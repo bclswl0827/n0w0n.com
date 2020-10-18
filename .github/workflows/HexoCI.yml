@@ -37,5 +37,6 @@ jobs:
 
       - name: Deploy
         run: |
+          hexo init
           hexo clean
           hexo deploy
