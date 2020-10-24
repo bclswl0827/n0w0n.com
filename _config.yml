@@ -107,8 +107,8 @@ theme: next
 deploy:
   - type: 'leancloud_counter_security_sync'
   - type: 'git'
-      repo: git@github.com:bclswl0827/bclswl0827.github.io.git
-      branch: master
+    repo: git@github.com:bclswl0827/bclswl0827.github.io.git
+    branch: master
 
 ##############################################################
 
