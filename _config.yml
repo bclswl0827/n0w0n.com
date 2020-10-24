@@ -105,10 +105,10 @@ theme: next
 ## Docs: https://hexo.io/docs/one-command-deployment
 ## $ npm install hexo-deployer-git --save
 deploy:
-  type: 'leancloud_counter_security_sync'
-  type: 'git'
-    repo: git@github.com:bclswl0827/bclswl0827.github.io.git
-    branch: master
+  - type: 'leancloud_counter_security_sync'
+  - type: 'git'
+      repo: git@github.com:bclswl0827/bclswl0827.github.io.git
+      branch: master
 
 ##############################################################
 
