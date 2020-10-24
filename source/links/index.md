@@ -1,6 +1,7 @@
 ---
 title: 友链
 ---
+>  - [Qiuyuair 的自留地](https://qiuyuair.com/)
 >  - [Project Aurora](https://mikukonai.com/)
 >  - [一个后浪的串味 QQ 空间](https://cnjpcivilization.xyz/)
 >  - [黄河业余无线电](http://www.439110.cn/)
