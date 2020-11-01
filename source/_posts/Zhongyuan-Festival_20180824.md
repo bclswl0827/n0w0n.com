@@ -11,32 +11,32 @@ tags:  [杂谈]
 
 <!--more-->
 
-![1](https://cdn-image.ibcl.us/Zhongyuan-Festival_20180824/1.jpg)
+![1](https://c.ibcl.us/Zhongyuan-Festival_20180824/1.jpg)
 
 ---
 
-![2](https://cdn-image.ibcl.us/Zhongyuan-Festival_20180824/2.jpg)
+![2](https://c.ibcl.us/Zhongyuan-Festival_20180824/2.jpg)
 
 ---
 
-![3](https://cdn-image.ibcl.us/Zhongyuan-Festival_20180824/3.jpg)
+![3](https://c.ibcl.us/Zhongyuan-Festival_20180824/3.jpg)
 
 ---
 
-![4](https://cdn-image.ibcl.us/Zhongyuan-Festival_20180824/4.jpg)
+![4](https://c.ibcl.us/Zhongyuan-Festival_20180824/4.jpg)
 
 ---
 
-![5](https://cdn-image.ibcl.us/Zhongyuan-Festival_20180824/5.jpg)
+![5](https://c.ibcl.us/Zhongyuan-Festival_20180824/5.jpg)
 
 ---
 
-![6](https://cdn-image.ibcl.us/Zhongyuan-Festival_20180824/6.jpg)
+![6](https://c.ibcl.us/Zhongyuan-Festival_20180824/6.jpg)
 
 ---
 
 最后来两张诡异一点的照片...
 
-![7](https://cdn-image.ibcl.us/Zhongyuan-Festival_20180824/7.jpg)
+![7](https://c.ibcl.us/Zhongyuan-Festival_20180824/7.jpg)
 
-![8](https://cdn-image.ibcl.us/Zhongyuan-Festival_20180824/8.jpg)
+![8](https://c.ibcl.us/Zhongyuan-Festival_20180824/8.jpg)

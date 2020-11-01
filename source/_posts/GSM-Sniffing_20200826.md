@@ -40,7 +40,7 @@ tags:  [广播,原创,SDR,瞎搞]
 
 所以，即便是在 0202 年的今天，网上也仍然有着不少类似“卡还在，可是钱没了”的新闻。
 
-![卡还在，可是钱没了 --P 民网](https://cdn-image.ibcl.us/GSM-Sniffing_20200826/1.jpg "卡还在，可是钱没了 --P 民网")
+![卡还在，可是钱没了 --P 民网](https://c.ibcl.us/GSM-Sniffing_20200826/1.jpg "卡还在，可是钱没了 --P 民网")
 
 而事实上，GSM 本身就是一种极不安全的协定，简单来说，其自身的缺陷可以归纳为如下 4 点。
 
@@ -65,7 +65,7 @@ tags:  [广播,原创,SDR,瞎搞]
 
 在扫描完基站频率过后，就要选择一个基站来进行嗅探了，嗅探的工具是 gr-gsm 的 `grgsm_livemon_headless` 模块。嗅探到的 GSM 流量是以数据流的形式传输的，所以还需要用到 Wireshark 来抓包，筛选出有用的资讯。
 
-![全景图](https://cdn-image.ibcl.us/GSM-Sniffing_20200826/2.jpg "全景图")
+![全景图](https://c.ibcl.us/GSM-Sniffing_20200826/2.jpg "全景图")
 
 准备好了硬件，综合以上内容，嗅探 GSM 网络需要以下软件。
 
@@ -263,13 +263,13 @@ yuki@meow:~$ wireshark-gtk -k -i lo -f 'port 4729'
 
 可正当博主觉得玩腻了的时候，Wireshark 传来了这样一条简讯。
 
-![沈大哥，我老公在家，不方便给你打电话。](https://cdn-image.ibcl.us/GSM-Sniffing_20200826/3.jpg "沈大哥，我老公在家，不方便给你打电话。")
+![沈大哥，我老公在家，不方便给你打电话。](https://c.ibcl.us/GSM-Sniffing_20200826/3.jpg "沈大哥，我老公在家，不方便给你打电话。")
 
 ## 遇到的问题
 
 正值七夕，博主不间断地嗅探了一天一夜，最后拿到了上百条简讯，除了一大堆广告之外，其中也不乏有小情侣们互传的情话。
 
-![简讯](https://cdn-image.ibcl.us/GSM-Sniffing_20200826/4.jpg "简讯")
+![简讯](https://c.ibcl.us/GSM-Sniffing_20200826/4.jpg "简讯")
 
 但在第二天，Wireshark 就再也不能嗅探到任何简讯了。
 
@@ -340,6 +340,6 @@ due to gnuradio bug #528.
 
 七夕节，怎么就没人给博主用简讯传情话？
 
-![爱有多深，就距离多远](https://cdn-image.ibcl.us/GSM-Sniffing_20200826/5.jpg "爱有多深，就距离多远")
+![爱有多深，就距离多远](https://c.ibcl.us/GSM-Sniffing_20200826/5.jpg "爱有多深，就距离多远")
 
 可～怜～哪～

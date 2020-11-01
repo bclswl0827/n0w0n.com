@@ -12,6 +12,6 @@ tags:  [广播,原创]
 
 上图。
 
-![“电波之旅”第一代机](https://cdn-image.ibcl.us/NewRadio-Issuse_20180802/1.jpg)
+![“电波之旅”第一代机](https://c.ibcl.us/NewRadio-Issuse_20180802/1.jpg)
 
 *博主目前还在观望中，打算待到时机成熟时再购买...*

@@ -20,12 +20,12 @@ tags:  [广播,原创]
 **网页留言：** *-*
 **通信地址：** *香港九龙大有街1楼十号*
 **网站：** *[http://liangyou.net](http://liangyou.net)*
-**官方收听报告单下载：** *[点此下载](https://cdn-static.ibcl.us/QSL-RadioLiangyou_20170502/report_to_station_head_form_rev.doc)*
+**官方收听报告单下载：** *[点此下载](https://c.ibcl.us/QSL-RadioLiangyou_20170502/report_to_station_head_form_rev.doc)*
 
 > ***其他***
 
 **特殊要求：** *-*
 **备注：** *具体操作请参见收听报告单中的说明。*
 
-![QSL正面](https://cdn-image.ibcl.us/QSL-RadioLiangyou_20170502/1.jpg "QSL正面")
-![QSL反面](https://cdn-image.ibcl.us/QSL-RadioLiangyou_20170502/2.jpg "QSL反面")
+![QSL正面](https://c.ibcl.us/QSL-RadioLiangyou_20170502/1.jpg "QSL正面")
+![QSL反面](https://c.ibcl.us/QSL-RadioLiangyou_20170502/2.jpg "QSL反面")

@@ -202,13 +202,13 @@ tags:  [广播,原创,历史,怀旧,我没有听敌台￣へ￣]
 
 下面的图片是当年的一些宣传画。
 
-![1](https://cdn-image.ibcl.us/UndergroundRadios-Data_20180831/1.jpg "1")
+![1](https://c.ibcl.us/UndergroundRadios-Data_20180831/1.jpg "1")
 
-![2](https://cdn-image.ibcl.us/UndergroundRadios-Data_20180831/2.jpg "2")
+![2](https://c.ibcl.us/UndergroundRadios-Data_20180831/2.jpg "2")
 
-![3](https://cdn-image.ibcl.us/UndergroundRadios-Data_20180831/3.jpg "3")
+![3](https://c.ibcl.us/UndergroundRadios-Data_20180831/3.jpg "3")
 
-![4](https://cdn-image.ibcl.us/UndergroundRadios-Data_20180831/4.jpg "4")
+![4](https://c.ibcl.us/UndergroundRadios-Data_20180831/4.jpg "4")
 
 ## 备注
 
@@ -218,7 +218,7 @@ tags:  [广播,原创,历史,怀旧,我没有听敌台￣へ￣]
 
 奉上录音：
 
-<audio src="https://cdn-media.ibcl.us/UndergroundRadios-Data_20180831/1.mp3" controls="controls"></audio>
+<audio src="https://c.ibcl.us/UndergroundRadios-Data_20180831/1.mp3" controls="controls"></audio>
 
 在这片投稿中，还有如下描述：
 

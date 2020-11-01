@@ -10,7 +10,7 @@ tags:  [广播,原创,SDR,瞎搞]
 
 [现在，博主的 ADS-B 监测站点已经上线，欢迎来踩～](https://a.ibcl.us)
 
-![博主的 SDR 服务器](https://cdn-image.ibcl.us/ADSB-Decode_20200118/1.jpg "博主的 SDR 服务器")
+![博主的 SDR 服务器](https://c.ibcl.us/ADSB-Decode_20200118/1.jpg "博主的 SDR 服务器")
 
 <!--more-->
 
@@ -33,7 +33,7 @@ tags:  [广播,原创,SDR,瞎搞]
 
 博主所购买的还是 CNY 42（不含运费）的那一款 SDR，其芯片方案是 RTL2832U+R820T2。如果有特别需求，可以购买 CNY 120 左右的，带温度补偿晶振（TXCO）的那款 RTL-SDR，其芯片方案同样是 RTL2832U+R820T2。
 
-![RTL2832U+R820T2](https://cdn-image.ibcl.us/ADSB-Decode_20200118/2.jpg "RTL2832U+R820T2")
+![RTL2832U+R820T2](https://c.ibcl.us/ADSB-Decode_20200118/2.jpg "RTL2832U+R820T2")
 
 此外，本文的 Linux 发行版选用 Debian Stretch。
 
@@ -162,7 +162,7 @@ root@BelovedZY:/home# reboot
 
 重启完成后，访问 `http://[N1 对应的 IP 地址]/dump1090-fa/`，就可以看到列在地图上的实时 ADS-B 数据了～
 
-![效果图](https://cdn-image.ibcl.us/ADSB-Decode_20200118/3.jpg "效果图")
+![效果图](https://c.ibcl.us/ADSB-Decode_20200118/3.jpg "效果图")
 
 # 公开数据等喝茶
 

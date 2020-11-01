@@ -17,14 +17,14 @@ tags:  [杂谈,瞎搞]
 
 这篇文章，便是调教 T1 盒子的笔记。
 
-![T1 盒子](https://cdn-image.ibcl.us/PhicommT1-Armbian_20190825/1.jpg "T1 盒子")
+![T1 盒子](https://c.ibcl.us/PhicommT1-Armbian_20190825/1.jpg "T1 盒子")
 
 <!--more-->
 ## 开箱上电
 
 拿到盒子接上电源，迎面而来便是斐讯俗里俗气的开机画面。启动完成后，是第一次使用前的配置向导，接上鼠标，资料一阵乱填，然后... 来到了手机绑定界面...
 
-![绑定手机](https://cdn-image.ibcl.us/PhicommT1-Armbian_20190825/2.jpg "绑定手机")
+![绑定手机](https://c.ibcl.us/PhicommT1-Armbian_20190825/2.jpg "绑定手机")
 
 居然还要绑定手机，博主肯定不会用自己号码绑定的，然而又不能填 Google Voice 的号码，于是，博主填了同桌的电话号码...
 
@@ -47,7 +47,7 @@ tags:  [杂谈,瞎搞]
 
 配套的手机遥控器 APP 在盒子底部便可找到下载二维码。借着这种骚操作，跳过注册步骤直接进入设置，博主顺利地打开了 ADB 功能。
 
-![开启 ADB](https://cdn-image.ibcl.us/PhicommT1-Armbian_20190825/3.png "开启 ADB")
+![开启 ADB](https://c.ibcl.us/PhicommT1-Armbian_20190825/3.png "开启 ADB")
 
 ## 系统降级
 
@@ -146,8 +146,8 @@ root@aml:~# ./install-aml.sh
 ```
 root@aml:~# cp /etc/apt/sources.list /etc/apt/sources.list.bak
 root@aml:~# cp /etc/apt/sources.list.d/armbian.list /etc/apt/sources.d/armbian.list.bak
-root@aml:~# curl https://cdn-static.ibcl.us/PhicommT1-Armbian_20190825/sources.list > /etc/apt/sources.list
-root@aml:~# curl https://cdn-static.ibcl.us/PhicommT1-Armbian_20190825/armbian.list > /etc/apt/sources.list.d/armbian.list
+root@aml:~# curl https://c.ibcl.us/PhicommT1-Armbian_20190825/sources.list > /etc/apt/sources.list
+root@aml:~# curl https://c.ibcl.us/PhicommT1-Armbian_20190825/armbian.list > /etc/apt/sources.list.d/armbian.list
 ```
 
 然后，更新软件源并升级软件源到最新。
@@ -166,7 +166,7 @@ root@aml:~# apt update && apt upgrade
 root@aml:~# armbian-config
 ```
 
-![armbian-config](https://cdn-image.ibcl.us/PhicommT1-Armbian_20190825/4.png "armbian-config")
+![armbian-config](https://c.ibcl.us/PhicommT1-Armbian_20190825/4.png "armbian-config")
 
 进入 System 项，然后选择 Default，系统先会引导创建一个子用户，然后下载相关文件并安装完整桌面。
 
@@ -176,11 +176,11 @@ root@aml:~# armbian-config
 
 此外，Armbian 自带浏览器 Chromium，可是总觉得有些不对劲...
 
-![硬件加速开启时](https://cdn-image.ibcl.us/PhicommT1-Armbian_20190825/5.png "硬件加速开启时")
+![硬件加速开启时](https://c.ibcl.us/PhicommT1-Armbian_20190825/5.png "硬件加速开启时")
 
 经检查，这是开启了硬件加速才导致的。
 
-![硬件加速关闭时](https://cdn-image.ibcl.us/PhicommT1-Armbian_20190825/6.png "硬件加速关闭时")
+![硬件加速关闭时](https://c.ibcl.us/PhicommT1-Armbian_20190825/6.png "硬件加速关闭时")
 
 前往 [chrome://settings](chrome://settings)，翻到页面最底部，将 Use hardware acceleration when available 取消勾选，重启 Chromium 后即可正常显示。
 
@@ -231,7 +231,7 @@ yukiho@aml:~/Desktop$ fcitx-config-gtk3
 
 使用 Ctrl+Space 切换输入法，然后就可以输入中文了。
 
-![斐讯牛逼惨了](https://cdn-image.ibcl.us/PhicommT1-Armbian_20190825/7.png "斐讯牛逼惨了")
+![斐讯牛逼惨了](https://c.ibcl.us/PhicommT1-Armbian_20190825/7.png "斐讯牛逼惨了")
 
 享受输入的乐趣罢！
 

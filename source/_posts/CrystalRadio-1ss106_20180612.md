@@ -10,38 +10,38 @@ tags:  [广播,原创]
 <!--more-->
 
 先把录音贴出来。
-<audio src="https://cdn-media.ibcl.us/CrystalRadio-1ss106_20180612/1.mp3" controls="controls"></audio>
+<audio src="https://c.ibcl.us/CrystalRadio-1ss106_20180612/1.mp3" controls="controls"></audio>
 
 ---
 
  - 这次我所使用的是一根４公尺长的铜芯电线做为矿机的天线，暂且不考虑它的电容，，，只要接收信号就行……*有点丑ＸＤ*
-![天线](https://cdn-image.ibcl.us/CrystalRadio-1ss106_20180612/1.jpg "天线")
+![天线](https://c.ibcl.us/CrystalRadio-1ss106_20180612/1.jpg "天线")
 
 ---
 
  - 博主家在１１楼，于是天线就被我这么放了下去……
-![天线](https://cdn-image.ibcl.us/CrystalRadio-1ss106_20180612/2.jpg "天线")
+![天线](https://c.ibcl.us/CrystalRadio-1ss106_20180612/2.jpg "天线")
 
 ---
 
  - 为了录音方便，博主并未使用高阻耳机，而是打算直接接到一个有源音响上面。
-![接口](https://cdn-image.ibcl.us/CrystalRadio-1ss106_20180612/3.jpg "接口")
+![接口](https://c.ibcl.us/CrystalRadio-1ss106_20180612/3.jpg "接口")
 
 ---
 
  - 毕竟使用的是有源音响，所以谨慎起见，博主连了根地线，接到一旁的金属栏杆上面。
-![接地](https://cdn-image.ibcl.us/CrystalRadio-1ss106_20180612/4.jpg "接地")
+![接地](https://c.ibcl.us/CrystalRadio-1ss106_20180612/4.jpg "接地")
 
 ---
 
 连上天线，打开音响电源～
-![连接天线](https://cdn-image.ibcl.us/CrystalRadio-1ss106_20180612/5.jpg "连接天线")
+![连接天线](https://c.ibcl.us/CrystalRadio-1ss106_20180612/5.jpg "连接天线")
 
 ---
 
 ***成功～博主听到了来自中国之声的广播信号。***
 博主试将１ＳＳ１０６检波管更换为２ＡＰ９锗检波管，也达到了相似的结果，接收到的是中波的一堆卖药台，效果明显没有１ＳＳ１０６好。
-![更换为２ＡＰ９](https://cdn-image.ibcl.us/CrystalRadio-1ss106_20180612/6.jpg "更换为２ＡＰ９")
+![更换为２ＡＰ９](https://c.ibcl.us/CrystalRadio-1ss106_20180612/6.jpg "更换为２ＡＰ９")
 
 ---
 

@@ -27,5 +27,5 @@ tags:  [广播,原创]
 **特殊要求：** *-*
 **备注：** *QSL为明信片实寄。*
 
-![QSL正面](https://cdn-image.ibcl.us/QSL-R.NIKKEI_20170201/1.jpg "QSL正面")
-![QSL反面](https://cdn-image.ibcl.us/QSL-R.NIKKEI_20170201/2.jpg "QSL反面")
+![QSL正面](https://c.ibcl.us/QSL-R.NIKKEI_20170201/1.jpg "QSL正面")
+![QSL反面](https://c.ibcl.us/QSL-R.NIKKEI_20170201/2.jpg "QSL反面")

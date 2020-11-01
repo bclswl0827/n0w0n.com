@@ -9,7 +9,7 @@ tags:  [广播,原创,我没有听敌台￣へ￣]
 
 请结合上一篇文章：[《对北朝鲜密码广播的比较、研究》](https://ibcl.us/N.Korea-RandomBroadcasting_20181020/)一文的 [2000 年以前](https://ibcl.us/N.Korea-RandomBroadcasting_20181020/#2000-%E5%B9%B4%E4%BB%A5%E5%89%8D)一节进行阅读。
 
-![1](https://cdn-image.ibcl.us/N.Korea-RandomBroadcasting_20181110/1.jpg)
+![1](https://c.ibcl.us/N.Korea-RandomBroadcasting_20181110/1.jpg)
 
 > 图中所示 QSL 为中央广播电台 XGOA（1941 年）的 QSL，当时中央广播电台在重庆播音。
 
@@ -47,7 +47,7 @@ tags:  [广播,原创,我没有听敌台￣へ￣]
 
 最后，是朝鲜东海海洋气象广播的一部分录音（1 Minute）。
 
-<audio src="https://cdn-media.ibcl.us/N.Korea-RandomBroadcasting_20181110/1.mp3" controls="controls"></audio>
+<audio src="https://c.ibcl.us/N.Korea-RandomBroadcasting_20181110/1.mp3" controls="controls"></audio>
 
 ---
 

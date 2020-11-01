@@ -8,7 +8,7 @@ tags:  [广播,原创,我没有听敌台￣へ￣]
 
 老规矩，先扯些题外话～
 
-![1](https://cdn-image.ibcl.us/N.Korea-Broadcaster_20181208/1.jpg "1")
+![1](https://c.ibcl.us/N.Korea-Broadcaster_20181208/1.jpg "1")
 
 > 不做过多介绍，图片来源于[小林的广播小站](https://kbysradio.wordpress.com/)。
 
@@ -24,7 +24,7 @@ tags:  [广播,原创,我没有听敌台￣へ￣]
 
 这些问题的答案在北朝鲜出版的一本书中都得到了回答。
 
-![2](https://cdn-image.ibcl.us/N.Korea-Broadcaster_20181208/2.jpg "2")
+![2](https://c.ibcl.us/N.Korea-Broadcaster_20181208/2.jpg "2")
 
 ---
 
@@ -32,7 +32,7 @@ tags:  [广播,原创,我没有听敌台￣へ￣]
 
 关于北朝鲜的播音员，除了一般的广播员之外，还有有着“功劳播音员”、“人民播音员”的称号的人。人民播音员是最高级的播音员，现在有 6～7 名。1994 年 7 月 9 日正午，朝鲜中央广播电台中传达的金日成主席去世的消息，便是由当时的最高级播音员——已故的李相碧人民播音员播报的。他也是《播音员话术》的执笔者之一（另，报道金正日行踪的朝鲜电视新闻中经常出现的女主播李春姬也获得了人民播音员的称号）。
 
-![3](https://cdn-image.ibcl.us/N.Korea-Broadcaster_20181208/3.jpg "3")
+![3](https://c.ibcl.us/N.Korea-Broadcaster_20181208/3.jpg "3")
 
 ## 无论什么情况，播音员都不能在语言上丧失气势
 

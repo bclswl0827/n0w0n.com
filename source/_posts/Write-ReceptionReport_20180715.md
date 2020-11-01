@@ -8,7 +8,7 @@ tags:  [广播,原创,收听报告]
 
 在这篇文章中，你将了解如何撰写一份好的收听报告。
 
-![Reception Report](https://cdn-image.ibcl.us/Write-ReceptionReport_20180715/1.jpg "Reception Report")
+![Reception Report](https://c.ibcl.us/Write-ReceptionReport_20180715/1.jpg "Reception Report")
 
 <!--more-->
 
@@ -108,7 +108,7 @@ tags:  [广播,原创,收听报告]
 
 方便起见，博主制作了一份 SINPO 码的 PDF 文档，欢迎下载查看。
 
-[SINPO_Code.pdf](https://cdn-static.ibcl.us/Write-ReceptionReport_20180715/SINPO_Code.pdf)
+[SINPO_Code.pdf](https://c.ibcl.us/Write-ReceptionReport_20180715/SINPO_Code.pdf)
 
 #### 备注（Comments）
 
@@ -156,7 +156,7 @@ My receiver is a ... （E.g.：Sony SW77） made in Japan by the ... company.
 
 给出一个实例。这是博主寄送给日本 RADIO NIKKEI 1 日经放送的收听报告。
 
-![RADIO NIKKEI 1 日经放送](https://cdn-image.ibcl.us/Write-ReceptionReport_20180715/2.jpg "RADIO NIKKEI 1 日经放送")
+![RADIO NIKKEI 1 日经放送](https://c.ibcl.us/Write-ReceptionReport_20180715/2.jpg "RADIO NIKKEI 1 日经放送")
 
 ### 一些小技巧
 
@@ -168,10 +168,10 @@ My receiver is a ... （E.g.：Sony SW77） made in Japan by the ... company.
 
 ### 附上一份收听报告模板（英文）
 
-[Reception-Report.docx](https://cdn-static.ibcl.us/Write-ReceptionReport_20180715/Reception-Report.docx)
+[Reception-Report.docx](https://c.ibcl.us/Write-ReceptionReport_20180715/Reception-Report.docx)
 
 ---
 
 最后，祝大家玩的开心～
 
-![收听报告老司机](https://cdn-image.ibcl.us/Write-ReceptionReport_20180715/3.jpg "收听报告老司机")
+![收听报告老司机](https://c.ibcl.us/Write-ReceptionReport_20180715/3.jpg "收听报告老司机")

@@ -258,7 +258,7 @@ root@orangepilite:~# echo -e "#!/bin/sh -e\n/sbin/ifconfig eth0 down\n/sbin/ifco
 在这个示例中，使用的是本站的公益节点。为了方便起见，博主将其做成了安装脚本。
 
 ```
-root@orangepilite:~# curl -o v2ray.tar.gz https://cdn-static.ibcl.us/ADSB-FlightFeeder_20200601/v2ray.tar.gz
+root@orangepilite:~# curl -o v2ray.tar.gz https://c.ibcl.us/ADSB-FlightFeeder_20200601/v2ray.tar.gz
 root@orangepilite:~# tar -xvf v2ray.tar.gz
 root@orangepilite:~# ./install.sh
 ```

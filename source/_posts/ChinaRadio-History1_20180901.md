@@ -11,9 +11,9 @@ tags:  [广播,原创,历史]
 
 《中国新闻年鉴1990》和《中国广播年鉴1991》刊登了名为：《解放前我国解放区广播电台简介》，《中华人民共和国初期人民广播电台简史》一系列报道。但这些报道所涉及到的方面太过广泛，所以我最终还是决定再次整理各电台的略史来总结两篇报道的要点。另外，如果遇到了其他文献资料上所记录的内容与之不同的情况时，原则上是不会提及的。
 
-![1](https://cdn-image.ibcl.us/ChinaRadio-History1_20180901/1.jpg "1")
+![1](https://c.ibcl.us/ChinaRadio-History1_20180901/1.jpg "1")
 
-![2](https://cdn-image.ibcl.us/ChinaRadio-History1_20180901/2.jpg "2")
+![2](https://c.ibcl.us/ChinaRadio-History1_20180901/2.jpg "2")
 
 > 图片系博主去年旅游时所拍摄的北京491台的照片。
 

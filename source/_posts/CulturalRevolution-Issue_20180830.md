@@ -28,7 +28,7 @@ tags:  [广播,原创,历史,怀旧,我没有听敌台￣へ￣,一本正经的�
 
 这很有可能是“中国共产党广播电台”。
 
-![The CIA and the Cult of Intelligence](https://cdn-image.ibcl.us/CulturalRevolution-Issue_20180830/1.jpg "The CIA and the Cult of Intelligence")
+![The CIA and the Cult of Intelligence](https://c.ibcl.us/CulturalRevolution-Issue_20180830/1.jpg "The CIA and the Cult of Intelligence")
 
 日本《产经新闻》在1971年4月9日名一篇为《ナゾの地下放送》的文章提到：
 
@@ -40,21 +40,21 @@ tags:  [广播,原创,历史,怀旧,我没有听敌台￣へ￣,一本正经的�
 
 之后这段毫无根据的描述被很多资料所引用。
 
-![How to Listen to the World（7th Ed.）](https://cdn-image.ibcl.us/CulturalRevolution-Issue_20180830/2.jpg "How to Listen to the World（7th Ed.）")
+![How to Listen to the World（7th Ed.）](https://c.ibcl.us/CulturalRevolution-Issue_20180830/2.jpg "How to Listen to the World（7th Ed.）")
 
 另外，David W. Conde所著的《CIA黑书》（1968年）提到：
 
 > 1966年夏天，中国领土周边有海盗电台的船只在航行，并向中国的那些可以收听广播的人传达所谓的来自华盛顿的消息。这是一种“黑色宣传”，能在国家之间制造混乱，并可能使中国从内部崩溃。
 
-![CIA黑书](https://cdn-image.ibcl.us/CulturalRevolution-Issue_20180830/3.jpg "CIA黑书")
+![CIA黑书](https://c.ibcl.us/CulturalRevolution-Issue_20180830/3.jpg "CIA黑书")
 
-![“Mi Amigo”号货船（摄于1974年），上面搭载有中波发射天线，曾作为英国著名地下电台“卡罗琳电台”的基地船。](https://cdn-image.ibcl.us/CulturalRevolution-Issue_20180830/4.jpg "“Mi Amigo”号货船（摄于1974年），上面搭载有中波发射天线，曾作为英国著名地下电台“卡罗琳电台”的基地船。")
+![“Mi Amigo”号货船（摄于1974年），上面搭载有中波发射天线，曾作为英国著名地下电台“卡罗琳电台”的基地船。](https://c.ibcl.us/CulturalRevolution-Issue_20180830/4.jpg "“Mi Amigo”号货船（摄于1974年），上面搭载有中波发射天线，曾作为英国著名地下电台“卡罗琳电台”的基地船。")
 
 《Far Eastern Economic Review》杂志在1979年5月4日的刊物报道了“八一电台”：
 
 > “八一电台”可能是来自符拉迪沃斯托克地区（海参威）的广播。
 
-![海参威](https://cdn-image.ibcl.us/CulturalRevolution-Issue_20180830/5.jpg "海参威")
+![海参威](https://c.ibcl.us/CulturalRevolution-Issue_20180830/5.jpg "海参威")
 
 报道还称，这应该是越南与苏联合作运营的电台。
 
@@ -78,7 +78,7 @@ tags:  [广播,原创,历史,怀旧,我没有听敌台￣へ￣,一本正经的�
 
 这究竟意味着什么？另外，直到BBC报道了“火花台”等地下电台的存在后，其他媒体才相继开始报道此事。
 
-![Foreign Broadcast Information Service（FBIS）](https://cdn-image.ibcl.us/CulturalRevolution-Issue_20180830/6.png "Foreign Broadcast Information Service（FBIS）")
+![Foreign Broadcast Information Service（FBIS）](https://c.ibcl.us/CulturalRevolution-Issue_20180830/6.png "Foreign Broadcast Information Service（FBIS）")
 
 ## 其它媒体千奇百怪的报道
 

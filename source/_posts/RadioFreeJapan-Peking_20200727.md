@@ -50,9 +50,9 @@ tags:  [广播,原创,历史,怀旧,我没有听敌台￣へ￣]
 
 ## 书影
 
-![伊藤律与北京 · 德田机关](https://cdn-image.ibcl.us/RadioFreeJapan-Peking_20200727/1.jpg "伊藤律与北京 · 德田机关")
+![伊藤律与北京 · 德田机关](https://c.ibcl.us/RadioFreeJapan-Peking_20200727/1.jpg "伊藤律与北京 · 德田机关")
 
-![战后期左翼人士群像](https://cdn-image.ibcl.us/RadioFreeJapan-Peking_20200727/2.jpg "战后期左翼人士群像")
+![战后期左翼人士群像](https://c.ibcl.us/RadioFreeJapan-Peking_20200727/2.jpg "战后期左翼人士群像")
 
 <!--more-->
 

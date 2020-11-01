@@ -37,25 +37,25 @@ tags:  [广播,原创,SDR,瞎搞]
 
 在填完一堆表格，并上传了居所东南西北方向的照片过后，博主终于通过了审核，并在 3 月初收到了来自德国的包裹。
 
-![DHL 敦豪国际](https://cdn-image.ibcl.us/ADSB-FlightFeeder_20200319/1.jpg "DHL 敦豪国际")
+![DHL 敦豪国际](https://c.ibcl.us/ADSB-FlightFeeder_20200319/1.jpg "DHL 敦豪国际")
 
 除了 FlightFeeder 本体之外，还有 5M 长的电缆、ADS-B 天线、固定支架和树莓派的原装电源（awsl！原装电源诶！）
 
-![FlightFeeder 本体](https://cdn-image.ibcl.us/ADSB-FlightFeeder_20200319/2.jpg "FlightFeeder 本体")
+![FlightFeeder 本体](https://c.ibcl.us/ADSB-FlightFeeder_20200319/2.jpg "FlightFeeder 本体")
 
-![5M 长电缆和 ADS-B 天线](https://cdn-image.ibcl.us/ADSB-FlightFeeder_20200319/3.jpg "5M 长电缆和 ADS-B 天线")
+![5M 长电缆和 ADS-B 天线](https://c.ibcl.us/ADSB-FlightFeeder_20200319/3.jpg "5M 长电缆和 ADS-B 天线")
 
-![固定支架](https://cdn-image.ibcl.us/ADSB-FlightFeeder_20200319/4.jpg "固定支架")
+![固定支架](https://c.ibcl.us/ADSB-FlightFeeder_20200319/4.jpg "固定支架")
 
-![树莓派原装电源](https://cdn-image.ibcl.us/ADSB-FlightFeeder_20200319/5.jpg "树莓派原装电源")
+![树莓派原装电源](https://c.ibcl.us/ADSB-FlightFeeder_20200319/5.jpg "树莓派原装电源")
 
 对了，还有一件丑到爆的 T 恤衫（
 
-![FlightAware 定制 T 恤衫](https://cdn-image.ibcl.us/ADSB-FlightFeeder_20200319/6.jpg "FlightAware 定制 T 恤衫")
+![FlightAware 定制 T 恤衫](https://c.ibcl.us/ADSB-FlightFeeder_20200319/6.jpg "FlightAware 定制 T 恤衫")
 
 报价单上显示，这些物件总共价值 75 欧元，而且不包括邮费。
 
-![报价单](https://cdn-image.ibcl.us/ADSB-FlightFeeder_20200319/7.jpg "报价单")
+![报价单](https://c.ibcl.us/ADSB-FlightFeeder_20200319/7.jpg "报价单")
 
 博主不得不感叹于 FlightAware 的大方，同时也因捡如此大的便宜而窃喜。
 
@@ -81,7 +81,7 @@ Thank you again for volunteering to host a FlightFeeder, we look forward to gett
 
 博主将 ADS-B 天线固定在了卧室落地窗前的护栏上，与外界只有一块玻璃之隔，至少这样能够避免天线被风吹雨打日晒，同时免去维护的麻烦。
 
-![ADS-B 天线](https://cdn-image.ibcl.us/ADSB-FlightFeeder_20200319/8.jpg "ADS-B 天线")
+![ADS-B 天线](https://c.ibcl.us/ADSB-FlightFeeder_20200319/8.jpg "ADS-B 天线")
 
 部署好了天线和电缆，并连接到了 FlightFeeder，在准备打开 FlightFeeder 前的一刻，博主却心血来潮想要看看 FlightFeeder 本体内部树莓派 SD 卡中的内容...
 
@@ -232,7 +232,7 @@ remote 70.42.6.135 4194 tcp
 
 FlightFeeder 内部，除了树莓派 3B，还有一块刻有 Mode-S Beast GPS 字样的板子。
 
-![Mode-S Beast GPS](https://cdn-image.ibcl.us/ADSB-FlightFeeder_20200319/9.jpg "Mode-S Beast GPS")
+![Mode-S Beast GPS](https://c.ibcl.us/ADSB-FlightFeeder_20200319/9.jpg "Mode-S Beast GPS")
 
 Google 一番后，博主发现 Mode-S Beast 的驱动是开源的，这为改装的操作提供了很大的便利，不然就只能靠添加 FlightAware 的软件仓库来实现了...
 

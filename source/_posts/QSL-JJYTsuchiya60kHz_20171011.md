@@ -27,5 +27,5 @@ tags:  [广播,原创]
 **特殊要求：** *[请参见文章](http://blog.love-radio.club/2017/08/01/JJY-Info_20170801/)*
 **备注：** *-*
 
-![QSL正面](https://cdn-image.ibcl.us/QSL-JJYTsuchiya60kHz_20171011/1.png "QSL正面")
-![QSL反面](https://cdn-image.ibcl.us/QSL-JJYTsuchiya60kHz_20171011/2.png "QSL反面")
+![QSL正面](https://c.ibcl.us/QSL-JJYTsuchiya60kHz_20171011/1.png "QSL正面")
+![QSL反面](https://c.ibcl.us/QSL-JJYTsuchiya60kHz_20171011/2.png "QSL反面")

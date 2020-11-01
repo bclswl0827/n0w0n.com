@@ -30,13 +30,13 @@ tags:  [杂谈]
 
 在 Arukas 的实例管理页面中分别开启 80 和 22 两端口，然后部署。
 
-![实例配置](https://cdn-image.ibcl.us/ArukasCloud-V2Ray_20190208/1.png "实例配置")
+![实例配置](https://c.ibcl.us/ArukasCloud-V2Ray_20190208/1.png "实例配置")
 
 使用 SSH，填入分配到的地址，连接到实例，但由于免费版分配的带端口的地址无法正常连接，所以事先还需要挂梯子来连接。
 
 先在 Session 填好服务器的地址和端口，再转至 Connection 的 Proxy 子项配置本地代理服务器，像这样：
 
-![代理配置](https://cdn-image.ibcl.us/ArukasCloud-V2Ray_20190208/2.png "代理配置")
+![代理配置](https://c.ibcl.us/ArukasCloud-V2Ray_20190208/2.png "代理配置")
 
 SSH 用户名，密码都是 root。
 

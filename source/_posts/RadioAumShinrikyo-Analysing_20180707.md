@@ -10,7 +10,7 @@ tags:  [广播,原创,历史,怀旧,我没有听敌台￣へ￣]
 
 这是 ABI 制作的《奥姆真理教广播录音集》的解说文，由于博主并没有这份录音集，所以只节选了部分来翻译。
 
-![江泽民](https://cdn-image.ibcl.us/RadioAumShinrikyo-Analysing_20180707/1.jpg "江泽民")
+![江泽民](https://c.ibcl.us/RadioAumShinrikyo-Analysing_20180707/1.jpg "江泽民")
 
 > 1988 年元旦，时任上海市市长**江泽民**通过 BY4AA 业余电台向时任横滨市长送上新年祝福。为长者续一秒......
 

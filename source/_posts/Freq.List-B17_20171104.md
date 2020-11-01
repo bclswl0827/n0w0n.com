@@ -6,7 +6,7 @@ tags:  [广播,原创]
 ---
 > ***制作来自：DXMAN***
 
-![Yamata Transmitting Station, Japan.](https://cdn-image.ibcl.us/Freq.List-B17_20171104/1.jpg "Yamata Transmitting Station, Japan.")
+![Yamata Transmitting Station, Japan.](https://c.ibcl.us/Freq.List-B17_20171104/1.jpg "Yamata Transmitting Station, Japan.")
 
 <!--more-->
 

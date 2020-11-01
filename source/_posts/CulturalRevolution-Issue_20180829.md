@@ -12,11 +12,11 @@ tags:  [广播,原创,历史,怀旧,我没有听敌台￣へ￣]
 
 ---
 
-![1](https://cdn-image.ibcl.us/CulturalRevolution-Issue_20180829/1.jpg "1")
+![1](https://c.ibcl.us/CulturalRevolution-Issue_20180829/1.jpg "1")
 
 ---
 
-![2](https://cdn-image.ibcl.us/CulturalRevolution-Issue_20180829/2.jpg "2")
+![2](https://c.ibcl.us/CulturalRevolution-Issue_20180829/2.jpg "2")
 
 ---
 

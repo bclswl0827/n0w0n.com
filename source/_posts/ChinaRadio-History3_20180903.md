@@ -11,7 +11,7 @@ tags:  [广播,原创,历史]
 
 *博主得到了「中国向け地下放送録音集　デジタルリマスター版」的原版录音。该录音为无删减、无压缩，文件现已上传至[“I BCL. 文件库”](https://f.ibcl.us)，欢迎各位前往下载～[链接直达](https://f.ibcl.us/%E7%94%B5%E5%8F%B0%E9%9F%B3%E9%A2%91/%E4%B8%AD%E5%9B%BD%E5%90%91%E3%81%91%E5%9C%B0%E4%B8%8B%E6%94%BE%E9%80%81%E9%8C%B2%E9%9F%B3%E9%9B%86%20CD%E7%89%88/)。*
 
-![1](https://cdn-image.ibcl.us/ChinaRadio-History3_20180903/1.jpg)
+![1](https://c.ibcl.us/ChinaRadio-History3_20180903/1.jpg)
 
 > 图为延安新华广播电台后来所使用的发射机，由国民党的美制导航台改装而成（图片来源于网络）。
 

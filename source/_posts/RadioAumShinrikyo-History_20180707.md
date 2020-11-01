@@ -20,11 +20,11 @@ tags:  [广播,历史]
 
 这是当年笔者带给Michael的奥姆教广播电台的台刊、收听证明卡及其他一些电台的纪念品复印件，想不到还保留着。这些东东原件应该放在笔者老家，一时无法取到，就用当初的复印件上图了。
 
-![1](https://cdn-image.ibcl.us/RadioAumShinrikyo-History_20180707/1.jpg "1")
+![1](https://c.ibcl.us/RadioAumShinrikyo-History_20180707/1.jpg "1")
 
 ---
 
-![2](https://cdn-image.ibcl.us/RadioAumShinrikyo-History_20180707/2.jpg "2")
+![2](https://c.ibcl.us/RadioAumShinrikyo-History_20180707/2.jpg "2")
 
 ---
 
@@ -34,7 +34,7 @@ tags:  [广播,历史]
 
 群友“万科樊**”和“BCLSWL”（博主在此～）等提供的麻原等新闻报导：
 
-![3](https://cdn-image.ibcl.us/RadioAumShinrikyo-History_20180707/3.jpg "3")
+![3](https://c.ibcl.us/RadioAumShinrikyo-History_20180707/3.jpg "3")
 
 **这是博主在YouTube上面找到的视频：
 [オウム真理教２０年目の真実](http://lcx.unaux.com/watch?v=Ia4H_6HJuxs)
@@ -52,4 +52,4 @@ tags:  [广播,历史]
 ---
 
 另外，国内还出版过麻原教主的书：
-![4](https://cdn-image.ibcl.us/RadioAumShinrikyo-History_20180707/4.jpg "4")
+![4](https://c.ibcl.us/RadioAumShinrikyo-History_20180707/4.jpg "4")

@@ -16,4 +16,4 @@ tags:  [广播,怀旧]
 ---
 
 附上录音，时间是1968年1月3日，访谈人物是江藤 俊哉。
-<audio src="https://cdn-media.ibcl.us/FMTokai-19680103NewYearMusic_20180612/1.mp3" controls="controls"></audio>
+<audio src="https://c.ibcl.us/FMTokai-19680103NewYearMusic_20180612/1.mp3" controls="controls"></audio>

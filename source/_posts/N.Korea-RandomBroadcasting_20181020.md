@@ -9,7 +9,7 @@ tags:  [广播,原创,我没有听敌台￣へ￣]
 
 译自：[http://www.abiweb.jp/report/ransu.htm](http://www.abiweb.jp/report/ransu.htm)
 
-![1](https://cdn-image.ibcl.us/N.Korea-RandomBroadcasting_20181020/1.png)
+![1](https://c.ibcl.us/N.Korea-RandomBroadcasting_20181020/1.png)
 
 > 1937年，国民党中央广播电台计划将 75 kW 发射机扩增至 500 kW，以便全国听众可通过单灯电子管收音机收听，兼可覆盖整个亚太地区、中东欧地区及非洲东部，但最终由于抗战爆发，计划搁浅。图中为计划中500kW大电台的覆盖范围。
 

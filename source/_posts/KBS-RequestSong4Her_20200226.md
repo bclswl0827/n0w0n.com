@@ -22,7 +22,7 @@ tags:  [广播,原创,瞎搞]
 
 好主意！
 
-![KBS World Radio](https://cdn-image.ibcl.us/KBS-RequestSong4Her_20200226/1.jpg "KBS World Radio")
+![KBS World Radio](https://c.ibcl.us/KBS-RequestSong4Her_20200226/1.jpg "KBS World Radio")
 
 然而让博主没有想到的是，这次的点歌经历充满曲折...
 
@@ -184,7 +184,7 @@ awsl（哭
 
 已是 19:25，按理说 KBS 的电台间奏信号已经开始，然而博主所看到的 9770kHz 的瀑布图只是一条若隐若现的细线...
 
-![9770kHz](https://cdn-image.ibcl.us/KBS-RequestSong4Her_20200226/2.png "9770kHz")
+![9770kHz](https://c.ibcl.us/KBS-RequestSong4Her_20200226/2.png "9770kHz")
 
 博主的天线是长线端馈，信号应该很好才对，博主怀疑是 SDR 太久没用出了问题，于是果断拿出 Tecsun PL600 收音机... 没想到的是，收音机里一片杂音，什么都没有。
 
@@ -196,7 +196,7 @@ awsl（哭
 
 21:00，博主终于在 7275kHz 收到了 KBS 的信号... 21:31 分时，听到了博主给她点的歌，由权志龙所演唱的 Missing you。
 
-<audio src="https://cdn-media.ibcl.us/KBS-RequestSong4Her_20200226/1.mp3" controls="controls"></audio>
+<audio src="https://c.ibcl.us/KBS-RequestSong4Her_20200226/1.mp3" controls="controls"></audio>
 
 最后，博主把录音发给了她，至此，这次的 KBS 点歌历程告一段落。
 
@@ -214,4 +214,4 @@ awsl（哭
 
 对了，ZY，希望你会喜欢这份礼物，祝你生日快乐！
 
-![“第 18 个心愿”](https://cdn-image.ibcl.us/KBS-RequestSong4Her_20200226/3.jpg "“第 18 个心愿”")
+![“第 18 个心愿”](https://c.ibcl.us/KBS-RequestSong4Her_20200226/3.jpg "“第 18 个心愿”")
