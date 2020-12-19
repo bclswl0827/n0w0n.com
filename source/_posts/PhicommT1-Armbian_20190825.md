@@ -145,7 +145,7 @@ root@aml:~# ./install-aml.sh
 
 ```
 root@aml:~# cp /etc/apt/sources.list /etc/apt/sources.list.bak
-root@aml:~# cp /etc/apt/sources.list.d/armbian.list /etc/apt/sources.d/armbian.list.bak
+root@aml:~# cp /etc/apt/sources.list.d/armbian.list /etc/apt/sources.list.d/armbian.list.bak
 root@aml:~# curl https://c.ibcl.us/PhicommT1-Armbian_20190825/sources.list > /etc/apt/sources.list
 root@aml:~# curl https://c.ibcl.us/PhicommT1-Armbian_20190825/armbian.list > /etc/apt/sources.list.d/armbian.list
 ```
