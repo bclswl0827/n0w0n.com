@@ -1,7 +1,7 @@
 ---
 title: 友链
 ---
->  - [优格の小窝](https://www.theyog.cn/)
+>  - [Sugaryboy](https://www.sugaryboy.com/)
 >  - [Qiuyuair 的自留地](https://qiuyuair.com/)
 >  - [Project Aurora](https://mikukonai.com/)
 >  - [一个后浪的串味 QQ 空间](https://cnjpcivilization.xyz/)
