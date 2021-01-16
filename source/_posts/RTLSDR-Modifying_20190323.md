@@ -688,6 +688,8 @@ root@yukiho:/home/rtl-sdr/build# cd /home
 root@yukiho:/home# git clone https://github.com/simonyiszk/openwebrx.git
 root@yukiho:/home# git clone https://github.com/jketterl/csdr
 root@yukiho:/home# cd csdr
+root@yukiho:/home/csdr# git checkout 32958ce37eb765f7f5511fe5f7c2c244c13f264b
+root@yukiho:/home/csdr# make
 root@yukiho:/home/csdr# make install
 root@yukiho:/home/csdr# cd /home
 ```
