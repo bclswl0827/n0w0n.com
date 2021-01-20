@@ -115,7 +115,7 @@ deploy:
 # LeanCloud secure counter
 ## $ npm install hexo-leancloud-counter-security --save
 ## $ hexo lc-counter register <username> <password>
-＃leancloud_counter_security:
+#leancloud_counter_security:
   #enable_sync: true
   #app_id: uT4ybD8yOWEDu5X1CCiJWkGe-MdYXbMMI
   #app_key: LIbrbRsDdyXFKYt3XTQsVIC6
