@@ -115,12 +115,12 @@ deploy:
 # LeanCloud secure counter
 ## $ npm install hexo-leancloud-counter-security --save
 ## $ hexo lc-counter register <username> <password>
-#leancloud_counter_security:
-  #enable_sync: true
-  #app_id: uT4ybD8yOWEDu5X1CCiJWkGe-MdYXbMMI
-  #app_key: LIbrbRsDdyXFKYt3XTQsVIC6
-  #username: PHx4wSJGvr
-  #password: Vkb24tcjRF
+leancloud_counter_security:
+  enable_sync: false
+  app_id: uT4ybD8yOWEDu5X1CCiJWkGe-MdYXbMMI
+  app_key: LIbrbRsDdyXFKYt3XTQsVIC6
+  username: PHx4wSJGvr
+  password: Vkb24tcjRF
 
 # RSS Feed
 ## $ npm install hexo-generator-feed --save
