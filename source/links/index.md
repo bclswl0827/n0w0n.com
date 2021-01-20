@@ -1,6 +1,10 @@
 ---
 title: 友链
 ---
+
+**由于站点不能即时维护，目前暂时停止接受友链申请。**
+
+>  - [Xiaomage’s Blog](https://blog.xmgspace.me/)
 >  - [Sugaryboy](https://www.sugaryboy.com/)
 >  - [Qiuyuair 的自留地](https://qiuyuair.com/)
 >  - [Project Aurora](https://mikukonai.com/)
