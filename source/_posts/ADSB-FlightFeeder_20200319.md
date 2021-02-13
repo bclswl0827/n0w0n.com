@@ -360,15 +360,16 @@ pi@raspberrypi:~/src/dump1090$ sudo reboot
  1. 连接 Mode-S Beast；
  2. 部署 Docker 镜像。
 ```
-pi@raspberrypi:~$ sudo docker run -d -i -t \
-	--name=FlightFeeder \
-	--restart always \
-	-p 0.0.0.0:8000:80 \
-	--memory="32m" \
-	--memory-swap="64m" \
-	--oom-kill-disable \
-	--privileged \
-	bclswl0827/flightfeeder-docker:latest
+pi@raspberrypi:~$ docker run -d \
+  --device /dev/ttyUSB0 \
+  --device /dev/ttyUSB1 \
+  --name flightfeeder \
+  --restart always \
+  -p 80:80 \
+  -p 123:123/udp \
+  -p 8080:8080 \
+  -p 30005:30005 \
+  bclswl0827/flightfeeder-docker:latest
 ```
 
 部署成功后，打开 `http://[树莓派 IP]:8000/dump1090-fa/` 即可看到 ADS-B 资讯。
