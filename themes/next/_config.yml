@@ -126,8 +126,8 @@ menu:
   #nodes: /nodes/ || fa fa-server
   sdr: http://yuki.p.sdrotg.com/ || fa fa-microchip
   ads-b: https://a.ibcl.us/ || fa fa-plane-departure
-  #ftp: https://f.ibcl.us/ || fa fa-file
-  cloud: https://n.ibcl.us/ || fa fa-cloud
+  ftp: https://f.ibcl.us/ || fa fa-file
+  #cloud: https://n.ibcl.us/ || fa fa-cloud
   #mirror: https://m.ibcl.us/ || fa fa-cube
   #categories: /categories/ || fa fa-th
   #archives: /archives/ || fa fa-archive
