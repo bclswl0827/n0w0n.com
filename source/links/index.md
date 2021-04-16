@@ -29,7 +29,7 @@ title: 友链
 >  - [BG3IQS](https://bg3iqs.com/)
 >  - [犬の窝](http://mlldxe.cn/)
 >  - [天空 Blond](https://www.skyblond.info/)
->  - [OceanicKang](https://www.oceanickang.com/)
+>  - [OceanicKang](https://www.oscaner.com/)
 >  - [小林的广播小站](https://kbysradio.wordpress.com/)
 >  - [Fidcer’Blog](https://vuln.top/)
 >  - [米米的博客](https://zhangshuqiao.org/)
