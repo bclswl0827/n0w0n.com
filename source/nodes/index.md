@@ -17,4 +17,4 @@ title: 公益节点
 
 | 服务器地址 | 端口 | 协议 | 服务器 UUID | 额外 ID | 加密方式 | 传输协定 | 路径 | 底层传输安全 | 备注 | 分享链接 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| t.ibcl.us | 443 | Vmess + WebSocket + TLSv1.3 | ad806487-2d26-4636-98b6-ab85cc8521f7 | 0 | auto | ws | /ibcl.us/nodes/vmess/ws | 是 | 美国 | `vmess://ew0KICAidiI6ICIyIiwNCiAgInBzIjogIkkgQkNMLiAtIGliY2wudXMiLA0KICAiYWRkIjogInQuaWJjbC51cyIsDQogICJwb3J0IjogIjQ0MyIsDQogICJpZCI6ICJhZDgwNjQ4Ny0yZDI2LTQ2MzYtOThiNi1hYjg1Y2M4NTIxZjciLA0KICAiYWlkIjogIjAiLA0KICAibmV0IjogIndzIiwNCiAgInR5cGUiOiAibm9uZSIsDQogICJob3N0IjogIiIsDQogICJwYXRoIjogIi9pYmNsLnVzL25vZGVzL3ZtZXNzL3dzIiwNCiAgInRscyI6ICJ0bHMiDQp9` |
+| t.ibcl.us | 443 | Vmess + WebSocket + TLSv1.3 | ad806487-2d26-4636-98b6-ab85cc8521f7 | 0 | auto | ws | /ibcl.us/nodes/vmess/ws | 是 | 美国 | `vmess://eyJhZGQiOiIxLjAuMC4xIiwiYWlkIjoiMCIsImhvc3QiOiJ0LmliY2wudXMiLCJpZCI6ImFkODA2NDg3LTJkMjYtNDYzNi05OGI2LWFiODVjYzg1MjFmNyIsIm5ldCI6IndzIiwicGF0aCI6Ii9pYmNsLnVzL25vZGVzL3ZtZXNzL3dzIiwicG9ydCI6IjQ0MyIsInBzIjoiSSBCQ0wuIC0gaWJjbC51cyIsInNjeSI6ImF1dG8iLCJzbmkiOiJ0LmliY2wudXMiLCJ0bHMiOiJ0bHMiLCJ0eXBlIjoiIiwidiI6IjIifQ==` |
