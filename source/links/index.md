@@ -8,7 +8,7 @@ title: 友链
 >  - [Sugaryboy](https://www.sugaryboy.com/)
 >  - [Qiuyuair 的自留地](https://qiuyuair.com/)
 >  - [Project Aurora](https://bd4sur.com/)
->  - [一个后浪的串味 QQ 空间](https://cnjpcivilization.xyz/)
+>  - [一个后浪的串味 QQ 空间](https://cnjpcivilization.top/)
 >  - [黄河业余无线电](http://www.439110.cn/)
 >  - [乐心湖’Blog](https://www.xn2001.com/)
 >  - [探索子](https://beyondstars.xyz/)
