@@ -18,6 +18,7 @@ menu:
   nodes: 公益节点
   sdr: 软件无限垫
   mirror: Linux 镜像
+  git: Git
   ads-b: ADS-B
   ftp: 文件库
   cloud: 私有云
