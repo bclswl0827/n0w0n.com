@@ -90,7 +90,7 @@ FlightAware
 
 # 搞事情
 
-## 换源+平滑切换 Raspbian Jessie
+## 换源 + 平滑切换 Raspbian Jessie
 
 在完成刷写工作并对开发板进行必要的配置后，将其连上网络，博主要开始正式操作了。
 
@@ -255,7 +255,7 @@ root@orangepilite:~# echo -e "#!/bin/sh -e\n/sbin/ifconfig eth0 down\n/sbin/ifco
 
 对于某些路由器而言，配置透明代理是件轻松的事情，然而对于那些不具备这个功能的路由器而言，则会稍微麻烦一些。
 
-在这个示例中，使用的是本站的公益节点。为了方便起见，博主将其做成了安装脚本。
+在这个示例中，使用的是本站的公益节点。为了方便起见，博主将其做成了安装脚本。如果要使用自己的节点，也可自行下载后修改 V2Ray 配置文件。
 
 ```
 root@orangepilite:~# curl -o v2ray.tar.gz https://c.ibcl.us/ADSB-FlightFeeder_20200601/v2ray.tar.gz

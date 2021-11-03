@@ -123,12 +123,12 @@ menu:
   tags: /tags/ || fa fa-tags
   links: /links/ || fa fa-link
   contact: /contact/ || fa fa-address-book
-  nodes: /nodes/ || fa fa-server
-  sdr: http://yuki.p.sdrotg.com/ || fa fa-microchip
-  ads-b: https://a.ibcl.us/ || fa fa-plane-departure
-  ftp: https://f.ibcl.us/ || fa fa-file
-  cloud: https://n.ibcl.us/ || fa fa-cloud
-  git: https://g.ibcl.us/ || fa fa-github
+  #nodes: /nodes/ || fa fa-server
+  #sdr: http://yuki.p.sdrotg.com/ || fa fa-microchip
+  #ads-b: https://a.ibcl.us/ || fa fa-plane-departure
+  #ftp: https://f.ibcl.us/ || fa fa-file
+  #cloud: https://n.ibcl.us/ || fa fa-cloud
+  #git: https://g.ibcl.us/ || fa fa-github
   #mirror: https://m.ibcl.us/ || fa fa-cube
   #categories: /categories/ || fa fa-th
   #archives: /archives/ || fa fa-archive

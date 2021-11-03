@@ -29,7 +29,7 @@ title: 友链
 >  - [BG3IQS](https://bg3iqs.com/)
 >  - [犬の窝](http://mlldxe.cn/)
 >  - [天空 Blond](https://www.skyblond.info/)
->  - [OceanicKang](https://www.oscaner.com/)
+>  - [Oscaner](https://www.oscaner.com/)
 >  - [小林的广播小站](https://kbysradio.wordpress.com/)
 >  - [Fidcer’Blog](https://vuln.top/)
 >  - [米米的博客](https://zhangshuqiao.org/)
@@ -37,7 +37,6 @@ title: 友链
 >  - [思绪的空中生活](https://sixu.life/)
 >  - [c0sMx's Blog](https://www.c0smx.com/)
 >  - [橘纸柚](http://lovemen.cc/)
->  - [Yiyang Wang](https://iyangw.us/)
 >  - [Radiofun-Hong](https://radiofunhong.wordpress.com/)
 
 *以上的友链顺序，均按照申请的时间进行排列，并无优次等之分。*
@@ -46,7 +45,7 @@ title: 友链
 - 网站名称：I BCL.
 - 网站地址：[ibcl.us](https://ibcl.us/)
 - 本站的头像位于：[ibcl.us/images/avatar.jpg](https://ibcl.us/images/avatar.jpg)。
-- 本站介绍：一位热爱无线电广播的高中学生的博客。
+- 本站介绍：一位热爱无线电广播的大学生博客。
 
 **关于添加友链的说明以及注意事项：**
  - `HTTPS`、`HTTP` 站点均可。

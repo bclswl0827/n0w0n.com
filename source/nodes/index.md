@@ -1,5 +1,6 @@
 ---
 title: 公益节点
+comments: false
 ---
 
 **[2020 年 11 月 15 日更新节点资讯，进一步提升安全性。](https://ibcl.us/nodes/#5fa81f3bcb5eb5529f9e5c01)**
