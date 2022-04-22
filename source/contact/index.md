@@ -8,4 +8,4 @@ comments: false
 
 ***这是博主的 GayHub，喜欢请 Fo 然后来撩......***
 
- - **GayHub**：[https://github.com/bclswl0827](https://github.com/bclswl0827)
+ - **GayHub**：[github.com/bclswl0827](https://github.com/bclswl0827)
