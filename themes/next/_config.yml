@@ -119,8 +119,8 @@ menu:
   home: / || fa fa-home
   about: /about/ || fa fa-user
   archives: /archives/ || fa fa-archive
-  categories: /categories/ || fa fa-th
-  tags: /tags/ || fa fa-tags
+  #categories: /categories/ || fa fa-th
+  #tags: /tags/ || fa fa-tags
   links: /links/ || fa fa-link
   contact: /contact/ || fa fa-address-book
   #nodes: /nodes/ || fa fa-server
