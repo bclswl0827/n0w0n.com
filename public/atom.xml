@@ -51,54 +51,6 @@
   </entry>
   
   <entry>
-    <title>Television Hokkaido Broadcasting Co. LTD.</title>
-    <link href="https://ibcl.us/QSL-JOHIdtv_20210105/"/>
-    <id>https://ibcl.us/QSL-JOHIdtv_20210105/</id>
-    <published>2021-01-05T13:50:28.000Z</published>
-    <updated>2022-04-22T02:18:38.688Z</updated>
-    
-    
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;基本信息&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;strong&gt;电视台名称：&lt;/strong&gt; &lt;em&gt;Television Hokkaido Broadcasting Co. LTD.&lt;/em&gt;&lt;br&gt;&lt;strong&gt;所属国家：&lt;/strong&gt; &lt;em&gt;JP 日本&lt;/em&gt;&lt;br&gt;&lt;strong&gt;取得时间：&lt;/strong&gt; &lt;em&gt;2018 年&lt;/em&gt;&lt;br&gt;&lt;strong&gt;收听报告寄送方式：&lt;/strong&gt; &lt;em&gt;航空邮件&lt;/em&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="QSL" scheme="https://ibcl.us/categories/QSL/"/>
-    
-    
-    <category term="原创" scheme="https://ibcl.us/tags/%E5%8E%9F%E5%88%9B/"/>
-    
-    <category term="电视台" scheme="https://ibcl.us/tags/%E7%94%B5%E8%A7%86%E5%8F%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>宮城テレビ放送</title>
-    <link href="https://ibcl.us/QSL-JOMMdtv_20210105/"/>
-    <id>https://ibcl.us/QSL-JOMMdtv_20210105/</id>
-    <published>2021-01-05T12:50:28.000Z</published>
-    <updated>2022-04-22T02:18:38.688Z</updated>
-    
-    
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;基本信息&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;strong&gt;电视台名称：&lt;/strong&gt; &lt;em&gt;宮城テレビ放送&lt;/em&gt;&lt;br&gt;&lt;strong&gt;所属国家：&lt;/strong&gt; &lt;em&gt;JP 日本&lt;/em&gt;&lt;br&gt;&lt;strong&gt;取得时间：&lt;/strong&gt; &lt;em&gt;2018年&lt;/em&gt;&lt;br&gt;&lt;strong&gt;收听报告寄送方式：&lt;/strong&gt; &lt;em&gt;航空邮件&lt;/em&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="QSL" scheme="https://ibcl.us/categories/QSL/"/>
-    
-    
-    <category term="原创" scheme="https://ibcl.us/tags/%E5%8E%9F%E5%88%9B/"/>
-    
-    <category term="电视台" scheme="https://ibcl.us/tags/%E7%94%B5%E8%A7%86%E5%8F%B0/"/>
-    
-  </entry>
-  
-  <entry>
     <title>偷窥狂养成记：成本 50 块的 GSM 网络嗅探经历</title>
     <link href="https://ibcl.us/GSM-Sniffing_20200826/"/>
     <id>https://ibcl.us/GSM-Sniffing_20200826/</id>
@@ -676,6 +628,50 @@
     <category term="历史" scheme="https://ibcl.us/tags/%E5%8E%86%E5%8F%B2/"/>
     
     <category term="怀旧" scheme="https://ibcl.us/tags/%E6%80%80%E6%97%A7/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>DX 记录：MBS 每日放送</title>
+    <link href="https://ibcl.us/DX-MBS_20190205/"/>
+    <id>https://ibcl.us/DX-MBS_20190205/</id>
+    <published>2019-02-05T06:40:06.000Z</published>
+    <updated>2022-04-22T02:18:38.688Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;基本信息&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;DX 电台名称：&lt;/strong&gt; &lt;em&gt;MBS 每日放送&lt;/em&gt;&lt;br&gt;&lt;strong&gt;电台所属国：&lt;/strong&gt; &lt;em&gt;日本&lt;/em&gt;&lt;br&gt;&lt;strong&gt;DX 日期：&lt;/strong&gt; &lt;em&gt;2019 年 2 月 4 日&lt;/em&gt;&lt;br&gt;&lt;strong&gt;DX 时间（UTC）：&lt;/strong&gt; &lt;em&gt;1745 - 1746&lt;/em&gt;&lt;br&gt;&lt;strong&gt;频率：&lt;/strong&gt; &lt;em&gt;1179 kHz&lt;/em&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="DX" scheme="https://ibcl.us/categories/DX/"/>
+    
+    
+    <category term="DX" scheme="https://ibcl.us/tags/DX/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>DX 记录：JOQR 文化放送</title>
+    <link href="https://ibcl.us/DX-JOQR_20190205/"/>
+    <id>https://ibcl.us/DX-JOQR_20190205/</id>
+    <published>2019-02-05T06:10:06.000Z</published>
+    <updated>2022-04-22T02:18:38.688Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;基本信息&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;DX 电台名称：&lt;/strong&gt; &lt;em&gt;JOQR 文化放送&lt;/em&gt;&lt;br&gt;&lt;strong&gt;电台所属国：&lt;/strong&gt; &lt;em&gt;日本&lt;/em&gt;&lt;br&gt;&lt;strong&gt;DX 日期：&lt;/strong&gt; &lt;em&gt;2019 年 2 月 4 日&lt;/em&gt;&lt;br&gt;&lt;strong&gt;DX 时间（UTC）：&lt;/strong&gt; &lt;em&gt;1732 - 1734&lt;/em&gt;&lt;br&gt;&lt;strong&gt;频率：&lt;/strong&gt; &lt;em&gt;1134 kHz&lt;/em&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="DX" scheme="https://ibcl.us/categories/DX/"/>
+    
+    
+    <category term="DX" scheme="https://ibcl.us/tags/DX/"/>
     
   </entry>
   

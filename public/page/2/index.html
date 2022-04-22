@@ -202,228 +202,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://ibcl.us/Heroku-V2Ray_20191014/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="一个不知名的网友">
-      <meta itemprop="description" content="大一学生，通信工程，A 股韭菜，喜欢无线电技术，属鸽子，文章随缘更新">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="I BCL.">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/Heroku-V2Ray_20191014/" class="post-title-link" itemprop="url">在 Heroku 搭建 V2Ray</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-10-14 23:22:00" itemprop="dateCreated datePublished" datetime="2019-10-14T23:22:00+08:00">2019-10-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-22 10:18:38" itemprop="dateModified" datetime="2022-04-22T10:18:38+08:00">2022-04-22</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9D%82%E8%B0%88/" itemprop="url" rel="index"><span itemprop="name">杂谈</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/Heroku-V2Ray_20191014/" class="post-meta-item leancloud_visitors" data-flag-title="在 Heroku 搭建 V2Ray" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/Heroku-V2Ray_20191014/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/Heroku-V2Ray_20191014/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><strong>重要：由于 V2Ray 修改了自动安装脚本，导致 bclswl0827/v2ray-heroku 该镜像在 Heroku 无法运行。修改 Dockerfile 后问题已经解决，现在请 2020 年 2 月 20 日前部署过本镜像的用户，删除原先的 V2Ray 应用，并重新在 Heroku 部署本镜像。</strong></p>
-<p><strong>已经 Fork 过这个项目的用户，请重新 Fork 一次。</strong></p>
-<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>在白嫖党的强势围攻之下，Arukas 终于宣布倒闭，并将于 2020 年 1 月 31 日关闭所有服务。</p>
-<blockquote>
-<p>Dear Arukas users,<br>We will shutdown of service on January 31, 2020 (JST).</p>
-</blockquote>
-<p>又一个免费服务被撸翻了车，默默为 Arukas 心疼一秒…</p>
-<p>算下来的话，现在还在运营中的，提供免费容器的也就只有 OpenShift 和 Heroku 了，很气的是，OpenShift 在今年二月左右变更了政策，此前可以一直使用的 OpenShift Starter 的有效期改为了只有两个月，到期之后需要重新申请免费的 OpenShift Starter 并重新部署应用。</p>
-<p>于是 Free Plan 变成了 Free Trail，顿时 OpenShift 就不香了。</p>
-<p>对于白嫖党们来说，Arukas 的倒下和 OpenShift 政策的变更确实是一个极坏的消息，但是好在还有 Heroku 这个活雷锋，并且 Heroku 和 OpenSHift 一样是使用的 Amazon EC2…</p>
-<p>或许可以再利用一波？</p>
-<p>这篇水文，将介绍博主如何写 Dockerfie 以在 Heroku 上搭建 V2Ray。</p>
-<p>默默为 Heroku 心疼两秒…</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/Heroku-V2Ray_20191014/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://ibcl.us/Disable-CloudFlareIPv6_20190922/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="一个不知名的网友">
-      <meta itemprop="description" content="大一学生，通信工程，A 股韭菜，喜欢无线电技术，属鸽子，文章随缘更新">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="I BCL.">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/Disable-CloudFlareIPv6_20190922/" class="post-title-link" itemprop="url">曲线救国：利用 Cloudflare API 关闭 Cloudflare IPv6 兼容功能</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-09-22 11:22:00" itemprop="dateCreated datePublished" datetime="2019-09-22T11:22:00+08:00">2019-09-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-22 10:18:38" itemprop="dateModified" datetime="2022-04-22T10:18:38+08:00">2022-04-22</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9D%82%E8%B0%88/" itemprop="url" rel="index"><span itemprop="name">杂谈</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/Disable-CloudFlareIPv6_20190922/" class="post-meta-item leancloud_visitors" data-flag-title="曲线救国：利用 Cloudflare API 关闭 Cloudflare IPv6 兼容功能" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/Disable-CloudFlareIPv6_20190922/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/Disable-CloudFlareIPv6_20190922/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>博主有幸用到中国移不动免费送的流量，但是却发现打开自己的博客所用时间再创 147s 的新高。</p>
-<p>博主博客使用 Cloudflare 的 CDN 保护源站并<del>加速</del>，经过 nslookup 等一波操作后，博主发现原来是 Cloudflare 优先让浏览者使用了 IPv6 访问网站。</p>
-<p>好吧，没有任何贬低 IPv6 的意思，老外们都说 IPv6 速度快，博主也相信这只是在国外而言…</p>
-<p>以日本为例，这个亚洲 IPv6 普及度比较高的国家。</p>
-<p><img data-src="https://c.ibcl.us/Disable-CloudFlareIPv6_20190922/1.png" alt="IPv6 在日本" title="IPv6 在日本"></p>
-<p>然而这玩意在中国却又变了味，就算连到百度的 IPv6 站，延迟都是 70+ms，丢包更不用说，80% Loss 绝对不是吹牛。工信部下令部署 IPv6，三大运营商也只是为了完成任务，之所以连通性这么低，也是因为利益相关。</p>
-<p>在这么一个神奇的国度，IPv6 自然不合国情，所以要阉割掉。然而 Cloudflare 却不让用户直接关掉 IPv6 兼容功能，所以这是一个很恼火的问题。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/Disable-CloudFlareIPv6_20190922/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://ibcl.us/PhicommT1-Armbian_20190825/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1282,6 +1060,216 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ibcl.us/DX-MBS_20190205/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="一个不知名的网友">
+      <meta itemprop="description" content="大一学生，通信工程，A 股韭菜，喜欢无线电技术，属鸽子，文章随缘更新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I BCL.">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/DX-MBS_20190205/" class="post-title-link" itemprop="url">DX 记录：MBS 每日放送</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-02-05 14:40:06" itemprop="dateCreated datePublished" datetime="2019-02-05T14:40:06+08:00">2019-02-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-22 10:18:38" itemprop="dateModified" datetime="2022-04-22T10:18:38+08:00">2022-04-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DX/" itemprop="url" rel="index"><span itemprop="name">DX</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/DX-MBS_20190205/" class="post-meta-item leancloud_visitors" data-flag-title="DX 记录：MBS 每日放送" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/DX-MBS_20190205/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/DX-MBS_20190205/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p><strong><em>基本信息</em></strong></p>
+</blockquote>
+<p><strong>DX 电台名称：</strong> <em>MBS 每日放送</em><br><strong>电台所属国：</strong> <em>日本</em><br><strong>DX 日期：</strong> <em>2019 年 2 月 4 日</em><br><strong>DX 时间（UTC）：</strong> <em>1745 - 1746</em><br><strong>频率：</strong> <em>1179 kHz</em></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/DX-MBS_20190205/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ibcl.us/DX-JOQR_20190205/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="一个不知名的网友">
+      <meta itemprop="description" content="大一学生，通信工程，A 股韭菜，喜欢无线电技术，属鸽子，文章随缘更新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I BCL.">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/DX-JOQR_20190205/" class="post-title-link" itemprop="url">DX 记录：JOQR 文化放送</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-02-05 14:10:06" itemprop="dateCreated datePublished" datetime="2019-02-05T14:10:06+08:00">2019-02-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-22 10:18:38" itemprop="dateModified" datetime="2022-04-22T10:18:38+08:00">2022-04-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DX/" itemprop="url" rel="index"><span itemprop="name">DX</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/DX-JOQR_20190205/" class="post-meta-item leancloud_visitors" data-flag-title="DX 记录：JOQR 文化放送" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/DX-JOQR_20190205/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/DX-JOQR_20190205/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p><strong><em>基本信息</em></strong></p>
+</blockquote>
+<p><strong>DX 电台名称：</strong> <em>JOQR 文化放送</em><br><strong>电台所属国：</strong> <em>日本</em><br><strong>DX 日期：</strong> <em>2019 年 2 月 4 日</em><br><strong>DX 时间（UTC）：</strong> <em>1732 - 1734</em><br><strong>频率：</strong> <em>1134 kHz</em></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/DX-JOQR_20190205/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
@@ -1353,7 +1341,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">95</span>
+          <span class="site-state-item-count">93</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1364,7 +1352,7 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
