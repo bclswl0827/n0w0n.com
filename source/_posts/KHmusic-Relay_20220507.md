@@ -184,14 +184,14 @@ func pathExists(path string) (bool, error) {
 
 ## 主函数
 
-引入 flag 包，获取用户指定的命令行参数，有 `-f` 和 `-h` 两个选项，分别对应 FFMpeg 程序路径和 FFmpeg 转发的流输出路径。
+引入 flag 包，获取用户指定的命令行参数，这里设置 `-f` 和 `-h` 两个选项，分别对应 FFMpeg 程序路径和 FFmpeg 转发的流输出路径。
 
 默认情况下，默认 FFmpeg 路径为 `/usr/bin/ffmpeg`，FFmpeg 转发的流输出路径为 `/www/khmusic`。
 
 ```go
 func main() {
 	// 指定命令行默认参数
-	flag.StringVar(&config.ffmpegPath, "f", "/usr/bin/ffmpeg", "FFMpeg 路径（绝对路径）")
+	flag.StringVar(&config.ffmpegPath, "f", "/usr/bin/ffmpeg", "FFmpeg 路径（绝对路径）")
 	flag.StringVar(&config.m3u8Dir, "h", "/www/khmusic", "HLS 流路径（末尾不要有斜杠）")
 	flag.Parse()
 	log.Println("FFmpeg 路径为", config.ffmpegPath)
@@ -224,7 +224,7 @@ func main() {
 
 启动 Python 自带的 HTTP 服务非常简单，只需要一行命令即可，其中，`/www` 是 FFmpeg 转发的流输出路径，`8080` 是监听的 HTTP 端口，`::` 代表监听了所有地址（包含 IPv6）。
 
-```
+```shell
 $ python3 -m http.server -d /www 8080 --bind ::
 ```
 
