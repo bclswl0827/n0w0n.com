@@ -184,7 +184,7 @@ func pathExists(path string) (bool, error) {
 
 ## 主函数
 
-引入 flag 包，获取用户指定的命令行参数，这里设置 `-f` 和 `-h` 两个选项，分别对应 FFMpeg 程序路径和 FFmpeg 转发的流输出路径。
+引入 flag 包，获取用户指定的命令行参数，这里设置 `-f` 和 `-h` 两个选项，分别对应 FFmpeg 程序路径和 FFmpeg 转发的流输出路径。
 
 默认情况下，默认 FFmpeg 路径为 `/usr/bin/ffmpeg`，FFmpeg 转发的流输出路径为 `/www/khmusic`。
 
