@@ -239,6 +239,38 @@ $ python3 -m http.server -d /www 8080 --bind ::
  - [khmusic.herokuapp.com/khmusic/index.m3u8](https://khmusic.herokuapp.com/khmusic/index.m3u8)
  - [khmusic.a1.workers.dev/khmusic/index.m3u8](https://khmusic.a1.workers.dev/khmusic/index.m3u8)
 
+如果是部署到自己的服务器上，则只需要将仓库拉取下来用 Docker 构建一下就行了，步骤也很简单。
+
+```shell
+$ git clone https://github.com/bclswl0827/khmusic-forwarder
+$ cd khmusic-forwarder
+$ docker build -t khmusic .
+```
+
+部署应用时，如果服务器上已经运行有 HTTP 进程，可以直接将容器的 `/www` 目录挂载到既有的网站目录中，也可选择启动自带的 HTTP 服务，并开放对应端口。
+
+例如直接部署应用到 80 端口，使用自带的 HTTP 服务，需要注意，指定运行自带 HTTP 服务的端口号和指定开放的需要保证相同。
+
+```shell
+$ docker run -d \
+             --env HTTP_ENABLED=true \
+             --env HTTP_PORT=80 \
+             --name khmusic \
+             --restart always \
+             --publish 80:80 \
+             khmusic:latest
+```
+
+又如利用既有的 HTTP 服务，将容器的 `/www` 目录挂载到既有的网站目录中（例如 `/var/www/live`）。
+
+```shell
+$ docker run -d \
+             --name khmusic \
+             --restart always \
+             --volume /var/www/live:/www \
+             khmusic:latest
+```
+
 # 后记
 
 和光华的一位老听友聊天，才知道他以前已经反馈了很多次，希望光华能有自己的串流。没想到这么多年了才给安排上，想必光华的内部也是一堆鸽王吧。
