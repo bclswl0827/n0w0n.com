@@ -126,10 +126,10 @@ func urlPraser(myUrl string, urlParam string) int64 {
 
 ```go
 func validTime(uTime int64) int64 {
-    // 获取本地 UTC 时间
-	currentTime := time.Now().UTC()
-	// 解析传入的 Unix 时间戳
-	futureTime := time.Unix(uTime, 0).UTC()
+	// 获取本地 UTC 时间
+	currentTime := time.Now().Local().UTC()
+	// 解析传入的 Unix 时间戳，转为 UTC 时间
+	futureTime := time.Unix(uTime, 0).Add(-8 * time.Hour).Local().UTC()
 	// 求差值，并将 time.Duration 类型转为 int64 类型
 	validHours, _ := strconv.ParseInt(fmt.Sprintf("%.f", futureTime.Sub(currentTime).Hours()), 10, 64)
 	// 提前一个小时
@@ -184,15 +184,15 @@ func pathExists(path string) (bool, error) {
 
 ## 主函数
 
-引入 flag 包，获取用户指定的命令行参数，这里设置 `-f` 和 `-h` 两个选项，分别对应 FFmpeg 程序路径和 FFmpeg 转发的流输出路径。
+引入 flag 包，获取用户指定的命令行参数，这里设置 `-p` 和 `-o` 两个选项，分别对应 FFmpeg 程序路径和 FFmpeg 转发的流输出路径。
 
 默认情况下，默认 FFmpeg 路径为 `/usr/bin/ffmpeg`，FFmpeg 转发的流输出路径为 `/www/khmusic`。
 
 ```go
 func main() {
 	// 指定命令行默认参数
-	flag.StringVar(&config.ffmpegPath, "f", "/usr/bin/ffmpeg", "FFmpeg 路径（绝对路径）")
-	flag.StringVar(&config.m3u8Dir, "h", "/www/khmusic", "HLS 流路径（末尾不要有斜杠）")
+	flag.StringVar(&config.ffmpegPath, "p", "/usr/bin/ffmpeg", "FFmpeg 绝对路径")
+	flag.StringVar(&config.m3u8Dir, "o", "/www/khmusic", "TS 分片输出路径")
 	flag.Parse()
 	log.Println("FFmpeg 路径为", config.ffmpegPath)
 	log.Println("HLS 流将会存放至", config.m3u8Dir)
