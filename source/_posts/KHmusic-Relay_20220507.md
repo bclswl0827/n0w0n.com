@@ -236,8 +236,8 @@ $ python3 -m http.server -d /www 8080 --bind ::
 
 博主部署了一个，用着还不错，配合 CloudFlare Workers + 自选 IP 应该会更爽。
 
- - [khmusic.herokuapp.com/khmusic/index.m3u8](https://khmusic.herokuapp.com/khmusic/index.m3u8)
- - [khmusic.a1.workers.dev/khmusic/index.m3u8](https://khmusic.a1.workers.dev/khmusic/index.m3u8)
+ - [khmusic.herokuapp.com/khmusic/index.m3u8](https://khmusic.herokuapp.com/khmusic/index.m3u8)（暂未被屏蔽）
+ - [khmusic.a1.workers.dev/khmusic/index.m3u8](https://khmusic.a1.workers.dev/khmusic/index.m3u8)（2022 年 5 月 9 日，CloudFlare Workers 已被屏蔽）
 
 如果是部署到自己的服务器上，则只需要将仓库拉取下来用 Docker 构建一下就行了，步骤也很简单。
 
