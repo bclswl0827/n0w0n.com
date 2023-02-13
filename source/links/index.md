@@ -4,6 +4,7 @@ title: 友链
 
 **由于站点不能即时维护，目前暂时停止接受友链申请。**
 
+>  - [Izumi Chino's Blog](https://www.izumichino.tk)
 >  - [Xiaomage’s Blog](https://blog.xmgspace.me/)
 >  - [Sugaryboy](https://www.sugaryboy.com/)
 >  - [Qiuyuair 的自留地](https://qiuyuair.com/)
@@ -17,7 +18,7 @@ title: 友链
 >  - [ZRM](https://zrmblog.com/)
 >  - [BD6MM's Blog](https://bd6mm.cn/blog/)
 >  - [有趣的无聊小站](https://tengxiao.wang/)
->  - [小俊博客](https://www.xjisme.com/)
+>  - [小俊博客](https://www.smalljun.com/)
 >  - [洛尘曦](https://www.sgyzyun.club/)
 >  - [零昀](https://blog.geek-cloud.top/)
 >  - [宇宙湾](https://yuzhouwan.com/)
