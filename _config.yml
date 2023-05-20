@@ -5,7 +5,7 @@
 # Site
 title: I BCL.
 subtitle: 'ibcl.us'
-description: '大一学生，通信工程，A 股韭菜，喜欢无线电技术，属鸽子，文章随缘更新'
+description: '大二学生，通信工程，A 股韭菜，喜欢无线电技术，属鸽子，文章随缘更新'
 keywords:
 author: '一个不知名的网友'
 language: zh-CN
@@ -14,7 +14,7 @@ timezone: 'Asia/Shanghai'
 # URL
 ## If your site is put in a subdirectory, set url as 'http://example.com/child' and root as '/child/'
 url: https://ibcl.us
-root: /
+root: /blog_archive
 permalink: :title/
 permalink_defaults:
 pretty_urls:
