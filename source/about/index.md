@@ -28,9 +28,9 @@ title: 关于
 
 差点忘了说，~~我还是一名**忠实的**无线电爱好者~~（大佬们我错了其实关于无线电我真的很菜）
 
-最近打算重新捡回这个博客了，于是以前的文章移到了 `/blog_archive` 目录里
+最近打算重新捡回这个博客了，于是以前的文章移到了 `/blog-archive` 目录里
 
-如果再访问以前的文章链接，页面会自动跳转，至于想回顾旧文章的，就要麻烦去一趟 [GitHub Pages](https://github.com/bclswl0827/bclswl0827.github.io/tree/master/blog_archives) 上手动找找了
+如果再访问以前的文章链接，页面会自动跳转，至于想回顾旧文章的，就要麻烦去一趟 [GitHub Pages](https://github.com/bclswl0827/bclswl0827.github.io/tree/master/blog-archive) 上手动找找了
 
 **联系请上：[ibcl.us/contact/](https://ibcl.us/contact/)**
 **欢迎订阅本站 RSS：[ibcl.us/atom.xml](https://ibcl.us/atom.xml)**
