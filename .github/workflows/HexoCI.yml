@@ -38,6 +38,4 @@ jobs:
       - name: Deploy
         run: |
           hexo g
-          mkdir -p blog_archive
-          mv public/* blog_archive
           hexo d
