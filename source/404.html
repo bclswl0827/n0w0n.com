@@ -12,9 +12,7 @@
 
         if (pathname.includes(archive)) {
             app.innerText = `页面未找到，请检查该文章是否存在`;
-        }
-
-        if (date) {
+        } else if (date) {
             if (parseInt(date[0]) < 20230520) {
                 app.innerText = `本页文章已做归档，即将尝试跳转`;
                 window.location.href = `${origin}/${archive}/${pathname}`;
