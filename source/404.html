@@ -5,7 +5,7 @@
     <script type="text/javascript">
         const archive = "blog_archive";
         const origin = window.location.origin;
-        const pathname = window.location.pathname.slice(1);
+        const pathname = window.location.pathname.replaceAll("/", "");
 
         const app = document.getElementById("app");
         const date = pathname.match(/\d{8}/);
