@@ -2,8 +2,6 @@
 title: 友链
 ---
 
-**由于站点不能即时维护，目前暂时停止接受友链申请。**
-
 >  - [Izumi Chino's Blog](https://www.izumichino.tk)
 >  - [Xiaomage’s Blog](https://blog.xmgspace.me/)
 >  - [Sugaryboy](https://www.sugaryboy.com/)
