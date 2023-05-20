@@ -12,7 +12,7 @@ tags:
   - 嵌入式
 ---
 
-博主接手的一个项目，主控板连续好几年使用的一直是 Rapsberry Pi，但是随着 Raspberry Pi 价格长期居高不下，让人直呼伤不起，只能考虑把板子换成更便宜的方案，在权衡之下，博主最后选了 Orange Pi One。
+博主曾经接手的一个项目，主控板连续好几年使用的一直是 Rapsberry Pi，但是随着 Raspberry Pi 价格长期居高不下，让人直呼伤不起，只能考虑把板子换成更便宜的方案，在权衡之下，博主最后选了 Orange Pi One。
 
 Orange Pi One 使用了 Allwinner H3 作为 CPU，内建 512 MB 运存，对于博主的项目来说绰绰有余，另外，Orange Pi One 的 GPIO 定义和 Raspberry Pi 相同，而且闲鱼上的售价普遍 70 左右，和树莓派现在的售价比起来，直接少了个 0，让人很难不心动。
 
@@ -257,7 +257,7 @@ int main() {
 
 作为一个 Gopher，当然也要用 Go 语言来实现一遍了。
 
-在 Go 语言的版本中，内存映射使用了 `syscall.Mmap` 和 `syscall.Munmap` 函数。
+在 Go 语言的版本中，内存映射使用了 `syscall.Mmap()` 和 `syscall.Munmap()` 函数。
 
 此外，在之前的 C 代码中，使用了强制类型转换 `(gpio_t *)` 和解引用运算符 `*` 来进行指针转换，而在 Go 版本的实现中，指针转换是使用 `unsafe.Pointer` 类型与 `unsafe.Pointer()` 函数来进行指针转换，从而实现了直接操作内存地址。
 
