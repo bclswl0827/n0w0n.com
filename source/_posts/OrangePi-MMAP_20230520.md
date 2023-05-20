@@ -42,13 +42,13 @@ Orange Pi One 使用了 Allwinner H3 作为 CPU，内建 512 MB 运存，对于�
 
 要透过 mmap 控制 GPIO，流程有如下 5 步。
 
- 1. 打开 /dev/mem 装置文件
+ 1. 打开 `/dev/mem` 装置文件
  2. 确定 GPIO 控制寄存器的物理地址
  3. 使用 mmap 映射物理地址到用户空间
  4. 访问 GPIO 控制寄存器
  5. 取消 mmap 映射
 
-在这 5 步中，第 2 步需要查阅 CPU 数据表确定。
+在这 5 步中，第 2 步需要查阅 CPU 厂商所提供的 Datasheet 来确定。
 
 # 查阅 Allwinner H3 Datasheet
 
