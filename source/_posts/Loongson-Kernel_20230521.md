@@ -273,4 +273,4 @@ $ GOOS=linux GOARCH=mipsle GOMIPS=softfloat go build -ldflags="-s -w" main ../cm
 
 将程序上传到龙芯，测站程序成功运行。
 
-![测站程序](https://c.ibcl.us/Loongson-Kernel_20230520/4.png)
+![测站程序](https://c.ibcl.us/Loongson-Kernel_20230520/5.png)
