@@ -34,4 +34,3 @@ title: 关于
 
 **联系请上：[ibcl.us/contact/](https://ibcl.us/contact/)**
 **欢迎订阅本站 RSS：[ibcl.us/atom.xml](https://ibcl.us/atom.xml)**
-**站点地图位于：[ibcl.us/sitemap.xml](https://ibcl.us/sitemap.xml)**
