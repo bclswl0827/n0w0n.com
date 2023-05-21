@@ -129,7 +129,7 @@ BUG_REPORT_URL="https://bugs.debian.org/
 
 由于 2K1000 EDU 板子没有无线网卡，而博主恰好又有使用无线网卡的需求，所以需要先安装无线网卡驱动。
 
-![博主使用的无线网卡](https://c.ibcl.us/Loongson-Kernel_20230520/3.png)
+![博主使用的无线网卡](https://c.ibcl.us/Loongson-Kernel_20230520/3.jpg)
 
 这一款 USB 无线网卡使用的芯片方案是 RTL8188GU，所以需要安装驱动。
 
