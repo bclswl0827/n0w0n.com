@@ -55,7 +55,7 @@ tags:
 
 在编写程序前，我们需要先了解一下 JJY 时间码的结构。NICT 在官网给出的时间码结构如下图所示。
 
-![NICT 时间结构](htts://c.ibcl.us/JJY_Timecode_20230522/3.png)
+![NICT 时间结构](https://c.ibcl.us/JJY_Timecode_20230522/3.png)
 
 JJY 的脉冲宽度总共分为 3 种，分别是 200ms、500ms、800ms，其中 200ms 的脉冲代表**标记符**，500ms 的脉冲代表**逻辑 1**，800ms 的脉冲代表**逻辑 0**。
 
