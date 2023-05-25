@@ -45,14 +45,14 @@ GET https://datacenter-web.eastmoney.com/api/data/v1/get?callback=_&sortColumns=
 
 博主决定使用 Golang 来实现这个小需求，但是苦于 Golang 中的标准库没有提供 JSONP 的解析方式，所以还需要博主自行编写一个包装器来解析。
 
-要实现解析 JSONP 的包装器，不光需要实现 `io.Reader` 接口方法，因为 JSONP 的数据包裹在一个 callback 中，所以还需要嵌套实现 `io.Reader` 接口方法，用来读取 JSONP 数据；另外，还需要一个 bool 型变量，来指示是否已经读取到了 callback 的开始位置。
+要实现解析 JSONP 的包装器，不光需要实现 `io.Reader` 接口方法，因为 JSONP 的数据包裹在一个 callback 中，所以还需要嵌套实现 `io.Reader` 接口方法，用来读取 JSONP 数据；另外，还需要一个 `bool` 型变量，来指示是否已经读取到了 callback 的开始位置。
 
 所以，可以定义一个名为 `JsonpWrapper` 的结构体来实现顶层的 `io.Reader` 接口方法。
 
 ```go
 type JsonpWrapper struct {
 	Prefix     string    // 指定 callback 前缀
-	Underlying io.Reader // 读取 JSONP 数据
+	Underlying io.Reader // 在底层提供 JSONP 数据
 
 	gotPrefix bool       // 指示是否读到 callback
 }
@@ -103,7 +103,7 @@ func (jpw *JsonpWrapper) Read(b []byte) (int, error) {
 }
 ```
 
-实现了 `JsonpWrapper` 结构体和 `Read` 方法后，就可以使用 `JsonpWrapper` 来解析 JSONP 数据了。
+透过声明 `JsonpWrapper` 结构体实现了顶层与底层的 `io.Reader` 接口后，就可以使用 `JsonpWrapper` 来解析 JSONP 数据了。
 
 例如，有一串 JSONP 数据如下所示。
 
@@ -142,11 +142,11 @@ if err != nil {
 
 # 对接 Telegram
 
-这里用到了 [telegram-bot-api](https://github.com/go-telegram-bot-api/telegram-bot-api) 这个库，这个库的使用方法也很简单，只需要调用 `tgbotapi.NewBotAPI()` 方法，传入 Bot Token 即可。
+这里用到了 [telegram-bot-api](https://github.com/go-telegram-bot-api/telegram-bot-api) 这个库，这个库的使用方法也很简单，只需要调用 `tgbotapi.NewBotAPI()` 方法，传入 Bot Token 即可完成 Bot 的实例化。
 
-示例代码如下，博主按照[这个教程](https://ithelp.ithome.com.tw/m/articles/10262881)申请了一个 Telegram Bot，然后将 Bot Token 传入 `tgbotapi.NewBotAPI()` 方法即可完成对接。
+示例代码如下，博主按照[这个教程](https://ithelp.ithome.com.tw/m/articles/10262881)申请了一个 Telegram Bot，然后将 Bot Token 传入 `tgbotapi.NewBotAPI()` 方法即可完成对接，向指定用户发送消息。
 
-需要注意，由于 Telegram 在中国被屏蔽，所以需要使用代理才能正常使用。所以博主在运行程序时，需要设置 `HTTPS_PROXY` 环境变量，例如 `export HTTPS_PROXY=http://127.0.0.1:10809`
+需要注意，由于 Telegram 在中国被屏蔽，所以需要使用代理才能正常使用。所以博主在运行程序前，需要设置 `HTTPS_PROXY` 环境变量，例如在 Linux 下运行 `export HTTPS_PROXY=http://127.0.0.1:10809` 命令。
 
 ```go
 // 初始化 Bot
@@ -169,7 +169,7 @@ msg := tgbotapi.NewMessage(
 bot.Send(msg)
 ```
 
-有关如何取得用户或群组 ID，可以参考[这篇教程](https://web.archive.org/web/20230521060656/https://ww.sjfn.com/post/telegram-get-id.html)。
+至于如何取得用户或群组 ID，可以参考[这篇教程](https://web.archive.org/web/20230521060656/https://ww.sjfn.com/post/telegram-get-id.html)。
 
 # 成品和实战
 
