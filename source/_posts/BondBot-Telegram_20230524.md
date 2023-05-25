@@ -19,7 +19,7 @@ tags:
 
 多亏博主心理比较强大，也坚信价值投资的意义，否则就成为被收割的韭菜了。在痛苦之余，博主也曾思考，能否写一个小程序，获取每日的可转债并通知博主申购呢？
 
-好在博主是 Telegram 的常驻用户，同时 Telegram 也提供了健全的生态支援平台下的机器人开发，于是博主萌生了写一个 Telegram 可转债机器人的想法。
+也好在博主是 Telegram 的常驻用户，同时，Telegram 也提供了健全的生态，以支援平台下的机器人开发，于是博主萌生了写一个 Telegram 可转债机器人的想法。
 
 这篇文章，将会分享博主编写简单的 Telegram 可转债机器人时的一些思路，并介绍如何将其搭建在云服务器上，实现每天给自己或是往几个朋友组建的小群里自动推送可供当日申购的可转债，推动「共同富裕」。
 
@@ -117,8 +117,8 @@ _({"data":[],"success":true})
 r := strings.NewReader(`_({"data":[1, 2, 3],"success":true})`)
 
 var data struct {
-    Data    []any `json:"data"`
-    Success bool          `json:"success"`
+    Data            []any `json:"data"`
+    Success bool    `json:"success"`
 }
 
 err := json.NewDecoder(&JsonpWrapper{
@@ -128,8 +128,6 @@ err := json.NewDecoder(&JsonpWrapper{
 if err != nil {
     panic(err)
 }
-
-fmt.Println(data) // 执行返回 {[1 2 3] true}
 ```
 
 # 略过节假日
@@ -155,9 +153,8 @@ fmt.Println(data) // 执行返回 {[1 2 3] true}
 // 假设 Bot Token 为 123456789:abcdefghijklmnopqrstuvwxyz
 bot, err := tgbotapi.NewBotAPI("123456789:abcdefghijklmnopqrstuvwxyz")
 if err != nil {
-    log.Fatalln(err)
+    panic(err)
 }
-log.Println("Authorized account", bot.Self.UserName)
 
 // 获取消息间隔
 u := tgbotapi.NewUpdate(0)
