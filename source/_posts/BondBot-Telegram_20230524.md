@@ -101,15 +101,13 @@ func (jpw *JsonpWrapper) Read(b []byte) (int, error) {
 }
 ```
 
-透过声明 `JsonpWrapper` 结构体实现了顶层与底层的 `io.Reader` 接口后，就可以使用 `JsonpWrapper` 来解析 JSONP 数据了。
-
-例如，有一串 JSONP 数据如下所示。
+接下来就可以使用 `JsonpWrapper` 来解析 JSONP 数据了。例如，有一串 JSONP 数据如下所示。
 
 ```js
 _({"data":[],"success":true})
 ```
 
-那么可以使用如下代码来解析。
+那么可以使用如下方法来解析。
 
 ```go
 r := strings.NewReader(`_({"data":[1, 2, 3],"success":true})`)
