@@ -120,8 +120,8 @@ menu:
   about: /about/ || fa fa-user
   archives: /archives/ || fa fa-archive
   archive: /archive/ || fa fa-clock
-  #categories: /categories/ || fa fa-th
-  #tags: /tags/ || fa fa-tags
+  categories: /categories/ || fa fa-th
+  tags: /tags/ || fa fa-tags
   links: /links/ || fa fa-link
   contact: /contact/ || fa fa-address-book
   #nodes: /nodes/ || fa fa-server
