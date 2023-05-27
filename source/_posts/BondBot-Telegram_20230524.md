@@ -45,7 +45,7 @@ GET https://datacenter-web.eastmoney.com/api/data/v1/get?callback=_&sortColumns=
 
 博主决定使用 Golang 来实现这个小需求，但是苦于 Golang 中的标准库没有提供 JSONP 的解析方式，所以还需要博主自行编写一个包装器来解析。
 
-虽然 Go 不是 OOP 语言，但是要实现解析 JSONP 的包装器，我们仍然可以用 OOP 的思想分析这个需求，即我们可以编写两个「类」来实现 `io.Reader` 接口，其中，我们透过结构体 `Underlying` 定义一个用于提供 JSONP 原始数据的「类」，然后再创建一个「继承」自 `Underlying` 的「子类」，即 `JsonpWrapper`，用来对 JSONP 数据做解析。
+虽然 Go 不是 OOP 语言，但是要实现解析 JSONP 的包装器，但这并不妨碍使用 OOP 的思想分析这个需求，即我们可以编写两个「类」来实现 `io.Reader` 接口，其中，透过建立 `Underlying` 这一个「类」，从而实现一个用于提供 JSONP 原始数据的方法，然后再创建一个「继承」自 `Underlying` 的「子类」，即 `JsonpWrapper`，用来对 JSONP 数据做解析。
 
 所以，上述的两个「类」如下所示，其中，`Underlying` 可以直接由 `strings.NewReader()` 方法实现，所以只需要为 `JsonpWrapper` 这个「子类」编写代码实现 `io.Reader` 接口即可。
 
@@ -58,7 +58,7 @@ type JsonpWrapper struct {
 }
 ```
 
-假设 `JsonpWrapper` 的实例名字为 `jpw`，那么实现 `jpw.Read()` 方法的流程如下所述。
+假设 `JsonpWrapper` 的实例化后的名称为 `jpw`，那么实现 `jpw.Read()` 方法的流程如下所述。
 
  1. 若已读取过前缀（即 `jpw.gotPrefix` 为 `true`，则直接调用 `jpw.Underlying.Read(b)` 从底层的 JSONP 数据源读取数据，并返回结果；若未读取过前缀，则创建一个与前缀长度相同的字节数组 `prefix`
  2. 调用 `io.ReadFull` 方法从 `jpw.Underlying` 中读取与前缀长度相同的字节，并将结果存储在 `prefix` 中
