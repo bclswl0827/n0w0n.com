@@ -119,6 +119,7 @@ menu:
   home: / || fa fa-home
   about: /about/ || fa fa-user
   archives: /archives/ || fa fa-archive
+  archive: /archive/ || fa fa-clock
   #categories: /categories/ || fa fa-th
   #tags: /tags/ || fa fa-tags
   links: /links/ || fa fa-link
