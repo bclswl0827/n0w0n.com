@@ -91,7 +91,7 @@ def mock_serial(data: str) -> list[float]:
     return [float(i) for i in data]
 
 
-def main() -> None:
+def main():
     # 模拟出学长从串口收到的数据
     data = generate_random(1000)
     # 取得文本数据的大小
@@ -159,7 +159,7 @@ def mock_serial(data: bytes) -> list[float]:
     return list(unpack(format_string, data))
 
 
-def main() -> None:
+def main():
     # 生成随机浮点数，转为二进制形式
     data = generate_random(1000)
     # 取得二进制数据的大小
@@ -266,7 +266,7 @@ void loop() {
 
 原谅博主太热爱 Golang 了，什么都想拿 Go 写一遍。这里用到了 `encoding/binary` 包，可以~~方便地~~将二进制数据解析成结构体。
 
-此外，由于 Golang 的 `io.ReadFull` 方法没有超时机制，所以博主重新实现了这个方法，设置了一个超时时间，如果在超时时间内没有读取到数据，就会抛出异常，避免进程被阻塞。
+此外，由于 Go 的 `io.ReadFull` 方法没有超时机制，所以博主重新实现了这个方法，设置了一个超时时间，如果在超时时间内没有读取到数据，就会抛出异常，避免进程被阻塞。
 
 ```go
 package main
@@ -276,7 +276,6 @@ import (
 	"encoding/binary"
 	"fmt"
 	"io"
-	"log"
 	"time"
 	"unsafe"
 
@@ -351,7 +350,7 @@ func main() {
 		Baud: BAUDRATE,
 	})
 	if err != nil {
-		log.Fatalf("无法打开串口：%v", err)
+		panic(err)
 	}
 	defer port.Close()
 
@@ -371,7 +370,7 @@ func main() {
 		buffer := make([]byte, unsafe.Sizeof(sensor_t{}))
 		n, err := readSerial(port, buffer, 2*time.Second)
 		if err != nil {
-			log.Fatalf("无法读取数据帧：%v", err)
+			panic(err)
 		}
 
 		// 解析数据帧
@@ -382,12 +381,12 @@ func main() {
 			&SensorData,
 		)
 		if err != nil {
-			log.Fatalf("无法解析数据帧：%v", err)
+			panic(err)
 		}
 
 		// 校验数据帧
 		if SensorData.Checksum != getChecksum(SensorData.Data) {
-			log.Println("校验和不正确")
+			fmt.Println("校验和不正确")
 			continue
 		}
 
