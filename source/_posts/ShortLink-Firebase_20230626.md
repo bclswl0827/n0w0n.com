@@ -565,7 +565,7 @@ export default updateShortLink;
 
 ![FireShort - 3](https://c.ibcl.us/ShortLink-Firebase_20230626/5.png)
 
-原来这是因为 React 的前端路由分为 Hash 和 History 两种模式。前者的路径形式行如 `example.org/#/test`，而后者的路径形式行如 `example.org/test`，而这一形式又与传统的后端路由一样，因而导致在不支持 History 模式的服务器上就会产生 404 错误。
+原来这是因为 React 的前端路由分为 Hash 和 History 两种模式。前者的路径形式行如 `example.org/#/test`，而后者的路径形式行如 `example.org/test`，可是这一形式又与传统的后端路由一样，因而导致在不支持 History 模式的服务器上就会产生 404 错误。
 
 看上去貌似只能用 Hash 模式了，但是 Hash 模式真的很丑！难道好不容易生成了一个短网址，还得按着 Shift 再打出一组 `/#` 吗？
 
