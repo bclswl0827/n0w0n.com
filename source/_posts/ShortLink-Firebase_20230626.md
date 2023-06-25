@@ -57,14 +57,14 @@ Firebase Realtime Database 中的所有数据都是以 JSON 对象来保存的�
 }
 ```
 
-在这份表中，若要取得所有用户的资讯（位于 `users` 字段），那么使用 `curl` 工具的请求体如下。
+在这份表中，若要取得所有用户的资讯（位于 `users` 字段），那么使用 `curl` 工具的请求构造如下。
 
 ```shell
 curl -X GET https://test.firebaseio.com/users.json
 {"joshua":{"age":18,"gender":1,"nation":"US"},"mary":{"age":16,"gender":0,"nation":"GB"}}
 ```
 
-又例如，若要取得用户 `joshua` 的资讯，那么使用 `curl` 工具的请求体如下。
+又例如，若要取得用户 `joshua` 的资讯，那么使用 `curl` 工具的请求构造如下。
 
 ```shell
 curl -X GET https://test.firebaseio.com/users/joshua.json
@@ -557,7 +557,7 @@ export default updateShortLink;
 
 ![FireShort - 2](https://c.ibcl.us/ShortLink-Firebase_20230626/4.png)
 
-# 一些奇技淫巧
+# 一点奇技淫巧
 
 程序写完过后，博主果断将生成的 dist 推送到了 GitHub Pages 上，准备好好欣赏自己的成果。
 
@@ -565,9 +565,9 @@ export default updateShortLink;
 
 ![FireShort - 3](https://c.ibcl.us/ShortLink-Firebase_20230626/5.png)
 
-原来这是因为 React 的前端路由分为 Hash 和 History 两种模式。前者的路径形式行如 `example.org/#/test`，而后者的路径形式行如 `example.org/test`，这与传统的后端路由一样，因而导致在不支持 History 模式的服务器上就会产生 404 错误。
+原来这是因为 React 的前端路由分为 Hash 和 History 两种模式。前者的路径形式行如 `example.org/#/test`，而后者的路径形式行如 `example.org/test`，而这一形式又与传统的后端路由一样，因而导致在不支持 History 模式的服务器上就会产生 404 错误。
 
-但是 Hash 模式真的很丑！难道好不容易生成了一个短网址，还得按着 Shift 再打出一组 `/#` 吗？
+看上去貌似只能用 Hash 模式了，但是 Hash 模式真的很丑！难道好不容易生成了一个短网址，还得按着 Shift 再打出一组 `/#` 吗？
 
 经过博主一天一夜的思考，最后灵光一闪：既然 GitHub Pages 能够支持自定义 404 页面，那么利用 404 页面来跳转去到 Hash 路由不就好了吗？
 
