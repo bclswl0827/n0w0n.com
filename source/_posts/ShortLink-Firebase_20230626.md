@@ -512,43 +512,37 @@ export default getShortLink;
 
 ```typescript
 import userRequest from "./userRequest";
-import { Result as UserInfo } from "./getUserInfo";
 
 interface Params {
-    slug: string;
+    url?: string;
+    slug?: string;
+    remark?: string;
     firebase: string;
 }
 
-interface Result {
-    remark: string | "";
-    url: string | "";
-    slug: string | "";
-    user: UserInfo;
-    timestamp: number | -1;
-}
-
-const getShortLink = async ({ slug, firebase }: Params): Promise<Result> => {
+const updateShortLink = async ({
+    url,
+    slug,
+    remark,
+    firebase,
+}: Params): Promise<void> => {
     const dbURL = `${firebase}/shorts/${slug}.json`;
-
     const res = await userRequest({
-        method: "get",
+        method: "patch",
         url: dbURL,
+        data: {
+            url: url,
+            slug: slug,
+            remark: remark,
+        },
     });
-    if (res.data === null) {
-        return Promise.reject("查无此短链");
-    }
 
-    const { remark, url, timestamp, user } = res.data;
-    return {
-        timestamp: timestamp,
-        remark: remark,
-        url: url,
-        slug: slug,
-        user: user,
-    };
+    if (res.status !== 200) {
+        return Promise.reject("短链更新失败");
+    }
 };
 
-export default getShortLink;
+export default updateShortLink;
 ```
 
 # 完整项目仓库
