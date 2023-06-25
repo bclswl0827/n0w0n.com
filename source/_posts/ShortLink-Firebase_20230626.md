@@ -26,9 +26,9 @@ tags:
 
 # 数据库选型
 
-市面上已经有很多的 Serverless 云数据库服务了，例如 Google 的 Firebase 就提供了 Firebase Realtime Database，而本文提到的短网址程序也会依赖于 Firebase 平台。
+市面上已经有很多的 Serverless 云数据库服务了，例如 Google 的 Firebase 就提供了 Firebase Realtime Database，而本文提到的短网址程序正是基于 Firebase 平台。
 
-Firebase 注册不需要绑定信用卡，创建的项目默认为免费版本（Spark 方案），自然也就不存在超出帐单自动扣费的问题，另外，免费版本的 Realtime Database 存储配额为 1 GB，若按照一条短网址占用 4 kB 空间来计算，容纳 25.6 万条短网址已经绰绰有余。
+使用 Firebase 不需要绑定信用卡，创建的项目默认为免费版本（Spark 方案），自然也就不存在超出帐单自动扣费的问题，另外，免费版本的 Realtime Database 存储配额为 1 GB，若按照一条短网址占用 4 kB 空间来计算，容纳 25.6 万条短网址已经绰绰有余。
 
 ![Spark 方案](https://c.ibcl.us/ShortLink-Firebase_20230626/1.png)
 
