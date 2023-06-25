@@ -561,9 +561,9 @@ export default updateShortLink;
 
 程序写完过后，博主果断将生成的 dist 推送到了 GitHub Pages 上，准备好好欣赏自己的成果。
 
-离谱的是，博主满心欢喜生成好短链接，去到另外一个窗口打开这个链接过后，看到的却是 404。
+离谱的是，当博主满心欢喜生成好短链接，去到另外一个窗口打开这个链接过后，看到的却是 404。
 
-![FireShort - 3](https://c.ibcl.us/ShortLink-Firebase_20230626/4.png)
+![FireShort - 3](https://c.ibcl.us/ShortLink-Firebase_20230626/5.png)
 
 原来这是因为 React 的前端路由分为 Hash 和 History 两种模式。前者的路径形式行如 `example.org/#/test`，而后者的路径形式行如 `example.org/test`，这与传统的后端路由一样，因而导致在不支持 History 模式的服务器上就会产生 404 错误。
 
