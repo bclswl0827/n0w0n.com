@@ -57,14 +57,14 @@ Firebase Realtime Database 中的所有数据都是以 JSON 对象来保存的�
 }
 ```
 
-在这份表中，若要取得所有用户的资讯（位于 `users` 字段），那么使用 `curl` 工具的请求构造如下。
+在这份表中，若要取得所有用户的资讯（位于 `users` 字段），那么可以使用 `curl` 工具构造如下的请求。
 
 ```shell
 curl -X GET https://test.firebaseio.com/users.json
 {"joshua":{"age":18,"gender":1,"nation":"US"},"mary":{"age":16,"gender":0,"nation":"GB"}}
 ```
 
-又例如，若要取得用户 `joshua` 的资讯，那么使用 `curl` 工具的请求构造如下。
+又例如，若要取得用户 `joshua` 的资讯，那么可以使用 `curl` 工具构造如下的请求。
 
 ```shell
 curl -X GET https://test.firebaseio.com/users/joshua.json
@@ -81,7 +81,7 @@ curl -X GET https://test.firebaseio.com/users/joshua.json
  - 短网址生成时间
  - 生成者留下的备注
 
-同时，为了提高服务的安全性（打击侵权内容、血腥暴恐、儿童色情等），还应当对提交链接的访客身份做一些记录。
+同时，为了提高服务的质量（打击侵权内容、血腥暴恐、儿童色情等），还应当对提交链接的访客身份做一些记录。
 
  - 生成者之 IP
  - 生成者所在国家
@@ -120,19 +120,19 @@ curl -X GET https://test.firebaseio.com/users/joshua.json
 
 上述表结构设计巧妙之处在于，将短网址的短链直接作为了表中的 key，例如，若要取得 `abcd` 这一短链接对应到的资讯，那么只需以 GET 方式请求 `https://test.firebaseio.com/shorts/abcd.json` 即可。
 
-例如，用于短网址服务的域名是 `slnk.com`，**当用户访问 `slink.com/abcd` 时，前端 JavaScript 只需先将 `abcd` 的部分取出，然后拼接到 Firebase Realtime Database 的 API 请求路径中，即可完成取回链接资讯的操作**。
+又例如，用于短网址服务的域名是 `slnk.com`，**当用户访问 `slnk.com/abcd` 时，前端 JavaScript 只需先将 `abcd` 的部分取出，然后拼接到 Firebase Realtime Database 的 API 请求路径中，即可完成取回链接资讯的操作**。
 
 新增短链接方面，**当用户提交长链和自定义的短链后，先用和上述同样的方法判断短链是否已经存在，若 API 返回了正常数据，则提示用户短链接已经被占用；若 API 返回空数据则说明链接未被占用，可以继续**。
 
 # 编写基本函数
 
-博主的短网址项目使用的是 React + TypeScript，前端 CSS 框架则选用了原子化的 Tailwind。本文会放上的是项目中一些比较关键的代码。
+博主的短网址项目使用的是 React + TypeScript 方案，前端 CSS 框架则选用了原子化的 Tailwind。本文会放上的是项目中一些比较关键的代码。
 
 ## 封装请求函数
 
-考虑到便利性，博主并没有直接使用 `XMLHttpRequest` 或是 `fetch` 对 Firebase Realtime Database 做请求，而是使用了 axios 这个库。
+考虑到便利性，博主并没有直接使用 `XMLHttpRequest` 或是 `fetch` 对 Firebase Realtime Database 做请求，而是使用了 `axios` 这个库。
 
-axios 支持使用拦截器对请求进行拦截，借助拦截器，可以方便地对请求做一些修改再重新送出，从而减少代码量，也提高了代码可读性。在这里，博主需要为所有请求加上 `Accept` 头，以指示 Firebase Realtime Database 响应 JSON 数据。
+`axios` 支持使用拦截器对请求进行拦截，借助拦截器，可以方便地对请求做一些修改再重新送出，从而减少代码量，也提高了代码可读性。在这里，博主需要为所有请求加上 `Accept` 头，以指示 Firebase Realtime Database 响应 JSON 数据。
 
 ```typescript
 import axios, { AxiosResponse, AxiosError } from "axios";
@@ -159,7 +159,6 @@ const userRequest = ({
     _axios.interceptors.request.use((config: any) => {
         try {
             config.headers["Accept"] = "application/json";
-            config.headers["Content-Type"] = "application/json";
         } catch (error) {
             return Promise.reject(error);
         }
@@ -199,7 +198,7 @@ export default userRequest;
  4. 短网址长度须大于等于 4 且小于等于 10 个字符
  5. 用户备注长度须小于等于 100 个字符
 
-上面的几个需求，主要依靠正则和 length 方法来实现，并不复杂。为了便于调用，博主自定义了一个 Error 类型的接口，用作三个函数的返回值（一看就知道是 Go 写多了）。
+上面的几个需求，主要依靠正则和字符串自带 `length` 方法来实现，并不复杂。为了便于调用，博主还自定义了一个叫做 `Error` 的接口，用作三个函数的返回值类型（一看就知道是 Go 写多了）。
 
 ```typescript
 interface Error {
@@ -244,9 +243,9 @@ export { isURLValid, isSlugValid, isRemarkValid };
 
 这样就结束了吗？当然不是！写到这里，博主想起以前混 HostLoc 时，曾刷到一篇关于「如何透过 F12 开 Vultr 2.5 刀小鸡」的帖子，贴子中就是直接透过修改前端代码绕过的限制。
 
-既然有这经验了，博主肯定不会再犯这种低级错误了，所以不光前端要限制用户输入，数据库一侧也要限制用户输入。
+既然有这经验了，博主肯定也不会再犯这种低级错误，所以不光要在前端要限制用户输入，数据库一侧也要限制用户输入。
 
-幸亏 Firebase Realtime Database 拥有比较强大的规则控制，所以在数据库端也能轻松约束用户输入的内容，从而避免用户对应用抓包后自行构造恶意请求。
+幸亏 Firebase Realtime Database 拥有比较强大的规则管理功能，所以在数据库端也能轻松约束用户输入的内容，从而避免用户对应用抓包后自行构造恶意请求。
 
 ![Firebase Realtime Database 规则管理](https://c.ibcl.us/ShortLink-Firebase_20230626/2.png)
 
@@ -378,13 +377,13 @@ const getUserInfo = async (): Promise<Result> => {
 export default getUserInfo;
 ```
 
-值得一提的是，这段的代码使用了异步编程的方法，可以有效避免陷入「回调地狱」。
+值得一提的是，这段代码使用了异步编程的方法，可以有效避免陷入「回调地狱」。
 
 ## 数据库 CURD
 
 其实前文也已经提到，对 Firebase Realtime Database 的增删查改操作，就是一堆 HTTP 请求，没有什么太大的难度，只需要做好相应的错误处理即可。
 
-在这一部分的代码中，博主都是使用的异步编程方式。
+在这一部分的代码中，博主也都是使用的异步编程方式。
 
 ### 增加短链
 
@@ -434,7 +433,7 @@ export default addShortLink;
 
 ### 删除短链
 
-删除短链使用 DELETE 方法，传入要删除的短链即可。不得不说 Google 的规范真的很优秀，完全是照着 RESTful 规范来的。
+删除短链使用 `DELETE` 方法，传入要删除的短链即可。不得不说 Google 的规范真的很优秀，完全是照着 RESTful 来的。
 
 ```typescript
 import userRequest from "./userRequest";
@@ -463,7 +462,7 @@ export default removeShortLink;
 
 ### 查询短链
 
-查询短链使用 GET 方法即可，同样是只需要传入要查询的短链。如果没有查询到相关数据，Firebase Realtime Database 则会返回 `Null`，根据这一区别抛出相关错误即可。
+查询短链使用 `GET` 方法即可，同样是只需要传入要查询的短链。如果没有查询到相关数据，Firebase Realtime Database 则会返回 `Null`，代码中只需根据这一区别抛出相关错误即可。
 
 ```typescript
 import userRequest from "./userRequest";
@@ -508,7 +507,7 @@ export default getShortLink;
 
 ### 修改短链
 
-虽然项目用不到，但是博主还是写上了，这里用的是 PATCH 方法，只需要传入一组或多组待修改的字段即可。
+虽然项目用不到，但是博主还是写上了，这里用的是 `PATCH` 方法，只需要传入一组或多组待修改的字段即可。
 
 ```typescript
 import userRequest from "./userRequest";
@@ -559,7 +558,7 @@ export default updateShortLink;
 
 # 一点奇技淫巧
 
-程序写完过后，博主果断将生成的 dist 推送到了 GitHub Pages 上，准备好好欣赏自己的成果。
+程序写完过后，博主果断将生成的 `dist` 推送到了 GitHub Pages 上，准备好好欣赏自己的成果。
 
 离谱的是，当博主满心欢喜生成好短链接，去到另外一个窗口打开这个链接过后，看到的却是 404。
 
@@ -611,4 +610,4 @@ export default updateShortLink;
 
 这份代码其实是博主去年疫情期间打发时间写的，之后也没有再改过。这几天准备炒点冷饭，但是发现之前写的代码根本没法看，遂狠心花了一天时间，用 TypeScript 重构了一遍，终于舒服了。
 
-哎，又了结了一桩心事！
+哎，又了结一桩心事！
