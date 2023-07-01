@@ -2,6 +2,7 @@
 title: 友链
 ---
 
+>  - [Clash 免费节点](https://clashfree.eu.org/)
 >  - [柚木鉉の空間](https://www.gloomyghost.com/)
 >  - [Izumi Chino's Blog](https://www.izumichino.tk)
 >  - [Xiaomage’s Blog](https://blog.xmgspace.me/)
