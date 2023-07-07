@@ -45,7 +45,7 @@ title: 友链
 **本站的信息：**
 - 网站名称：I BCL.
 - 网站地址：[ibcl.us](https://ibcl.us/)
-- 本站的头像位于：[ibcl.us/images/avatar.jpg](https://ibcl.us/images/avatar.jpg)。
+- 本站的头像位于：[ibcl.us/images/avatar.png](https://ibcl.us/images/avatar.png)。
 - 本站介绍：一位热爱无线电广播的大学生博客。
 
 **关于添加友链的说明以及注意事项：**
