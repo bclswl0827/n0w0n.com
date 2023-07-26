@@ -103,7 +103,7 @@ JJY 的脉冲宽度总共分为 3 种，分别是 200ms、500ms、800ms，其中
 
 # 程序编写
 
-Github 仓库：[github.com/bclswl0827/JJYClock](https://github.com/bclswl0827/JJYClock)
+Github 仓库：[github.com/bclswl0827/JJY-Clock](https://github.com/bclswl0827/JJY-Clock)
 
 博主已经写好了程序，也开源到了 GitHub 上，经过测试可以正常解码。下文介绍一些关键点与代码。
 
