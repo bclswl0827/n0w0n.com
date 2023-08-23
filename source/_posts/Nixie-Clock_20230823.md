@@ -144,7 +144,7 @@ PCB 以及转接板的完整设计文件位于仓库的 [circuit 目录下](http
 
 ## 单片机端
 
-单片机的完整源码位于仓库的 [firmware 目录下](https://github.com/bclswl0827/OpenNixie/tree/master/firmware)，为了充分享受 VSCode 的自动补全、代码高亮、自动格式化等生产力黑科技，博主抛弃了传统的 Keil（补一句，Keil 真是又丑又难用），而是使用了 VSCode 上的 EIDE 插件作为 STC89C51 的开发环境。在 VSCode 上安装该插件后，打开 firmware 目录下的 `OpenNixie.code-workspace` 文件，即可进入 EIDE 工作区编辑代码、构建项目、烧录固件。
+单片机的完整源码位于仓库的 [firmware 目录下](https://github.com/bclswl0827/OpenNixie/tree/master/firmware)，为了充分享受自动补全、代码高亮、自动格式化等现代生产力黑科技，所以博主抛弃了传统的 Keil（补一句，Keil 真是又丑又难用），而是使用了 VSCode 上的 EIDE 插件作为 STC89C51 的开发环境。在 VSCode 上安装该插件后，打开 firmware 目录下的 `OpenNixie.code-workspace` 文件，即可进入 EIDE 工作区编辑代码、构建项目、烧录固件。
 
 ### 辉光管驱动
 
@@ -233,7 +233,7 @@ while (1) {
 
 ### 阴极保护
 
-由于辉光管长期运行，所以需要避免长期显示某个数字导致管子中毒。解决的方案则是定时显示一遍所有数字。代码只需基于上述片段稍作修改即可。
+由于辉光管长期运行可能发生中毒现象，因此需要避免长期显示某个固定的数字。解决的方案则是定时显示一遍所有数字，代码只需基于上述片段稍作修改即可。
 
 ```cpp
 void setProtection() {
