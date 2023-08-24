@@ -335,3 +335,9 @@ while (1) {
 ![显示随机数](https://c.ibcl.us/Nixie-Clock_20230823/14.gif)
 
 ![网页授时](https://c.ibcl.us/Nixie-Clock_20230823/15.gif)
+
+# 一些补充
+
+除了 GitHub 仓库的 Issue 之外，博主还建了一个 Telegram 群组，方便为读者解答辉光钟 DIY 过程中遇到的各种问题，欢迎加入。
+
+[t.me/OpenNixie](https://t.me/OpenNixie)
