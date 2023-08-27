@@ -48,7 +48,7 @@ Firebase Realtime Database 中的所有数据都是以 JSON 对象来保存的�
             "gender": 1,
             "nation": "US"
         }, 
-        "mary": {
+        "eliza": {
             "age": 16,
             "gender": 0,
             "nation": "GB"
@@ -61,7 +61,7 @@ Firebase Realtime Database 中的所有数据都是以 JSON 对象来保存的�
 
 ```shell
 curl -X GET https://test.firebaseio.com/users.json
-{"joshua":{"age":18,"gender":1,"nation":"US"},"mary":{"age":16,"gender":0,"nation":"GB"}}
+{"joshua":{"age":18,"gender":1,"nation":"US"},"eliza":{"age":16,"gender":0,"nation":"GB"}}
 ```
 
 又例如，若要取得用户 `joshua` 的资讯，那么可以使用 `curl` 工具构造如下的请求。
