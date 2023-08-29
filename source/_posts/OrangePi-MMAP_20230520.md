@@ -95,19 +95,26 @@ typedef struct {
 例如，我们要控制 GPIO_A20 为输出模式，并输出高电平，透过查询 Datasheet，我们需要得知以下几条与 GPIO_A20 相关的资讯。
 
  1. GPIO_A20 的配置位于 PA_CFG2_REG 寄存器中第 20-22 位，其值为 0x01 时为输出模式
- 2. 当 PA_DATA_REG 寄存器第 20 位值为 1 时，即可输出高电平
+ 2. 当 PA_DATA_REG 寄存器第 20 位值为 0x01 时，即可输出高电平
+
+又例如，我们要控制 GPIO_A8 为输入模式，并使能上拉电阻，透过查询 Datasheet，我们需要得知以下几条与 GPIO_A8 相关的资讯。
+
+ 1. GPIO_A8 的配置位于 PA_CFG1_REG 寄存器中第 0-2 位，其值为 0x00 时为输入模式
+ 2. 当 PA_PULL0_REG 寄存器第 16-17 位值为 0x01 时，即可使能上拉电阻
 
 # 编程解决问题
 
 有了以上知识做铺垫，我们就可以开始编写程序解决问题了。
 
-博主将以 C 语言、Go 语言与 Python 为例，透过 mmap 操作 GPIO，实现 GPIO_A21 管脚带动 LED 灯闪烁，同时读取 GPIO_A20 管脚电平并打印到终端。
+博主将以 C 语言、Go 语言与 Python 为例，透过 mmap 操作 GPIO，实现 GPIO_A21 管脚带动 LED 灯闪烁，同时读取 GPIO_A8 管脚电平并打印到终端。
+
+**由于 GPIO_A8 管脚设定了上拉使能，所以除非用户将这个管脚接地，否则读出的电平始终为高**；同理，若用户设定了下拉使能，则除非用户将这个管脚接到 Vcc，否则读出的电平始终为低。
 
 ## C 语言版本
 
 以下是 C 语言的版本，其中，`gpio_t` 结构体的定义与上文相同，`set_output` 函数用于将 GPIO 端口设置为输出模式，`set_input` 函数用于将 GPIO 端口设置为输入模式，`set_level` 函数用于设定 GPIO 端口电平，`get_level` 函数用于读取 GPIO 端口的电平。
 
-```C
+```cpp
 #include <fcntl.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -118,30 +125,30 @@ typedef struct {
 // GPIO_A 配置寄存器列表
 // { 寄存器号, 寄存器位 }
 const int GPIO_A_CONFIG[22][2] = {
-    {0, 0}, // PA0
-    {0, 4}, // PA1
-    {0, 8}, // PA2
-    {0, 12}, // PA3
-    {0, 16}, // PA4
-    {0, 20}, // PA5
-    {0, 24}, // PA6
-    {0, 28}, // PA7
+    {0, 0},   // PA0
+    {0, 4},   // PA1
+    {0, 8},   // PA2
+    {0, 12},  // PA3
+    {0, 16},  // PA4
+    {0, 20},  // PA5
+    {0, 24},  // PA6
+    {0, 28},  // PA7
 
-    {1, 0}, // PA8
-    {1, 4}, // PA9
-    {1, 8}, // PA10
-    {1, 12}, // PA11
-    {1, 16}, // PA12
-    {1, 20}, // PA13
-    {1, 24}, // PA14
-    {1, 28}, // PA15
+    {1, 0},   // PA8
+    {1, 4},   // PA9
+    {1, 8},   // PA10
+    {1, 12},  // PA11
+    {1, 16},  // PA12
+    {1, 20},  // PA13
+    {1, 24},  // PA14
+    {1, 28},  // PA15
 
-    {2, 0}, // PA16
-    {2, 4}, // PA17
-    {2, 8}, // PA18
-    {2, 12}, // PA19
-    {2, 16}, // PA20
-    {2, 20}, // PA21
+    {2, 0},   // PA16
+    {2, 4},   // PA17
+    {2, 8},   // PA18
+    {2, 12},  // PA19
+    {2, 16},  // PA20
+    {2, 20},  // PA21
 };
 
 // 寄存器基础地址
@@ -150,47 +157,68 @@ const int GPIO_A_CONFIG[22][2] = {
 #define GPIO_PA_OFFSET 0x0800
 // 指定在使用 mmap 函数时要映射的区域大小
 #define MMAP_SIZE 0x1000
+
 // GPIO 模式设定
 enum GPIO_MODE {
-    INPUT = 0, OUTPUT,
+    INPUT = 0,
+    OUTPUT,
 };
 // GPIO 电平设定
 enum GPIO_LEVEL {
-    LOW = 0, HIGH,
+    LOW = 0,
+    HIGH,
+};
+// GPIO 上拉下拉设定
+enum GPIO_PULL {
+    PULL_OFF = 0,
+    PULL_UP,
+    PULL_DOWN,
 };
 
 // GPIO 端口寄存器类型
 typedef struct {
-  volatile uint32_t config[4];
-  volatile uint32_t data;
-  volatile uint32_t driver[2];
-  volatile uint32_t pull[2];
+    volatile uint32_t config[4];
+    volatile uint32_t data;
+    volatile uint32_t driver[2];
+    volatile uint32_t pull[2];
 } gpio_t;
 
 // 配置 GPIO_A 的指定管脚为输出模式
-void set_output(gpio_t *gpio, int pin) {
+void set_output(gpio_t* gpio, int pin) {
     // 取得寄存器号与寄存器位
     int reg = GPIO_A_CONFIG[pin][0];
     int bit = GPIO_A_CONFIG[pin][1];
     // 清空原有配置
-    gpio->config[reg] &= ~(0xF << bit);
+    gpio->config[reg] &= ~(0x0F << bit);
     // 设为输出模式
     gpio->config[reg] |= (OUTPUT << bit);
 }
 
 // 配置 GPIO_A 的指定管脚为输入模式
-void set_input(gpio_t *gpio, int pin) {
+void set_input(gpio_t* gpio, int pin) {
     // 取得寄存器号与寄存器位
     int reg = GPIO_A_CONFIG[pin][0];
     int bit = GPIO_A_CONFIG[pin][1];
     // 清空原有配置
-    gpio->config[reg] &= ~(0xF << bit);
+    gpio->config[reg] &= ~(0x0F << bit);
     // 设为输入模式
     gpio->config[reg] |= (INPUT << bit);
 }
 
+// 设定 GPIO_A 的指定管脚上拉下拉
+void set_pull(gpio_t* gpio, int pin, int pull) {
+    // 取得寄存器索引
+    int n = pin / 16;
+    // 取得 uint32_t 类型寄存器值
+    uint32_t val = (uint32_t)pull;
+    // 清空原有配置
+    gpio->pull[n] &= ~(0x03U << ((pin % 16) * 2));
+    // 设定上拉下拉
+    gpio->pull[n] |= val << ((pin % 16) * 2);
+}
+
 // 设定 GPIO_A 的指定管脚电平
-void set_level(gpio_t *gpio, int pin, int level) {
+void set_level(gpio_t* gpio, int pin, int level) {
     switch (level) {
         case HIGH:
             gpio->data |= (1 << pin);
@@ -204,12 +232,12 @@ void set_level(gpio_t *gpio, int pin, int level) {
 }
 
 // 读取 GPIO_A 的指定管脚电平
-int get_level(gpio_t *gpio, int pin) {
+int get_level(gpio_t* gpio, int pin) {
     // 取得寄存器号与寄存器位
     int reg = GPIO_A_CONFIG[pin][0];
     int bit = GPIO_A_CONFIG[pin][1];
     // 清空原有配置
-    gpio->config[reg] &= ~(0xF << bit);
+    gpio->config[reg] &= ~(0x0F << bit);
     return (gpio->data >> pin) & 0x01;
 }
 
@@ -222,7 +250,8 @@ int main() {
     }
 
     // 将寄存器映射到内存
-    char *reg = (char *)mmap(NULL, MMAP_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, mem, ALLWINNER_H3_BASE);
+    char* reg = (char*)mmap(NULL, MMAP_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED,
+                            mem, ALLWINNER_H3_BASE);
     if (reg == MAP_FAILED) {
         perror("mmap");
         close(mem);
@@ -230,12 +259,14 @@ int main() {
     }
 
     // 将映射的地址偏移量应用于 GPIO_A 寄存器类型
-    gpio_t *gpio = (gpio_t *)&reg[GPIO_PA_OFFSET];
+    gpio_t* gpio = (gpio_t*)&reg[GPIO_PA_OFFSET];
 
     // 设定 GPIO_A21 为输出模式
     set_output(gpio, 21);
-    // 设定 GPIO_A20 为输入模式
-    set_input(gpio, 20);
+    // 设定 GPIO_A8 为输入模式
+    set_input(gpio, 8);
+    // 设定 GPIO_A8 上拉使能
+    set_pull(gpio, 8, PULL_UP);
 
     // 闪烁 LED 灯并读取电平
     for (;;) {
@@ -244,9 +275,9 @@ int main() {
         usleep(500000);
         set_level(gpio, 21, LOW);
         usleep(500000);
-        // 读取 GPIO_A20 电平并打印
-        int level = get_level(gpio, 20);
-        printf("GPIO_A20 level: %d\n", level);
+        // 读取 GPIO_A8 电平并打印
+        int level = get_level(gpio, 8);
+        printf("GPIO_A8 level: %d\n", level);
     }
 
     // 解除内存映射
@@ -326,6 +357,13 @@ const (
 	HIGH = 1
 )
 
+// 上拉下拉设定
+const (
+	PULL_OFF  = 0
+	PULL_UP   = 1
+	PULL_DOWN = 2
+)
+
 // GPIO 端口寄存器类型
 type gpio_t struct {
 	config [4]uint32
@@ -339,7 +377,7 @@ func setOutput(gpio *gpio_t, pin int) {
 	reg := GPIO_A_CONFIG[pin][0]
 	bit := GPIO_A_CONFIG[pin][1]
 	// 清空原有配置
-	gpio.config[reg] &= ^(0xF << bit)
+	gpio.config[reg] &= ^(0x0F << bit)
 	// 设为输出模式
 	gpio.config[reg] |= OUTPUT << bit
 }
@@ -349,9 +387,20 @@ func setInput(gpio *gpio_t, pin int) {
 	reg := GPIO_A_CONFIG[pin][0]
 	bit := GPIO_A_CONFIG[pin][1]
 	// 清空原有配置
-	gpio.config[reg] &= ^(0xF << bit)
+	gpio.config[reg] &= ^(0x0F << bit)
 	// 设为输入模式
 	gpio.config[reg] |= INPUT << bit
+}
+
+func setPull(gpio *gpio_t, pin, pull int) {
+	// 取得寄存器索引
+	n := pin / 16
+	// 取得 uint32 类型寄存器值
+	val := uint32(pull)
+	// 清空原有配置
+	gpio.pull[n] &= ^(0x03 << (pin % 16 * 2))
+	// 设定上拉下拉
+	gpio.pull[n] |= val << (pin % 16 * 2)
 }
 
 func setLevel(gpio *gpio_t, pin, level int) {
@@ -368,7 +417,7 @@ func getLevel(gpio *gpio_t, pin int) int {
 	reg := GPIO_A_CONFIG[pin][0]
 	bit := GPIO_A_CONFIG[pin][1]
 	// 清空原有配置
-	gpio.config[reg] &= ^(0xF << bit)
+	gpio.config[reg] &= ^(0x0F << bit)
 	return int((gpio.data >> pin) & 0x01)
 }
 
@@ -394,19 +443,21 @@ func main() {
 
 	// 设定 GPIO_A21 为输出模式
 	setOutput(gpio, 21)
-	// 设定 GPIO_A20 为输入模式
-	setInput(gpio, 20)
+	// 设定 GPIO_A8 为输入模式
+	setInput(gpio, 8)
+	// 设定 GPIO_A8 上拉使能
+	setPull(gpio, 8, PULL_UP)
 
 	// 闪烁 LED 灯并读取电平
 	for {
 		// 闪烁 GPIO_A21 LED
 		setLevel(gpio, 21, HIGH)
-		time.Sleep(time.Second)
+		time.Sleep(time.Millisecond * 500)
 		setLevel(gpio, 21, LOW)
-		time.Sleep(time.Second)
-		// 读取 GPIO_A20 电平并打印
-		level := getLevel(gpio, 20)
-		fmt.Printf("GPIO_A20 level: %d\n", level)
+		time.Sleep(time.Millisecond * 500)
+		// 读取 GPIO_A8 电平并打印
+		level := getLevel(gpio, 8)
+		fmt.Printf("GPIO_A8 level: %d\n", level)
 	}
 }
 ```
@@ -416,10 +467,12 @@ func main() {
 Python 版本的实现与 Go 版本的实现类似，不过在 Python 中，内存映射使用了 `mmap` 模块。
 
 ```python
-import ctypes
-import mmap
-import os
-import time
+from mmap import mmap, MAP_SHARED, PROT_READ, PROT_WRITE
+from os import open, close, O_RDWR, O_SYNC
+from ctypes import Structure, c_uint32
+from typing import Type
+from time import sleep
+from sys import exit
 
 # GPIO_A 配置寄存器列表
 # { 寄存器号, 寄存器位 }
@@ -460,30 +513,54 @@ OUTPUT = 1
 # GPIO 电平设定
 LOW = 0
 HIGH = 1
+# 上拉下拉设定
+PULL_OFF = 0
+PULL_UP = 1
+PULL_DOWN = 2
+
+
+# GPIO 端口寄存器类型
+class gpio_t(Structure):
+    _fields_ = [
+        ("config", c_uint32 * 4),
+        ("data", c_uint32),
+        ("driver", c_uint32 * 2),
+        ("pull", c_uint32 * 2),
+    ]
 
 
 # 配置 GPIO_A 的指定管脚为输出模式
-def set_output(gpio, pin):
+def set_output(gpio: Type[gpio_t], pin: int) -> None:
     # 取得寄存器号与寄存器位
     reg, bit = GPIO_A_CONFIG[pin]
     # 清空原有配置
-    gpio.config[reg] &= ~(0xF << bit)
+    gpio.config[reg] &= ~(0x0F << bit)
     # 设为输出模式
     gpio.config[reg] |= (OUTPUT << bit)
 
 
 # 配置 GPIO_A 的指定管脚为输入模式
-def set_input(gpio, pin):
+def set_input(gpio: Type[gpio_t], pin: int) -> None:
     # 取得寄存器号与寄存器位
     reg, bit = GPIO_A_CONFIG[pin]
     # 清空原有配置
-    gpio.config[reg] &= ~(0xF << bit)
+    gpio.config[reg] &= ~(0x0F << bit)
     # 设为输入模式
     gpio.config[reg] |= (INPUT << bit)
 
 
+# 设定 GPIO_A 的指定管脚上拉下拉
+def set_pull(gpio: Type[gpio_t], pin: int, pull: int) -> None:
+    # 取得寄存器索引
+    n = pin//16
+    # 清除原有配置
+    gpio.pull[n] &= ~((0x03 << (pin % 16 * 2)))
+    # 设置上拉下拉
+    gpio.pull[n] |= pull << (pin % 16 * 2)
+
+
 # 设定 GPIO_A 的指定管脚电平
-def set_level(gpio, pin, level):
+def set_level(gpio: Type[gpio_t], pin: int, level: int) -> None:
     if level == HIGH:
         gpio.data |= (1 << pin)
     elif level == LOW:
@@ -491,54 +568,50 @@ def set_level(gpio, pin, level):
 
 
 # 读取 GPIO_A 的指定管脚电平
-def get_level(gpio, pin):
+def get_level(gpio: Type[gpio_t], pin: int) -> int:
     # 取得寄存器号与寄存器位
     reg, bit = GPIO_A_CONFIG[pin]
     # 清空原有配置
-    gpio.config[reg] &= ~(0xF << bit)
+    gpio.config[reg] &= ~(0x0F << bit)
     return (gpio.data >> pin) & 0x01
 
 
 def main():
     # 以读写模式打开 /dev/mem 装置文件
-    mem = os.open("/dev/mem", os.O_RDWR | os.O_SYNC)
+    mem = open("/dev/mem", O_RDWR | O_SYNC)
     if mem < 0:
         print("Failed to open /dev/mem")
-        return
+        exit(1)
 
     # 将寄存器映射到内存
-    reg = mmap.mmap(mem, MMAP_SIZE, mmap.MAP_SHARED, mmap.PROT_READ | mmap.PROT_WRITE, offset=ALLWINNER_H3_BASE)
-
-    # GPIO 端口寄存器类型
-    class gpio_t(ctypes.Structure):
-        _fields_ = [
-            ("config", ctypes.c_uint32 * 4),
-            ("data", ctypes.c_uint32),
-            ("driver", ctypes.c_uint32 * 2),
-            ("pull", ctypes.c_uint32 * 2),
-        ]
-
+    reg = mmap(
+        mem, MMAP_SIZE, MAP_SHARED,
+        PROT_READ | PROT_WRITE,
+        offset=ALLWINNER_H3_BASE
+    )
     gpio = gpio_t.from_buffer(reg, GPIO_PA_OFFSET)
 
     # 设定 GPIO_A21 为输出模式
     set_output(gpio, 21)
-    # 设定 GPIO_A20 为输入模式
-    set_input(gpio, 20)
+    # 设定 GPIO_A8 为输入模式
+    set_input(gpio, 8)
+    # 设定 GPIO_A8 上拉使能
+    set_pull(gpio, 8, PULL_UP)
 
     # 闪烁 LED 灯并读取电平
     while True:
         # 闪烁 GPIO_A21 LED
         set_level(gpio, 21, HIGH)
-        time.sleep(0.5)
+        sleep(0.5)
         set_level(gpio, 21, LOW)
-        time.sleep(0.5)
-        # 读取 GPIO_A20 电平并打印
-        level = get_level(gpio, 20)
-        print("GPIO_A20 level:", level)
+        sleep(0.5)
+        # 读取 GPIO_A8 电平并打印
+        level = get_level(gpio, 8)
+        print("GPIO_A8 level:", level)
 
     # 解除内存映射
     reg.close()
-    os.close(mem)
+    close(mem)
 
 
 if __name__ == "__main__":
