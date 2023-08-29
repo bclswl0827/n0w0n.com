@@ -207,14 +207,14 @@ void set_input(gpio_t* gpio, int pin) {
 
 // 设定 GPIO_A 的指定管脚上拉下拉
 void set_pull(gpio_t* gpio, int pin, int pull) {
-    // 取得寄存器索引
-    int n = pin / 16;
-    // 取得 uint32_t 类型寄存器值
-    uint32_t val = (uint32_t)pull;
+    // 取得寄存器号
+    int reg = pin / 16;
+    // 取得寄存器位
+    int bit = (pin % 16) * 2;
     // 清空原有配置
-    gpio->pull[n] &= ~(0x03U << ((pin % 16) * 2));
+    gpio->pull[reg] &= ~(0x03 << bit);
     // 设定上拉下拉
-    gpio->pull[n] |= val << ((pin % 16) * 2);
+    gpio->pull[reg] |= (uint32_t)pull << bit;
 }
 
 // 设定 GPIO_A 的指定管脚电平
@@ -393,14 +393,14 @@ func setInput(gpio *gpio_t, pin int) {
 }
 
 func setPull(gpio *gpio_t, pin, pull int) {
-	// 取得寄存器索引
-	n := pin / 16
-	// 取得 uint32 类型寄存器值
-	val := uint32(pull)
+	// 取得寄存器号
+	reg := pin / 16
+    // 取得寄存器位
+    bit := (pin % 16) * 2;
 	// 清空原有配置
-	gpio.pull[n] &= ^(0x03 << (pin % 16 * 2))
+	gpio.pull[reg] &= ^(0x03 << bit)
 	// 设定上拉下拉
-	gpio.pull[n] |= val << (pin % 16 * 2)
+	gpio.pull[reg] |= uint32(pull) << bit
 }
 
 func setLevel(gpio *gpio_t, pin, level int) {
@@ -551,12 +551,14 @@ def set_input(gpio: Type[gpio_t], pin: int) -> None:
 
 # 设定 GPIO_A 的指定管脚上拉下拉
 def set_pull(gpio: Type[gpio_t], pin: int, pull: int) -> None:
-    # 取得寄存器索引
-    n = pin//16
+    # 取得寄存器号
+    reg = int(pin / 16)
+    # 取得寄存器位
+    bit = int((pin % 16) * 2)
     # 清除原有配置
-    gpio.pull[n] &= ~((0x03 << (pin % 16 * 2)))
+    gpio.pull[reg] &= ~(0x03 << bit)
     # 设置上拉下拉
-    gpio.pull[n] |= pull << (pin % 16 * 2)
+    gpio.pull[reg] |= (pull << bit)
 
 
 # 设定 GPIO_A 的指定管脚电平
@@ -589,6 +591,8 @@ def main():
         PROT_READ | PROT_WRITE,
         offset=ALLWINNER_H3_BASE
     )
+
+    # 将映射的地址偏移量应用于 GPIO_A 寄存器类型
     gpio = gpio_t.from_buffer(reg, GPIO_PA_OFFSET)
 
     # 设定 GPIO_A21 为输出模式
