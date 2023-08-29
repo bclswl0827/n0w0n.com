@@ -620,6 +620,6 @@ if __name__ == "__main__":
 
 # 效果展示
 
-![闪烁的 LED](https://c.ibcl.us/OrangePi-MMAP_20230520/2.gif)
+![GPIO_A21 闪烁的 LED](https://c.ibcl.us/OrangePi-MMAP_20230520/2.gif)
 
-![读取 GPIO_A20 电平](https://c.ibcl.us/OrangePi-MMAP_20230520/3.png)
+![读取 GPIO_A8 电平](https://c.ibcl.us/OrangePi-MMAP_20230520/3.png)
