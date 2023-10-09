@@ -340,4 +340,6 @@ while (1) {
 
 除了 GitHub 仓库的 Issue 之外，博主还建了一个 Telegram 群组，方便为读者解答辉光钟 DIY 过程中遇到的各种问题，欢迎加入。
 
+对了，现在还却一个外壳，可惜博主不会做 3D 设计，所以只能等待有缘人帮忙设计了。
+
 [t.me/OpenNixie](https://t.me/OpenNixie)
