@@ -198,13 +198,13 @@ Press CTRL-C for hangup
 
 前端首页主要展示当前测站的状况，包含测站名、测站位置、在线时长、解码数量，丢包数量，与标准时间偏移量，CPU 及内存占用率。其中，「已推送讯息量」、「推送失败讯息量」、「等待推送讯息量」是为以后的中心服务器做准备的，目前还没有实际用途。
 
-![前端首页](https://c.ibcl.us/Earthquake-Sensor_20231009/8.png)
+![前端首页](https://c.ibcl.us/Earthquake-Sensor_20231009/8.jpg)
 
 波形页面主要展示当前测站的波形图，包含三个通道的波形图，用户可以通过拖拽的方式对任意通道的数据进行缩放，在波形图表下方有，还有实时计算的 PGA、PGV 数据、震度数据，另外，震度标准可以自行切换，目前默认为 JMA 标准。
 
 在页面接近顶部的位置，有实时计算得出的下位机采样率，用户在调整下位机采样率时，可以通过这个数据来判断是否达到了预期的采样率。
 
-![前端波形](https://c.ibcl.us/Earthquake-Sensor_20231009/9.png)
+![前端波形](https://c.ibcl.us/Earthquake-Sensor_20231009/9.jpg)
 
 若用户在配置文件开启了数据库存档功能，则可以在历史页面查看历史数据，**目前查询方式有两种，一种是按时间段查询，另一种是按地震事件查询**，用户可以根据自己的需求来选择。
 
@@ -214,15 +214,15 @@ Press CTRL-C for hangup
 
 若要将地震事件分享给其他人，可以点击「分享」按钮，然后将弹出的链接分享给其他人，其他人打开链接后，起始和结束时间选择器中的时间段将会自动填充为该地震事件的时间段，其他人只需要点击「查询」按钮即可查询到该地震事件的所有数据。
 
-![前端历史](https://c.ibcl.us/Earthquake-Sensor_20231009/10.png)
+![前端历史](https://c.ibcl.us/Earthquake-Sensor_20231009/10.jpg)
 
 若用户在配置文件开启了 MiniSEED 存档功能，则可以在数据下载页面导出以天为单位的 MiniSEED 格式的数据。
 
-![前端导出](https://c.ibcl.us/Earthquake-Sensor_20231009/11.png)
+![前端导出](https://c.ibcl.us/Earthquake-Sensor_20231009/11.jpg)
 
 最后启用 SeedLink 后的效果，用户可以在 Swarm 中直接连接 SeedLink 服务，从而实时查看地震波数据（波形 + 频谱）。
 
-![SeedLink](https://c.ibcl.us/Earthquake-Sensor_20231009/12.png)
+![SeedLink](https://c.ibcl.us/Earthquake-Sensor_20231009/12.jpg)
 
 # 待解决的问题
 
