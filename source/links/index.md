@@ -34,7 +34,7 @@ title: 友链
 >  - [小林的广播小站](https://kbysradio.wordpress.com/)
 >  - [Fidcer’Blog](https://vuln.top/)
 >  - [米米的博客](https://zhangshuqiao.org/)
->  - [欧尼酱](http://www.nothamor.cn/)
+>  - [欧尼酱](http://www.nothamor.com/)
 >  - [思绪的空中生活](https://sixu.life/)
 >  - [c0sMx's Blog](https://www.c0smx.com/)
 >  - [橘纸柚](http://lovemen.cc/)
