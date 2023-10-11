@@ -80,8 +80,8 @@ ADS1256 的驱动代码由博主自行编写（读 Datasheet 是一件很痛苦�
 | 通道名称 | 差分输入口 |
 | :------: | :--------: |
 |   EHZ    | AIN3、AIN4 |
-|   ENE    | AIN5、AIN6 |
-|   ENN    | AIN7、AIN8 |
+|   EhE    | AIN5、AIN6 |
+|   EhN    | AIN7、AIN8 |
 
 ![下位机成品](https://c.ibcl.us/Earthquake-Sensor_20231009/7.jpg)
 
@@ -113,7 +113,7 @@ Press CTRL-C for hangup
 
 博主已经为这个项目启用了 GitHub Actions，每次有新的提交时，[GitHub 都会自动构建最新的 Release 版本](https://github.com/bclswl0827/observer/releases)，从而便于一般用户直接下载最新的预编译的版本。预编译提供包含 Linux 下 x86_64、arm64 和 armv7l 三种架构的二进制文件，以及 Windows 下 x86 和 x86_64 两种架构的二进制文件，用户可以根据自己的场景和需求选用。
 
-在使用上位机前，上位机需要预装 PostgreSQL 数据库（也可以安装在其他服务器远程连接），安装好 PostgreSQL 数据库后，创建一个空白的库，这里以 `observer` 为库名，用户名以 `postgres`，密码以 `passw0rd` 为例。
+若要启用历史数据查询功能，在使用上位机前，上位机需要预装 PostgreSQL 数据库（也可以安装在其他服务器远程连接），安装好 PostgreSQL 数据库后，创建一个空白的库，这里以 `observer` 为库名，用户名以 `postgres`，密码以 `passw0rd` 为例。
 
 接下来配置上位机参数，这些参数均位于 `config.json` 文件中，在用户下载的 Release 预编译版本中，也已经附上了这个文件，用户只需稍加修改其中的参数即可，下面是这些参数字段的介绍。
 
