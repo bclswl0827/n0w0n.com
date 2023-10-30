@@ -110,19 +110,19 @@ BUG_REPORT_URL="https://bugs.debian.org/
 接下来为龙芯 2K1000 EDU 安装必备及常用组件。
 
 ```shell
-# sudo openssh-server usbutils network-manager liblinux-usermod-perl build-essential locales bc make dialog network-manager
+$ sudo apt install -y openssh-server usbutils network-manager liblinux-usermod-perl build-essential locales bc make dialog network-manager
 ```
 
 安装完成后，将 loongson 用户加入 sudo 组。
 
 ```shell
-# usermod -aG sudo loongson
+$ sudo usermod -aG sudo loongson
 ```
 
 然后再次重启设备。
 
 ```shell
-# reboot
+$ sudo reboot
 ```
 
 # 安装无线网卡驱动
