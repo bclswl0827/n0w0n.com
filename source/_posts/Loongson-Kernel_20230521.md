@@ -58,7 +58,7 @@ $ su root
 Loongbian 实际上源自 Debian Buster，由于要对系统发行版做升级，所以直接将源地址改成 Debian Bullseye 的。
 
 ```shell
-# echo "deb https://mirrors.teach.com.cn/debian bullseye main" | tee /etc/apt/sources.list
+# echo "deb https://mirrors.bfsu.edu.cn/debian bullseye main" | tee /etc/apt/sources.list
 ```
 
 再更新软件列表，并对软件做最小升级。
