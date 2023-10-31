@@ -2,6 +2,8 @@
 title: 友链
 ---
 
+>  - [星川栀子的杂物铺](https://kutinai.com/)
+>  - [永恒之爱 - 热衷资源共享](http://forevers.love/)
 >  - [Clash 免费节点](https://clashfree.eu.org/)
 >  - [柚木鉉の空間](https://www.gloomyghost.com/)
 >  - [Izumi Chino's Blog](https://www.izumichino.tk)
