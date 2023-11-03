@@ -149,7 +149,7 @@ $ sudo apt update
 然后为交叉编译的环境安装编译内核需要的相关依赖项。
 
 ```shell
-$ sudo apt install crossbuild-essential-mips64el u-boot-tools git flex bison libncurses-dev bc ssh -y
+$ sudo apt install crossbuild-essential-mips64el u-boot-tools git flex bison libncurses-dev bc ssh libssl-dev rsync kmod cpio -y
 ```
 
 ## 交叉编译龙芯内核
