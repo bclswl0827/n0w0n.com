@@ -260,5 +260,7 @@ Press CTRL-C for hangup
 
 再贴一次项目地址，欢迎大家 Star 和 Fork，同时，项目的使用说明及二次开发文档也将在近期发布，敬请期待。
 
-- [GitHub - bclswl0827/explorer](https://github.com/bclswl0827/explorer)
-- [GitHub - bclswl0827/observer](https://github.com/bclswl0827/observer)
+- [GitHub - anyshake/explorer](https://github.com/anyshake/explorer)
+- [GitHub - anyshake/observer](https://github.com/anyshake/observer)
+
+2023 年 12 月 18 日更新：项目文档已经开源至 [anyshake.org](https://anyshake.org) 了
