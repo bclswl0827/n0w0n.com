@@ -15,6 +15,10 @@ tags:
   - TypeScript
 ---
 
+**本项目已更名 AnyShake Project，并由博主继续维护。AnyShake Project 网站及文档位于 [anyshake.org](https://anyshake.org)，GitHub 主页位于 [github.com/anyshake](https://github.com/anyshake)**
+
+**由于本文写在项目起步之初，部分内容可能已经过期或不适用，因此一切请以 AnyShake Project 官网文档给出的内容为准**
+
 博主在今年（2023 年）上半年在带领实验室其他成员报名「全国大学生嵌入式芯片与系统设计竞赛」时，在项目选题时却犹豫不止，大多数人都是选择在「智能小车」、「智能机器人」及其相关的项目上下功夫，而博主却想做点不一样的。
 
 在报名截止的前夕，博主突然想起博主的[一位朋友曾经给博主提到他买过一台名叫 Raspberry Shake 的地震仪](https://github.com/TenkyuChimata)，这台地震仪可以将地震波数据整合或上传到云端，供用户调阅查看，而且[他也长期在 Bilibili 上直播地震仪测到的实时数据](https://live.bilibili.com/22863790)，在看过他的直播后，博主立刻被这台地震仪所吸引住了。
@@ -67,7 +71,7 @@ tags:
 
 项目下位机使用 C++ 编写，在时下流行的 PlatformIO IDE 上进行开发，下位机的代码仓库地址如下：
 
-[GitHub - bclswl0827/explorer](https://github.com/bclswl0827/explorer)
+[GitHub - anyshake/explorer](https://github.com/anyshake/explorer)
 
 下位机默认运行的平台为 STM32F103C8T6 核心板，但是透过修改 `platformio.ini` 文件和少许引脚定义（ADC 的 RST 和 DRDY 引脚定义），即可轻易在其他开发板上运行。
 
@@ -109,9 +113,9 @@ Press CTRL-C for hangup
 
 项目上位机使用 B/S 架构，后端使用 Golang + Gin 编写，前端则使用 TypeScript + React + TailwindCSS，代码仓库地址如下：
 
-[GitHub - bclswl0827/observer](https://github.com/bclswl0827/observer)
+[GitHub - anyshake/observer](https://github.com/anyshake/observer)
 
-博主已经为这个项目启用了 GitHub Actions，每次有新的提交时，[GitHub 都会自动构建最新的 Release 版本](https://github.com/bclswl0827/observer/releases)，从而便于一般用户直接下载最新的预编译的版本。预编译提供包含 Linux 下 x86_64、arm64 和 armv7l 三种架构的二进制文件，以及 Windows 下 x86 和 x86_64 两种架构的二进制文件，用户可以根据自己的场景和需求选用。
+博主已经为这个项目启用了 GitHub Actions，每次有新的提交时，[GitHub 都会自动构建最新的 Release 版本](https://github.com/anyshake/observer/releases)，从而便于一般用户直接下载最新的预编译的版本。预编译提供包含 Linux 下 x86_64、arm64 和 armv7l 三种架构的二进制文件，以及 Windows 下 x86 和 x86_64 两种架构的二进制文件，用户可以根据自己的场景和需求选用。
 
 若要启用历史数据查询功能，在使用上位机前，上位机需要预装 PostgreSQL 数据库（也可以安装在其他服务器远程连接），安装好 PostgreSQL 数据库后，创建一个空白的库，这里以 `observer` 为库名，用户名以 `postgres`，密码以 `passw0rd` 为例。
 
