@@ -17,7 +17,7 @@ tags:
 
 **本项目已更名 AnyShake Project，并由博主继续维护。AnyShake Project 网站及文档位于 [anyshake.org](https://anyshake.org)，GitHub 主页位于 [github.com/anyshake](https://github.com/anyshake)**
 
-**由于本文写在项目起步之初，部分内容可能已经过期或不适用，因此一切请以 AnyShake Project 官网文档给出的内容为准**
+**由于本文写在项目有起色之初，部分内容可能已经过期或不适用，因此一切请以 AnyShake Project 官网文档给出的内容为准**
 
 博主在今年（2023 年）上半年在带领实验室其他成员报名「全国大学生嵌入式芯片与系统设计竞赛」时，在项目选题时却犹豫不止，大多数人都是选择在「智能小车」、「智能机器人」及其相关的项目上下功夫，而博主却想做点不一样的。
 
