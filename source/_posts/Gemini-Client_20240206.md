@@ -13,19 +13,21 @@ tags:
   - Serverless
 ---
 
-博主前些日子逛 V2EX 时，经常看到有人讨论各种 ChatGPT 的第三方客户端。作为一个月月被 ChatGPT-4 爆金币的人，自然对这些第三方客户端没有兴趣~~（毕竟咱可是高贵的官方用户）~~。
-
-直到 Google 发布了 Gemini 模型后，博主想要体验一下这个 AI 模型到底有多厉害，才在 GitHub 上搜索起了 Gemini 的第三方客户端。
+博主前些日子逛 V2EX 时，经常看到有人讨论各种 ChatGPT 的第三方客户端。作为一个月月被 ChatGPT-4 爆金币的人，自然对这些第三方客户端没有兴趣~~（毕竟咱可是高贵的官方用户）~~。直到 Google 发布了 Gemini 模型后，博主才想要体验一下这个 AI 模型到底有多厉害，于是在 GitHub 上搜索起了 Gemini 的第三方客户端。
 
 ![1](https://c.ibcl.us/Gemini-Client_20240206/1.png)
 
-好家伙，第一条结果 babaohuang/GeminiProChat 居然有 3.5k 颗 Star，看来这个客户端还是挺受欢迎的。博主顺着仓库给出的演示 URL 进去，却让人大失所望。
+好家伙，第一条结果的 `babaohuang/GeminiProChat` 仓库居然有 3.5k 颗 Star，看来这个客户端还是挺受欢迎的。
+
+可顺着仓库给出的演示 URL 进去，结果却让博主大失所望。
 
 ![2](https://c.ibcl.us/Gemini-Client_20240206/2.png)
 
-这套客户端没有历史记录，发出去的消息也不能再编辑，**另外 Gemini 重要的识图功能居然也没有实现**，这怎么能行？鉴于以上种种不好的使用体验，因此博主决定自己开发一个山寨版的 ChatGPT 客户端，名字就叫 ChatGemini 吧。
+这套客户端没有历史记录，发出去的消息也不能再编辑，**另外 Gemini 很重要的识图功能居然也没有实现**，这怎么能行？
 
-说干就干，于是博主花了 3 天时间，用 React + TypeScript + TailwindCSS 制作出了一款全新有如下功能的 Gemini 客户端，项目一经发布，截止博主写这篇文章时，已经收获了 470 颗 Star。
+鉴于以上种种不好的使用体验，因此博主决定自己开发一个山寨版的 ChatGPT 客户端，名字就叫 ChatGemini。
+
+说干就干，博主花了 3 天时间，用 React + TypeScript + TailwindCSS 打造了一款全新有如下功能的 Gemini 客户端，项目一经发布，截止博主写这篇文章时，已经收获了 470 颗 Star。
 
  - 适配移动端
  - 支持多 API 密钥分流
@@ -43,7 +45,7 @@ tags:
 
 ![3](https://c.ibcl.us/Gemini-Client_20240206/3.png)
 
-博主写这篇文章并不打算将 README 中的内容再重复一遍，因此这里只会记录一些开发过程中的细节。
+这篇文章并不打算将 README 中的内容再重复一遍，因此这里只会记录一些博主在开发过程中的细节。
 
 <!--more-->
 
@@ -149,7 +151,7 @@ nginx -g 'daemon off;'
 
 ## 逐字输出
 
-ChatGPT 和 Gemini 的回应是逐字输出的，这意味着每次 AI 回应都是一小部分，而不是一次性输出全部内容。这样做的好处是能更好地模拟真实的聊天场景。
+ChatGPT 和 Gemini 的回应是逐字输出的，因此每次 AI 的回应都是一小部分，而非一次性输出全部内容，这样做的好处是能更好地模拟真实的聊天场景。
 
 而支撑这个功能的技术，并非常见的 WebSocket，而是 SSE（Server-Sent Events），这是一种服务器推送技术，它允许服务器向客户端推送事件，而不是客户端向服务器请求数据。
 
@@ -181,7 +183,7 @@ private function setRuntimeBuffer() {
 }
 ```
 
-另外，若在 PHP 中处理逐字输出，需要使用 PHP cURL 中的 `CURLOPT_WRITEFUNCTION` 选项，这个选项允许用户自定义一个回调函数，回调函数会在每次接收到数据时被调用，而回调函数则实时将数据再转发给用户。
+另外，若在 PHP 中处理逐字输出，需要使用 PHP cURL 中的 `CURLOPT_WRITEFUNCTION` 选项，这个选项允许用户自定义一个回调函数，回调函数会在每次接收到数据时被调用，而在回调函数中，数据则会实时再转发给用户。
 
 ```php
 curl_setopt($this->curlObject, CURLOPT_RETURNTRANSFER, false);
@@ -228,7 +230,7 @@ export const getBase64Img = async (file: File) => {
 
 值得一提的是，Gemini-Pro-Vision 并不能像 Gemini-Pro 那样能连续对话，因此，在用户上传完图片，并得到 Gemini-Pro-Vision 的回应后，ChatGemini 会自动切换回 Gemini-Pro 模型，这样就能保证用户能够继续和 AI 进行对话。
 
-但是这又导致了一个新问题，那就是 Gemini-Pro 并不知道用户先前上传了什么图片，因此，在发给 Gemini-Pro 的对话上下文中，博主会自动在用户的对话中追加一条消息，告诉 Gemini-Pro 用户此前在聊天中的什么位置上传了图片，并让其从对话中推测出图片的内容。
+但是这又导致了一个新问题，那就是 Gemini-Pro 并不知道用户先前上传了什么图片，因此，在发给 Gemini-Pro 的对话上下文中，ChatGemini 会自动在用户的对话中追加一条消息，告诉 Gemini-Pro 用户此前在聊天中的什么位置上传了图片，并让其从对话中推测出图片的内容。
 
 ```typescript
 if (!!attachmentIndexArr.length) {
@@ -241,7 +243,7 @@ if (!!attachmentIndexArr.length) {
 
 ChatGemini 会将用户和 AI 的对话保存在 IndexedDB 中，这样用户就能在下次访问时，从侧边栏的历史记录中选择一个话题，继续和 AI 进行对话，而不会因为刷新页面而导致对话丢失。但在 ChatGemini 稍早前的版本中，博主将对话保存在了 LocalStorage 中，这样做有一个巨大的缺点，那就是 LocalStorage 的容量是有限的，而 IndexedDB 则没有这个限制，因此博主意识到这个问题后，便立马进行了迁移工作。
 
-博主并没有手动编写 IndexedDB 的 CURD 逻辑，而是直接使用了 Redux 的中间件 `redux-persist` 和 `localforge`，这两个中间件会自动将 Redux 的状态保存在 IndexedDB 中，而博主只需操作 Redux 的状态即可。
+博主并没有手动编写 IndexedDB 的 CRUD 逻辑，而是直接使用了 Redux 的中间件 `redux-persist`，搭配 `localforge` 使用后，Redux 的状态将保存在 IndexedDB 中，而博主只需操作 Redux 的状态即可。
 
 ```typescript
 export const sessionsPersistConfig = persistReducer(
@@ -290,7 +292,7 @@ export const saveMdToHtml = (data: string, name: string) => {
 
 ChatGemini 还支持站点通行码功能，用户可以在访问 ChatGemini 时，输入正确的通行码后，才能进入 ChatGemini，否则将无法进入。
 
-这个功能的实现并不难，只需要在用户输入通行码后，将其转换为 MD5 编码，然后与预设的 MD5 格式通行码进行比对，如果相同，则允许用户进入，否则拒绝用户进入。
+这个功能的实现并不难，只需要在用户输入通行码后，将其转换为 MD5 编码，然后与预设的 MD5 格式通行码进行比对，如果相同，则允许用户进入应用。
 
 字符串转换为 MD5 的代码如下，使用了 `crypto-js` 库。
 
@@ -303,7 +305,7 @@ export const getMD5Hash = (str: string, upperCase?: boolean) => {
 };
 ```
 
-而为了方便用户不必每次都输入通行码，ChatGemini 还支持将通行码保存在 LocalStorage 中，这样用户只需在第一次输入通行码后，ChatGemini 就会自动保存通行码，下次访问时，就不必再次输入通行码了，实现了自动登入。
+而为了方便用户不必每次都输入通行码，ChatGemini 还支持将通行码保存在 LocalStorage 中，这样用户只需在第一次成功登入后，下次访问时，就不必再次输入通行码了，实现了自动登入。
 
 但是如果将用户通行码以明文保存在 LocalStorage 中，这样就会导致用户通行码泄露的风险，因此博主选择继续用 `crypto-js` 库，以浏览器指纹作为密钥，对用户通行码进行对称加密，然后再保存在 LocalStorage 中。
 
