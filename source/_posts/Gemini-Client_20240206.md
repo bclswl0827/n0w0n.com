@@ -74,7 +74,7 @@ ChatGemini 是一个基于 Google Gemini 的网页客户端，对标 ChatGPT 3.5
 |  `REACT_APP_TITLE_HEADER`  | 否   | `string`             | `Gemini Pro` | 应用标题，显示在应用侧边栏和头部         | 无                                         |
 |  `REACT_APP_PASSCODE_MD5`  | 否   | `string`\|`string[]` | 空           | MD5 格式通行码，多个以 `\|` 分隔         | 存在多个通行码时，任意一个通过验证即可登入 |
 
-但是博主在后期对项目进行 Docker 打包时，才发现依赖 `.env` 文件进行应用配置并不是一个好的选择，因为对 `.env` 文件的修改后，需要重新构建整个 React 应用才能生效。
+但是博主在后期对项目进行 Docker 打包时，才发现依赖 `.env` 文件进行应用配置并不是一个好的选择，因为对 `.env` 文件进行修改后，需要重新构建整个 React 应用才能生效。
 
 而要临时解决这个办法，则只能在每次应用启动时都执行 `npm run build` 命令，生成最新的应用，然后再启动 Nginx 服务，这样就会导致镜像体积剧增，同时应用启动时间也会变长，并不利于应用的持续部署。
 
@@ -115,7 +115,7 @@ echo "Nginx is starting..."
 nginx -g 'daemon off;'
 ```
 
-为了彻底解决这个问题，因此博主的解决方案是，若应用检测不到 `.env` 文件，则从 `/env.json` 文件中读取配置。这样一来，透过多阶段构建（第一阶段构建 React 应用，第二阶段构建 Nginx 镜像），就能将配置文件和应用分离开来，这样就不会因为配置文件的修改而导致镜像的重新构建了。
+为了彻底解决这一系列问题，博主最后的解决方案是，若应用检测不到来自 `.env` 的配置，网页端上则在加载时请求 `/env.json` 读取配置。这样一来，透过多阶段构建（第一阶段构建 React 应用，第二阶段构建 Nginx 镜像），就能将配置文件和应用分离开来，缩小了镜像体积，也不再会每次启动容器时进行应用构建了。
 
 所以，博主优化后的 `entrypoint.sh` 最终长这样。
 
@@ -149,11 +149,11 @@ nginx -g 'daemon off;'
 
 ## 逐字输出
 
-ChatGPT 和 Gemini 的回应是逐字输出的，这意味着每次 AI 回应都是一段一段的，而不是一次性输出所有内容。这样做的好处是，可以让用户看到 AI 的回应是逐字输出的，这样就能更好地模拟真实的聊天场景。
+ChatGPT 和 Gemini 的回应是逐字输出的，这意味着每次 AI 回应都是一小部分，而不是一次性输出全部内容。这样做的好处是能更好地模拟真实的聊天场景。
 
-而支撑这个功能的技术不是常见的 WebSocket，而是 SSE（Server-Sent Events），这是一种服务器推送技术，它允许服务器向客户端推送事件，而不是客户端向服务器请求数据。这样一来，就能实现逐字输出的功能了。
+而支撑这个功能的技术，并非常见的 WebSocket，而是 SSE（Server-Sent Events），这是一种服务器推送技术，它允许服务器向客户端推送事件，而不是客户端向服务器请求数据。
 
-在 ChatGemini 中，博主并未直接处理 SSE，而是使用了由 Google 提供的 SDK，这个 SDK 会自动处理 SSE，而不需要开发者自己去处理。
+在 ChatGemini 中，博主并未直接处理 SSE，而是使用了由 Google 提供的 SDK，这个 SDK 会自动处理 SSE，无需开发者自己去处理。
 
 另外，Google Gemini 的逐字输出功能是可选的，因此 ChatGemini 也提供了一个配置项，用户可以选择是否启用逐字输出功能，而相关的处理函数中，如果检测到用户没有开启逐字输出功能，则会模拟出逐字输出的效果。
 
@@ -171,7 +171,7 @@ location /api {
 }
 ```
 
-在博主编写 PHP 版本的反向代理时，也需要关闭 PHP 的缓冲，否则也会导致逐字输出功能失效。
+博主编写 PHP 版本的反向代理中，PHP 的缓冲也是关闭的。
 
 ```php
 private function setRuntimeBuffer() {
@@ -181,7 +181,7 @@ private function setRuntimeBuffer() {
 }
 ```
 
-在 PHP 中处理逐字输出，需要使用 PHP Curl 中的 `CURLOPT_WRITEFUNCTION` 选项，这个选项允许用户自定义一个回调函数，这个回调函数会在每次接收到数据时被调用。
+另外，若在 PHP 中处理逐字输出，需要使用 PHP cURL 中的 `CURLOPT_WRITEFUNCTION` 选项，这个选项允许用户自定义一个回调函数，回调函数会在每次接收到数据时被调用，而回调函数则实时将数据再转发给用户。
 
 ```php
 curl_setopt($this->curlObject, CURLOPT_RETURNTRANSFER, false);
@@ -210,7 +210,7 @@ curl_exec($this->curlObject);
 
 ## 识图功能
 
-这个功能是 ChatGemini 的一个亮点，用户可以在聊天中上传图片，然后 ChatGemini 会自动调用 Gemini-Pro-Vision 模型进行识图，然后将识图结果返回给用户。
+这是 ChatGemini 的一个亮点，即用户可以在聊天中上传图片，然后 ChatGemini 会自动调用 Gemini-Pro-Vision 模型进行识图，然后将识图结果返回给用户。
 
 这个功能的实现并不难，只需要在 React 中使用 `FileReader` 对象读取图片文件，然后将读取到的图片文件转换为 Base64 编码，然后再将 Base64 编码的图片文件发送给 Gemini API 服务器即可。
 
@@ -239,11 +239,9 @@ if (!!attachmentIndexArr.length) {
 
 ## 聊天保存
 
-ChatGemini 会将用户和 AI 的对话保存在 IndexedDB 中，这样用户就能在下次访问时，继续和 AI 进行对话，而不会因为刷新页面而导致对话丢失。
+ChatGemini 会将用户和 AI 的对话保存在 IndexedDB 中，这样用户就能在下次访问时，从侧边栏的历史记录中选择一个话题，继续和 AI 进行对话，而不会因为刷新页面而导致对话丢失。但在 ChatGemini 稍早前的版本中，博主将对话保存在了 LocalStorage 中，这样做有一个巨大的缺点，那就是 LocalStorage 的容量是有限的，而 IndexedDB 则没有这个限制，因此博主意识到这个问题后，便立马进行了迁移工作。
 
-但在稍早前的版本中，博主将对话保存在了 LocalStorage 中，这样做有一个巨大的缺点，那就是 LocalStorage 的容量是有限的，而 IndexedDB 则没有这个限制。
-
-博主并没有手动编写 IndexedDB 的 CURD 操作，而是直接使用了 Redux 的中间件 `redux-persist` 和 `localforge`，这两个中间件会自动将 Redux 的状态保存在 IndexedDB 中，而博主只需操作 Redux 的状态即可。
+博主并没有手动编写 IndexedDB 的 CURD 逻辑，而是直接使用了 Redux 的中间件 `redux-persist` 和 `localforge`，这两个中间件会自动将 Redux 的状态保存在 IndexedDB 中，而博主只需操作 Redux 的状态即可。
 
 ```typescript
 export const sessionsPersistConfig = persistReducer(
@@ -256,7 +254,7 @@ export const sessionsPersistConfig = persistReducer(
 
 ChatGemini 还支持将用户和 AI 的对话导出为 HTML 和 PDF 格式，这样用户就能将对话保存在本地，或是分享给他人。
 
-这个给你实现并不难，只需要传入渲染成 HTML 的 Markdown 字符串，然后将其拼接至网页模板中，调用 `file-saver` 库将即可保存为 HTML 文件。
+这个功能实现起来并不难，只需要传入已经渲染成了 HTML 的 Markdown 字符串，然后将其拼接至网页模板中，调用 `file-saver` 库将即可保存为 HTML 文件。
 
 ```typescript
 import { saveAs } from "file-saver";
@@ -286,7 +284,7 @@ export const saveMdToHtml = (data: string, name: string) => {
 };
 ```
 
-至于导出 PDF 功能，则需要使用 `html2pdf` 库，博主并未将其集成到 ChatGemini 中，而是在导出的 HTML 文件中，加入了一个按钮，用户点击按钮后，会自动调用 `html2pdf` 库将 HTML 文件转换为 PDF 文件。
+至于导出 PDF 功能，则需要使用 `html2pdf` 库，博主并未将其集成到 ChatGemini 中，而是在导出的 HTML 文件中加入了一个按钮，用户点击按钮后，则会自动调用 `html2pdf` 库将 HTML 文件转换为 PDF 文件。
 
 ## 密码访问
 
@@ -294,7 +292,7 @@ ChatGemini 还支持站点通行码功能，用户可以在访问 ChatGemini 时
 
 这个功能的实现并不难，只需要在用户输入通行码后，将其转换为 MD5 编码，然后与预设的 MD5 格式通行码进行比对，如果相同，则允许用户进入，否则拒绝用户进入。
 
-字符串转换为 MD5 编码的代码如下，使用了 `crypto-js` 库。
+字符串转换为 MD5 的代码如下，使用了 `crypto-js` 库。
 
 ```typescript
 import { MD5 } from "crypto-js";
@@ -305,7 +303,7 @@ export const getMD5Hash = (str: string, upperCase?: boolean) => {
 };
 ```
 
-而为了方便用户不必每次都输入通行码，ChatGemini 还支持将通行码保存在 LocalStorage 中，这样用户只需在第一次输入通行码后，ChatGemini 就会自动保存通行码，下次访问时，就不必再次输入通行码了。
+而为了方便用户不必每次都输入通行码，ChatGemini 还支持将通行码保存在 LocalStorage 中，这样用户只需在第一次输入通行码后，ChatGemini 就会自动保存通行码，下次访问时，就不必再次输入通行码了，实现了自动登入。
 
 但是如果将用户通行码以明文保存在 LocalStorage 中，这样就会导致用户通行码泄露的风险，因此博主选择继续用 `crypto-js` 库，以浏览器指纹作为密钥，对用户通行码进行对称加密，然后再保存在 LocalStorage 中。
 
@@ -337,13 +335,13 @@ export const getDecryption = (encryptedData: string, key: string) =>
 
 ## 执行 Python
 
-ChatGemini 还支持直接执行 AI 生成的 Python 代码，这样用户就能在 ChatGemini 中直接运行 Python 代码，而不必再打开 Python 解释器。比较有意思的是，这里的 Python 环境是直接运行在用户浏览器中的，并没有调用任何第三方 API，实现这个功能的技术是 `pyodide`。
+ChatGemini 还支持直接执行 AI 生成的 Python 代码，这样用户就能在 ChatGemini 网页中直接运行 Python 代码查看结果，而不必再复制代码，打开本地 Python 解释器进行测试。
 
-不过在博主配置 `pyodide` 时，发现最新版貌似用不了，最后只能使用了 0.23.4 版本。
+比较有意思的是，这里的 Python 环境是直接运行在用户浏览器中的，并没有调用任何第三方 API，实现这个功能的技术是 `pyodide`。不过在博主配置 `pyodide` 时，发现最新版貌似用不了，最后只能使用了 0.23.4 版本。
 
-每次当 Pyodide 加载时，大概会从服务器上拉取约 10MB 的数据，为了节约流量，所有对话都共用了同一个 Pyodide 实例，且按需加载，这样就能节约一部分流量，同时也能加快页面加载速度。
+每次当 Pyodide 加载时，客户端会从服务器上拉取约 10 MB 的数据，为了节约流量，因此博主为所有对话都共用了同一个 Pyodide 实例，且按需加载，这样就能节约一部分流量，同时也能加快页面加载速度。
 
-下面是创建 Pyodide 实例的代码，其中 `repoURL` 是 Pyodide 的索引 URL，`homedir` 是 Pyodide 的工作目录，这里设置为 `/home/user`，这样就能模拟出一个用户的家目录，用户可以在这个目录下进行文件操作，但是不能访问系统目录，这样就能保证用户的安全。另外，这里还重写了 Python 的 `input` 函数，使其能够在浏览器中弹出输入框。
+下面是创建 Pyodide 实例的代码，其中 `indexURL` 是 Pyodide 的 Python Wheel 包的索引 URL，`homedir` 是 Pyodide 的工作目录，这里设置为 `/home/user`，这样就能模拟出一个用户的家目录，用户可以在这个目录下进行文件操作，模仿在 Linux 系统中运行。另外，这里还重写了 Python 的 `input` 函数，使其能够在浏览器中弹出输入框。
 
 ```typescript
 import { loadPyodide } from "pyodide";
