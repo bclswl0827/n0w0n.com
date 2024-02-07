@@ -43,7 +43,7 @@ title: 友链
 | 思绪的空中生活                 | https://sixu.life                  |
 | c0sMx's Blog                   | https://www.c0smx.com              |
 | 橘纸柚                         | http://lovemen.cc                  |
-| Radiofun-Hong                  | https://radiofunhong.wordpress.com |
+| Radiofun-Hong                  | https://rdf97.wordpress.com/ |
 
 *以上的友链顺序，均按照申请的时间进行排列，并无优次等之分。*
 
