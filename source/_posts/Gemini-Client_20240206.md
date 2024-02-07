@@ -17,17 +17,15 @@ tags:
 
 ![1](https://c.ibcl.us/Gemini-Client_20240206/1.png)
 
-好家伙，第一条结果的 `babaohuang/GeminiProChat` 仓库居然有 3.5k 颗 Star，看来这个客户端还是挺受欢迎的。
-
-可顺着仓库给出的演示 URL 进去，结果却让博主大失所望。
+好家伙，第一条结果的 `babaohuang/GeminiProChat` 居然有 3.5k 颗 Star，看来这个客户端还是挺受欢迎的，可顺着仓库给出的演示 URL 进去，结果却让博主大失所望。
 
 ![2](https://c.ibcl.us/Gemini-Client_20240206/2.png)
 
 这套客户端没有历史记录，发出去的消息也不能再编辑，**另外 Gemini 很重要的识图功能居然也没有实现**，这怎么能行？
 
-鉴于以上种种不好的使用体验，因此博主决定自己开发一个山寨版的 ChatGPT 客户端，名字就叫 ChatGemini。
+鉴于以上种种不好的使用体验，因此博主最后决定自己开发一个山寨版的 ChatGPT 客户端，名字就叫 ChatGemini。
 
-说干就干，博主花了 3 天时间，用 React + TypeScript + TailwindCSS 打造了一款全新有如下功能的 Gemini 客户端，项目一经发布，截止博主写这篇文章时，已经收获了 470 颗 Star。
+说干就干，博主花了 3 天时间，用 React + TypeScript + TailwindCSS 打造了出一款全新的，有如下功能的 Gemini 客户端，项目一经发布，截止博主写这篇文章时，已经收获了 470 颗 Star。
 
  - 适配移动端
  - 支持多 API 密钥分流
@@ -45,13 +43,13 @@ tags:
 
 ![3](https://c.ibcl.us/Gemini-Client_20240206/3.png)
 
-这篇文章并不打算将 README 中的内容再重复一遍，因此这里只会记录一些博主在开发过程中的细节。
+这篇文章并不打算将 README 中的内容再复述一遍，因此这里只会记录一些博主在开发过程中的细节。
 
 <!--more-->
 
 ## 项目介绍
 
-ChatGemini 是一个基于 Google Gemini 的网页客户端，对标 ChatGPT 3.5，使用逻辑同 ChatGPT 3.5 一致，同时支持在聊天中上传图片，自动调用 Gemini-Pro-Vision 模型进行识图。
+这是一个基于 Google Gemini 的网页客户端，对标 ChatGPT 3.5，使用逻辑同 ChatGPT 3.5 一致，同时支持在聊天中上传图片，自动调用 Gemini-Pro-Vision 模型进行识图。
 
 这个项目还可自定义 Gemini API 服务器地址，用户可将本项目部署至支持 PHP 的服务器或虚拟主机上，或是自行配置 Nginx 反向代理，透过修改 Gemini API 路径，从而在中国大陆无障碍使用。
 
@@ -59,7 +57,7 @@ ChatGemini 是一个基于 Google Gemini 的网页客户端，对标 ChatGPT 3.5
 
 ## 框架选型
 
-博主在看了其他几个第三方 ChatGPT 客户端的代码后，发现有的项目使用了 Next.js，但博主并不打算使用 SSR 方式，因此还是选择了 React + TypeScript 方案。选择 React 则是因为博主对 React 更熟悉，另外，React 也是目前最流行的前端框架之一。
+博主在看了其他几个第三方 ChatGPT 客户端的代码后，发现有的项目使用了 Next.js，但博主并不打算使用 SSR 方式，因此还是选择了 React + TypeScript 方案。选择 React 也是因为博主对 React 更熟悉，另外，React 也是目前最流行的前端框架之一。
 
 另外，博主还使用了 TailwindCSS，这是一个 CSS 框架，它的特点是不需要写 CSS，只需要在 HTML 中使用类名即可，这样可以大大减少 CSS 的编写量，另外，这款框架也用在了博主的另外一个项目 [AnyShake Observer](https://github.com/anyshake/observer) 中。
 
@@ -78,9 +76,7 @@ ChatGemini 是一个基于 Google Gemini 的网页客户端，对标 ChatGPT 3.5
 
 但是博主在后期对项目进行 Docker 打包时，才发现依赖 `.env` 文件进行应用配置并不是一个好的选择，因为对 `.env` 文件进行修改后，需要重新构建整个 React 应用才能生效。
 
-而要临时解决这个办法，则只能在每次应用启动时都执行 `npm run build` 命令，生成最新的应用，然后再启动 Nginx 服务，这样就会导致镜像体积剧增，同时应用启动时间也会变长，并不利于应用的持续部署。
-
-因此，博主当时的 `entrypoint.sh` 长这样。
+而要临时解决这个问题，只能在每次应用启动时都执行 `npm run build` 命令，生成最新的版本，然后再启动 Nginx 服务。但是这样会导致镜像体积剧增，同时应用启动时间也会变长，并不利于应用的持续部署。博主当时的 `entrypoint.sh` 长下面这样。
 
 ```shell
 #!/bin/sh
@@ -117,9 +113,7 @@ echo "Nginx is starting..."
 nginx -g 'daemon off;'
 ```
 
-为了彻底解决这一系列问题，博主最后的解决方案是，若应用检测不到来自 `.env` 的配置，网页端上则在加载时请求 `/env.json` 读取配置。这样一来，透过多阶段构建（第一阶段构建 React 应用，第二阶段构建 Nginx 镜像），就能将配置文件和应用分离开来，缩小了镜像体积，也不再会每次启动容器时进行应用构建了。
-
-所以，博主优化后的 `entrypoint.sh` 最终长这样。
+为了彻底解决这一系列问题，博主最后的解决方案是，若应用检测不到来自 `.env` 的配置，网页端上则在加载时请求 `/env.json` 读取配置。这样一来，透过多阶段构建（第一阶段构建 React 应用，第二阶段构建 Nginx 镜像），就能将配置文件和应用分离开来，缩小了镜像体积，也不再会每次启动容器时进行应用构建了。所以，博主优化后的 `entrypoint.sh` 最终长这样。
 
 ```shell
 #!/bin/sh
@@ -151,17 +145,17 @@ nginx -g 'daemon off;'
 
 ## 逐字输出
 
-ChatGPT 和 Gemini 的回应是逐字输出的，因此每次 AI 的回应都是一小部分，而非一次性输出全部内容，这样做的好处是能更好地模拟真实的聊天场景。
+ChatGPT 和 Gemini 的回应是逐字输出的，因此每次 AI 的回应都是一小部分，这样做的好处是能更好地模拟真实的聊天场景。
 
-而支撑这个功能的技术，并非常见的 WebSocket，而是 SSE（Server-Sent Events），这是一种服务器推送技术，它允许服务器向客户端推送事件，而不是客户端向服务器请求数据。
+而支撑这个功能的技术，并非常见的 WebSocket，而是 SSE（Server-Sent Events），一种服务器推送技术，允许服务器向客户端主动推送事件，但和 WebSocket 不同之处在于，在 SSE 连接中，客户端不能向服务器推送数据。
 
-在 ChatGemini 中，博主并未直接处理 SSE，而是使用了由 Google 提供的 SDK，这个 SDK 会自动处理 SSE，无需开发者自己去处理。
+在 ChatGemini 中，博主并未直接处理 SSE，而是使用了由 Google 提供的 SDK，这套 SDK 会自动处理 SSE，无需开发者自己去处理。
 
-另外，Google Gemini 的逐字输出功能是可选的，因此 ChatGemini 也提供了一个配置项，用户可以选择是否启用逐字输出功能，而相关的处理函数中，如果检测到用户没有开启逐字输出功能，则会模拟出逐字输出的效果。
+另外，Google Gemini 的逐字输出功能是可选的，因此 ChatGemini 也提供了一个配置项，用户可以选择是否启用逐字输出功能，而相关的处理函数中，如果检测到用户没有开启逐字输出功能，则会在前端模拟出逐字输出的效果。
 
-需要注意的是，在博主为项目配置 Nginx 反向代理时，需要关闭 Nginx 的缓冲，否则会导致逐字输出功能失效。
+需要注意的是，在为项目配置 Nginx 反向代理时，需要关闭 Nginx 的缓冲，否则会导致逐字输出功能失效。
 
-所以，博主的 Nginx 配置文件长这样。
+所以，Nginx 反向代理配置文件长这样。
 
 ```nginx
 location /api {
@@ -256,7 +250,7 @@ export const sessionsPersistConfig = persistReducer(
 
 ChatGemini 还支持将用户和 AI 的对话导出为 HTML 和 PDF 格式，这样用户就能将对话保存在本地，或是分享给他人。
 
-这个功能实现起来并不难，只需要传入已经渲染成了 HTML 的 Markdown 字符串，然后将其拼接至网页模板中，调用 `file-saver` 库将即可保存为 HTML 文件。
+这个功能实现起来并不难，只需传入已经渲染成了 HTML 的 MarkDown 字符串，然后将其拼接至网页模板中，调用 `file-saver` 库将即可保存为 HTML 文件。
 
 ```typescript
 import { saveAs } from "file-saver";
@@ -286,13 +280,13 @@ export const saveMdToHtml = (data: string, name: string) => {
 };
 ```
 
-至于导出 PDF 功能，则需要使用 `html2pdf` 库，博主并未将其集成到 ChatGemini 中，而是在导出的 HTML 文件中加入了一个按钮，用户点击按钮后，则会自动调用 `html2pdf` 库将 HTML 文件转换为 PDF 文件。
+至于导出 PDF 功能，则需要使用 `html2pdf` 库，博主并未将其集成到 ChatGemini 中，而是在导出的 HTML 文件中加入了一个按钮，当用户点击按钮后，页面则会自动调用 `html2pdf` 库将 HTML 文件转换为 PDF 文件并输出。
 
 ## 密码访问
 
-ChatGemini 还支持站点通行码功能，用户可以在访问 ChatGemini 时，输入正确的通行码后，才能进入 ChatGemini，否则将无法进入。
+ChatGemini 也支持站点通行码功能，用户可以在访问 ChatGemini 时，输入正确的通行码后，才能进入 ChatGemini，否则将无法进入。
 
-这个功能的实现并不难，只需要在用户输入通行码后，将其转换为 MD5 编码，然后与预设的 MD5 格式通行码进行比对，如果相同，则允许用户进入应用。
+这个功能的实现也不难，只需要在用户输入通行码后，将其转换为 MD5 编码，然后与预设的 MD5 格式通行码进行比对，如果相同则放行。
 
 字符串转换为 MD5 的代码如下，使用了 `crypto-js` 库。
 
@@ -305,11 +299,11 @@ export const getMD5Hash = (str: string, upperCase?: boolean) => {
 };
 ```
 
-而为了方便用户不必每次都输入通行码，ChatGemini 还支持将通行码保存在 LocalStorage 中，这样用户只需在第一次成功登入后，下次访问时，就不必再次输入通行码了，实现了自动登入。
+而为了方便用户不必每次都输入通行码，ChatGemini 还支持将通行码保存在 LocalStorage 中，这样用户只需在第一次成功登入后，下一次访问时就不必再次输入通行码，实现了自动登入。
 
-但是如果将用户通行码以明文保存在 LocalStorage 中，这样就会导致用户通行码泄露的风险，因此博主选择继续用 `crypto-js` 库，以浏览器指纹作为密钥，对用户通行码进行对称加密，然后再保存在 LocalStorage 中。
+但是如果将用户通行码以明文保存在 LocalStorage 中，势必会导致用户通行码有泄露的风险，因此博主选择继续用 `crypto-js` 库，以浏览器指纹作为密钥，对用户通行码进行对称加密，然后再保存在 LocalStorage 中。
 
-有关获取浏览器指纹，博主使用了 `fingerprintjs` 库。
+有关获取浏览器指纹的方案，博主使用了的是`fingerprintjs` 库。
 
 ```typescript
 import fpPromise from "@fingerprintjs/fingerprintjs";
@@ -333,15 +327,15 @@ export const getDecryption = (encryptedData: string, key: string) =>
     Rabbit.decrypt(encryptedData, key).toString(enc.Utf8);
 ```
 
-但在解密从 LocalStorage 提取出的密文并进行解密时主遇到了解密失败的问题，最后发现是 LocalStorage 中保存的密文多了一堆双引号。因此，在提取密文时，博主需要先将密文中的双引号去掉，然后再进行解密。
+但在解密从 LocalStorage 提取出的密文并进行解密时主遇到了解密失败的问题，最后发现是 LocalStorage 中保存的密文多了一对双引号。因此，在提取密文时，博主需要先将密文中头部和尾部多余的双引号去掉，然后再进行解密。
 
 ## 执行 Python
 
-ChatGemini 还支持直接执行 AI 生成的 Python 代码，这样用户就能在 ChatGemini 网页中直接运行 Python 代码查看结果，而不必再复制代码，打开本地 Python 解释器进行测试。
+ChatGemini 还支持直接执行 AI 生成的 Python 代码，这样用户就能在 ChatGemini 网页中直接运行 Python 代码查看结果，而不必再复制代码再打开本地 Python 解释器进行测试。
 
 比较有意思的是，这里的 Python 环境是直接运行在用户浏览器中的，并没有调用任何第三方 API，实现这个功能的技术是 `pyodide`。不过在博主配置 `pyodide` 时，发现最新版貌似用不了，最后只能使用了 0.23.4 版本。
 
-每次当 Pyodide 加载时，客户端会从服务器上拉取约 10 MB 的数据，为了节约流量，因此博主为所有对话都共用了同一个 Pyodide 实例，且按需加载，这样就能节约一部分流量，同时也能加快页面加载速度。
+每次当 Pyodide 加载时，客户端会从服务器上拉取约 10 MB 的数据，为了节约流量，因此博主为所有对话都重用了同一个 Pyodide 实例，且按需加载，这样就能节约一部分流量，同时也能加快页面加载速度。
 
 下面是创建 Pyodide 实例的代码，其中 `indexURL` 是 Pyodide 的 Python Wheel 包的索引 URL，`homedir` 是 Pyodide 的工作目录，这里设置为 `/home/user`，这样就能模拟出一个用户的家目录，用户可以在这个目录下进行文件操作，模仿在 Linux 系统中运行。另外，这里还重写了 Python 的 `input` 函数，使其能够在浏览器中弹出输入框。
 
