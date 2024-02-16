@@ -27,9 +27,12 @@ title: 关于
 
 从前的大多数文章已经封存到了 `/archive` 目录里，若直接访问以前的文章链接，页面会自动跳转，至于想回顾这些旧文章的，可以去到 [封存](/archive) 页面寻找
 
-希望这个不知名网友和他的小博客能带给你一些乐趣和帮助，就酱～
+希望这个不知名网友和他的小博客能带给你一些乐趣和帮助，最后是博主的~~开源功德图鉴~~，溜了～
+
+![1](https://github-readme-stats.vercel.app/api?username=bclswl0827&show_icons=true&bg_color=ffffff&border_color=d0d7de&hide_title=true&disable_animations=true&include_all_commits=true&count_private=true&role=OWNER,COLLABORATOR,ORGANIZATION_MEMBER)
 
 **博主 GitHub：[github.com/bclswl0827](https://github.com/bclswl0827)**
 **联系请上：[ibcl.us/contact/](https://ibcl.us/contact/)**
 
 **欢迎订阅本站 RSS：[ibcl.us/atom.xml](https://ibcl.us/atom.xml)**
+
