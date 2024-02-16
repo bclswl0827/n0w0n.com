@@ -208,7 +208,7 @@ curl_exec($this->curlObject);
 
 这是 ChatGemini 的一个亮点，即用户可以在聊天中上传图片，然后 ChatGemini 会自动调用 Gemini-Pro-Vision 模型进行识图，然后将识图结果返回给用户。
 
-这个功能的实现并不难，只需要在 React 中使用 `FileReader` 对象读取图片文件，然后将读取到的图片文件转换为 Base64 编码，然后再将 Base64 编码的图片文件发送给 Gemini API 服务器即可。
+要实现上传图片并不难，只需要在 React 中使用 `FileReader` 对象读取图片文件，然后将读取到的图片文件转换为 Base64 编码，然后再将 Base64 编码的图片文件发送给 Gemini API 服务器即可。
 
 ```typescript
 export const getBase64Img = async (file: File) => {
@@ -250,7 +250,7 @@ export const sessionsPersistConfig = persistReducer(
 
 ChatGemini 还支持将用户和 AI 的对话导出为 HTML 和 PDF 格式，这样用户就能将对话保存在本地，或是分享给他人。
 
-这个功能实现起来并不难，只需传入已经渲染成了 HTML 的 MarkDown 字符串，然后将其拼接至网页模板中，调用 `file-saver` 库将即可保存为 HTML 文件。
+要实现这个功能，只需传入已经渲染成了 HTML 的 MarkDown 字符串，然后将其拼接至网页模板中，调用 `file-saver` 库将即可保存为 HTML 文件。
 
 ```typescript
 import { saveAs } from "file-saver";
@@ -282,7 +282,7 @@ export const saveMdToHtml = (data: string, name: string) => {
 
 至于导出 PDF 功能，则需要使用 `html2pdf` 库，博主并未将其集成到 ChatGemini 中，而是在导出的 HTML 文件中加入了一个按钮，当用户点击按钮后，页面则会自动调用 `html2pdf` 库将 HTML 文件转换为 PDF 文件并输出。
 
-## 密码访问
+## 站点通行码
 
 ChatGemini 也支持站点通行码功能，用户可以在访问 ChatGemini 时，输入正确的通行码后，才能进入 ChatGemini，否则将无法进入。
 
@@ -327,7 +327,7 @@ export const getDecryption = (encryptedData: string, key: string) =>
     Rabbit.decrypt(encryptedData, key).toString(enc.Utf8);
 ```
 
-但在解密从 LocalStorage 提取出的密文并进行解密时主遇到了解密失败的问题，最后发现是 LocalStorage 中保存的密文多了一对双引号。因此，在提取密文时，博主需要先将密文中头部和尾部多余的双引号去掉，然后再进行解密。
+但在解密从 LocalStorage 提取出的密文并进行解密时，博主遇到了解密失败的问题，最后发现是 LocalStorage 中保存的密文多了一对双引号。因此，在提取密文时，博主需要先将密文中头部和尾部多余的双引号去掉，然后再进行解密。
 
 ## 执行 Python
 
@@ -420,7 +420,7 @@ export const getPythonResult = async (
 
 ## 写在最后
 
-希望 ChatGemini 能给大家带来一些乐趣，同时也希望 ChatGemini 能成为一个学习 React、TypeScript、TailwindCSS 的好例子。
+希望 ChatGemini 能给大家带来一些乐趣，同时也希望 ChatGemini 能成为一个学习 React、TypeScript、TailwindCSS 的例子。
 
 另外，ChatGemini 也是一个开源项目，欢迎大家提出建议和意见，也欢迎大家参与到 ChatGemini 的开发中来。
 
