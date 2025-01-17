@@ -11,7 +11,11 @@ export interface RouterWrapperProps {
 
 export const RouterWrapper = ({ mode, children }: RouterWrapperProps) =>
 	mode === "hash" ? (
-		<HashRouter future={{ v7_startTransition: true }}>{children}</HashRouter>
+		<HashRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+			{children}
+		</HashRouter>
 	) : (
-		<BrowserRouter future={{ v7_startTransition: true }}>{children}</BrowserRouter>
+		<BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+			{children}
+		</BrowserRouter>
 	);

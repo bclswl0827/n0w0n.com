@@ -4,56 +4,78 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 interface HeaderProps {
+	baseUrl: string;
 	avatar: string;
 	title: string;
 	links: Array<{ icon: string; name: string; link: string }>;
 }
 
-export const Header = ({ avatar, title, links }: HeaderProps) => {
-	const [isMenuOpen, setIsMenuOpen] = useState(false);
+export const Header = ({ baseUrl, avatar, title, links }: HeaderProps) => {
+	const [menuOpen, setMenuOpen] = useState(false);
 
 	return (
-		<nav className="w-full px-8 py-6 mb-12 bg-gray-200 shadow-xl flex flex-row justify-between items-center">
-			<div>
-				<Link to="/">
-					<div className="flex flex-row items-center space-x-4">
-						<img
-							src={avatar}
-							className="hover:scale-110 transition-all w-10 rounded-full"
-							alt="avatar"
-						/>
-						<h1 className="text-xl font-medium tracking-tight hover:scale-105 transition-all text-gray-800 dark:text-gray-200">
-							{title}
-						</h1>
+		<nav className="bg-gray-200 shadow-xl z-500">
+			<div className="px-4 sm:px-6 lg:px-8">
+				<div className="flex items-center justify-between h-16">
+					<div className="flex items-center">
+						<Link
+							to={baseUrl}
+							className="text-gray-800 font-bold text-xl flex flex-row items-center space-x-4"
+						>
+							<img
+								src={avatar}
+								alt="Logo"
+								className="hover:scale-105 transition-all size-12 shadow-lg rounded-full"
+							/>
+							<span className="hover:scale-110 transition-all">{title}</span>
+						</Link>
 					</div>
-				</Link>
-			</div>
-			<div>
-				<div className="md:hidden">
-					<button
-						className="text-gray-800 dark:text-gray-200"
-						onClick={() => setIsMenuOpen(!isMenuOpen)}
-					>
-						<Icon path={isMenuOpen ? mdiClose : mdiMenu} size={1.5} />
-					</button>
+
+					<div className="hidden md:block">
+						<div className="ml-10 flex items-center space-x-4">
+							{links.map(({ icon, name, link }, index) => (
+								<Link
+									key={index}
+									to={link}
+									className="text-gray-500 hover:bg-gray-500 transition-all hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+								>
+									<div className="flex flex-row items-center space-x-2">
+										<Icon path={icon} size={1} />
+										<span>{name}</span>
+									</div>
+								</Link>
+							))}
+						</div>
+					</div>
+
+					<div className="md:hidden">
+						<button
+							onClick={() => {
+								setMenuOpen(!menuOpen);
+							}}
+							className="p-2 rounded-md text-gray-500 hover:text-white transition-all hover:bg-gray-500"
+						>
+							<Icon path={menuOpen ? mdiClose : mdiMenu} size={1} />
+						</button>
+					</div>
 				</div>
-				<div
-					className={`md:flex ${
-						isMenuOpen ? "block" : "hidden"
-					} md:block absolute md:static top-16 left-0 w-full bg-gray-200 md:bg-transparent p-4 md:p-0`}
-				>
+			</div>
+
+			<div className={`${menuOpen ? "block" : "hidden"} md:hidden bg-gray-200 shadow-md`}>
+				<div className="px-4 py-2 space-y-2">
 					{links.map(({ icon, name, link }, index) => (
 						<Link
-							key={`${index}-${name}`}
-							className="mx-4 my-2 block md:inline-block text-gray-800 dark:text-gray-200 hover:text-indigo-800 hover:scale-105 transition-all"
+							key={index}
 							to={link}
-							onClick={() => setIsMenuOpen(false)}
+							className="block text-gray-500 hover:bg-gray-500 transition-all hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+							onClick={() => {
+								setMenuOpen(false);
+							}}
 						>
-							<div className="flex flex-row items-center space-x-2">
+							<div className="flex items-center space-x-2">
 								<Icon path={icon} size={1} />
 								<span>{name}</span>
 							</div>
-							<div className="h-1 w-full bg-gray-300" />
 						</Link>
 					))}
 				</div>

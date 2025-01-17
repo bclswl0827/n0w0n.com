@@ -9,14 +9,14 @@ import { RouterConfig } from "./config/router";
 
 export const App = () => {
 	const { name: authorName, avatar } = GlobalConfig.author_settings;
-	const { title, tos } = GlobalConfig.site_settings;
+	const { base, title, tos } = GlobalConfig.site_settings;
 
 	return (
 		<div>
 			<div className="flex flex-col w-full min-h-screen">
-				<Header title={title} avatar={avatar} links={MenuConfig} />
+				<Header baseUrl={base} title={title} avatar={avatar} links={MenuConfig} />
 
-				<div className="grow">
+				<div className="grow mt-16">
 					<RouterView
 						appName={title}
 						routes={RouterConfig.routes}
