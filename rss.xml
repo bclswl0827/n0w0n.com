@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>The [object Object]</title>
+        <link>httpsn0w0n.com/</link>
+        <description>Uncaught Error: No silver bullet, but a lot of lead bullets</description>
+        <lastBuildDate>Fri, 17 Jan 2025 06:43:08 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>The [object Object]</generator>
+        <language>en</language>
+        <image>
+            <title>The [object Object]</title>
+            <url>/avatar.jpg</url>
+            <link>httpsn0w0n.com/</link>
+        </image>
+        <copyright>Posts are available under the Creative Commons Attribution-ShareAlike License 4.0, additional terms may apply.</copyright>
+        <atom:link href="https://n0w0n.com/rss.xml" rel="self" type="application/rss+xml"/>
+    </channel>
+</rss>

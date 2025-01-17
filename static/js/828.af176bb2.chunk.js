@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkn0w0n_blog=self.webpackChunkn0w0n_blog||[]).push([[828],{7828:(n,e,c)=>{c.r(e),c.d(e,{default:()=>a});var o=c(3306),s=c(4414);const a=()=>(0,s.jsx)("div",{className:"p-8",children:(0,s.jsx)(o.$,{code:404,heading:"404",content:"Resource not found",action:{onClick:()=>window.history.back(),label:"Go back"}})})}}]);

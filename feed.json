@@ -1,0 +1,12 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "The [object Object]",
+    "home_page_url": "httpsn0w0n.com/",
+    "feed_url": "https://n0w0n.com/feed.json",
+    "description": "Uncaught Error: No silver bullet, but a lot of lead bullets",
+    "icon": "/avatar.jpg",
+    "author": {
+        "name": "Unknown netizen"
+    },
+    "items": []
+}
