@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkn0w0n_blog=self.webpackChunkn0w0n_blog||[]).push([[68],{7068:(e,t,s)=>{s.r(t),s.d(t,{default:()=>n});var l=s(4414);const n=()=>(0,l.jsx)("div",{className:"flex flex-col justify-center items-center text-gray-600",children:"I was too lazy to write something about myself..."})}}]);
