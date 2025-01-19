@@ -22,6 +22,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+posts/draft_*
+public/data
 public/atom.xml
 public/feed.json
 public/rss.xml

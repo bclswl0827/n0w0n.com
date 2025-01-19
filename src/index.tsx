@@ -12,7 +12,7 @@ import { RouterConfig } from "./config/router";
 const targetNode = document.getElementById("root")!;
 const observer = new MutationObserver((mutationsList, observer) => {
 	for (const mutation of mutationsList) {
-		if (mutation.type === "attributes" && mutation.attributeName === "hidden") {
+		if (mutation.attributeName === "hidden") {
 			if ((mutation.target as HTMLDivElement).hidden === false) {
 				observer.disconnect();
 				const root = ReactDOM.createRoot(targetNode);

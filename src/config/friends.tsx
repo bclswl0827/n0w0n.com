@@ -8,6 +8,11 @@ export const FriendsConfig: IFriendsConfig[] = [
 	{
 		name: "Wolfx Project",
 		url: "https://wolfx.jp",
-		description: "The Wolfx Project collects a lot of useful tools and APIs in seismic field."
+		description: `Wolfx Project is a public service project aimed at providing a variety of practical services for free.`
+	},
+	{
+		name: "DongGua Blog",
+		url: "https://dgtea.site",
+		description: `Amateur radio operator (callsign: BD7PZX) and occasional photographer, passionate about cycling, traveling, and dabbling in coding`
 	}
 ];

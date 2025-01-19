@@ -27,12 +27,7 @@ const Links = () => {
 				}`}
 			>
 				{shuffledLinks?.map(({ name, url, description }, index) => (
-					<Link
-						key={`${index}-${url}`}
-						to={url}
-						className="block"
-						aria-label={`Visit ${name}`}
-					>
+					<Link key={`${index}-${url}`} to={url} target="_blank" className="block">
 						<div className="bg-white rounded-lg shadow-lg hover:shadow-xl hover:bg-gray-50 transition-all duration-300 p-6 h-full flex items-start">
 							<div>
 								<h2 className="text-xl font-semibold mb-2 text-gray-800">{name}</h2>

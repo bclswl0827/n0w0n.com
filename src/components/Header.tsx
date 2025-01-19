@@ -17,7 +17,7 @@ export const Header = ({ baseUrl, avatar, title, links }: HeaderProps) => {
 		<nav className="bg-gray-200 shadow-xl z-500">
 			<div className="px-4 sm:px-6 lg:px-8">
 				<div className="flex items-center justify-between h-16">
-					<div className="flex items-center">
+					<div className="flex items-center flex-shrink-0">
 						<Link
 							to={baseUrl}
 							className="text-gray-800 font-bold text-xl flex flex-row items-center space-x-4"

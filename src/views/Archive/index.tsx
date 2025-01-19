@@ -15,7 +15,7 @@ const Archive = () => {
 
 	return (
 		<div className="max-w-3xl mx-auto px-10 space-y-8 animate-fade-right">
-			<h1 className="text-3xl font-bold mb-6 text-gray-800">Post Archive</h1>
+			<h1 className="text-3xl font-extrabold text-gray-800 mb-6 text-center">Post Archive</h1>
 
 			{sortedYears.map((year) => (
 				<div key={year} className="mb-8">

@@ -12,7 +12,7 @@ export const App = () => {
 	const { base, title, tos } = GlobalConfig.site_settings;
 
 	return (
-		<div>
+		<>
 			<div className="flex flex-col w-full min-h-screen">
 				<Header baseUrl={base} title={title} avatar={avatar} links={MenuConfig} />
 
@@ -28,6 +28,6 @@ export const App = () => {
 			</div>
 
 			<Scroller />
-		</div>
+		</>
 	);
 };
