@@ -6,7 +6,6 @@ export const GlobalConfig = {
 		domain: "n0w0n.com",
 		https: true,
 		title: "The [object Object]",
-		description: "Uncaught Error: No silver bullet, but a lot of lead bullets",
 		language: "en",
 		tos: `Posts are available under the Creative Commons Attribution-ShareAlike License 4.0, additional terms may apply.`
 	},

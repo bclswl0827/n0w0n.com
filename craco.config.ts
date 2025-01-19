@@ -13,7 +13,6 @@ const handleBlogPosts = () => {
 		updated: new Date(),
 		language: GlobalConfig.site_settings.language,
 		title: GlobalConfig.site_settings.title,
-		description: GlobalConfig.site_settings.description,
 		id: `${getProtocolPrefix(GlobalConfig.site_settings.https)}${
 			GlobalConfig.site_settings.domain
 		}${GlobalConfig.site_settings.base}`,
