@@ -70,7 +70,7 @@ From page 319 of the datasheet, section 4.22.2.1 (PA Configure Register 0), we l
 
 Given this layout, the following C structure can represent the GPIO register set:
 
-```C
+```cpp
 typedef struct {
     volatile uint32_t config[4];
     volatile uint32_t data;
@@ -109,7 +109,7 @@ Note: Since GPIO_A8 has pull-up enabled, its default level is high unless the pi
 
 Here is the C version, where the `gpio_t` structure is the same as defined earlier. The `set_output` function configures the GPIO pin as output mode, the `set_input` function configures the GPIO pin as input mode, the `set_level` function sets the GPIO pin level, and the `get_level` function reads the GPIO pin level.
 
-```C
+```cpp
 #include <fcntl.h>
 #include <stdint.h>
 #include <stdio.h>
