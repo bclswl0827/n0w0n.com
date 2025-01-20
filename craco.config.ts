@@ -1,5 +1,5 @@
 import { Feed } from "feed";
-import { readdirSync, readFileSync, statSync, writeFileSync } from "fs";
+import { mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "fs";
 import { resolve } from "path";
 import { Configuration, DefinePlugin } from "webpack";
 import { parse as YamlParse } from "yaml";
@@ -71,6 +71,9 @@ const handleBlogPosts = () => {
 				date: postDate
 			});
 
+			if (!statSync(resolve(__dirname, "./public/data")).isDirectory()) {
+				mkdirSync(resolve(__dirname, "./public/data"));
+			}
 			writeFileSync(
 				resolve(__dirname, "./public/data", `${uniqueId}.json`),
 				JSON.stringify({
