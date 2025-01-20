@@ -41,14 +41,14 @@ Among these steps, step 2 requires consulting the CPU vendor's datasheet to iden
 
 [The datasheet](https://dl.linux-sunxi.org/H3/Allwinner_H3_Datasheet_V1.0.pdf), provided by Allwinner is an extensive 618 pages, making it impractical to read in full. Instead, relevant sections can be found by using Ctrl + F to search for the following keywords:
 
--   Base Address: Identifies the base address.
--   Register: Provides details on the registers.
+- Base Address: Identifies the base address.
+- Register: Provides details on the registers.
 
 And the key findings from the datasheet are given as follows:
 
--   CPU Base Address: On page 90, section 4.3.4, Register List, it is mentioned that the base address for all CPU registers is `0x01C20000`.
--   GPIO Base Address: On page 318, section 4.22.1, Port Controller Register List, it is noted that the GPIO base address is `0x01C20800`.
--   The offset between the CPU base address and the GPIO base address is therefore `0x0800`.
+- CPU Base Address: On page 90, section 4.3.4, Register List, it is mentioned that the base address for all CPU registers is `0x01C20000`.
+- GPIO Base Address: On page 318, section 4.22.1, Port Controller Register List, it is noted that the GPIO base address is `0x01C20800`.
+- The offset between the CPU base address and the GPIO base address is therefore `0x0800`.
 
 on page 318, section 4.22.2, at Port Controller Register, the GPIO register configurations are detailed. After excluding interrupt-related registers, the useful registers for GPIO configuration are as follows:
 

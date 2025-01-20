@@ -1,5 +1,8 @@
 import "katex/dist/katex.min.css";
+import "@fancyapps/ui/dist/fancybox/fancybox.css";
 
+import { Fancybox } from "@fancyapps/ui";
+import { useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeKatex from "rehype-katex";
 import rehypeRaw from "rehype-raw";
@@ -14,6 +17,13 @@ interface MarkdownProps {
 }
 
 export const Markdown = ({ className, children }: MarkdownProps) => {
+	useEffect(() => {
+		Fancybox.bind("[data-viewer]");
+		return () => {
+			Fancybox.destroy();
+		};
+	}, []);
+
 	return (
 		<ReactMarkdown
 			className={`prose text-md lg:prose-base max-w-[100%] break-words ${className ?? ""}`}
@@ -22,6 +32,14 @@ export const Markdown = ({ className, children }: MarkdownProps) => {
 				a: ({ node, ...props }) => (
 					<a href={props.href} target="_blank" rel="noreferrer" {...props}>
 						{props.children}
+					</a>
+				),
+				img: ({ node, ...props }) => (
+					<a href={props.src} data-viewer data-caption={props.alt}>
+						<div className="flex flex-col items-center">
+							<img className="rounded-lg" {...props} alt={props.alt} />
+							<span className="-mt-8 text-sm">{props.alt}</span>
+						</div>
 					</a>
 				),
 				pre: ({ node, ...props }) => <pre className="bg-transparent p-2" {...props} />,
