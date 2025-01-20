@@ -94,8 +94,8 @@ To configure GPIO_A20 as an output and drive it high, refer to the following det
 
 To configure GPIO_A8 as an input and enable the pull-up resistor, refer to the following details from the datasheet:
 
-1. GPIO_A8's configuration is located in the PA_CFG1_REG register (bits 0–2). Set its value to 0x00 to configure it as an input.
-2. To enable the pull-up resistor, set bits 16–17 in the PA_PULL0_REG register to 0x01.
+1. GPIO_A8's configuration is located in the PA_CFG1_REG register (bits 0–2). Set its value to `0x00` to configure it as an input.
+2. To enable the pull-up resistor, set bits 16–17 in the PA_PULL0_REG register to `0x01`.
 
 ## Practical Demonstration
 

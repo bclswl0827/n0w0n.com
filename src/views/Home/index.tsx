@@ -61,7 +61,7 @@ const Home = () => {
 						({ summary, title, slug, created_at, updated_at, words }, index) => (
 							<li className="my-8 space-y-4" key={`${index}-${slug}`}>
 								<div className="flex flex-row items-center text-2xl space-x-3 font-extrabold">
-									<Icon path={mdiFileEdit} className="text-gray-500 size-8" />
+									<Icon path={mdiFileEdit} size={1} className="text-gray-500 shrink-0" />
 									<Link
 										to={`/post/${slug}`}
 										className="text-gray-800 hover:text-amber-600 duration-300 transition-all"

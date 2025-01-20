@@ -51,17 +51,17 @@ const Post = () => {
 				<>
 					<div className="text-sm text-gray-400 flex flex-col sm:flex-row">
 						<div className="flex flex-row items-center space-x-1 sm:mr-2">
-							<Icon path={mdiClockCheck} size={0.7} className="" />
+							<Icon path={mdiClockCheck} size={0.7} />
 							<span>{getTimeString(postData.created_at)}</span>
 						</div>
 						{postData.created_at !== postData.updated_at && (
 							<div className="flex flex-row items-center space-x-1 sm:mr-2">
-								<Icon path={mdiClockEdit} size={0.7} className="" />
+								<Icon path={mdiClockEdit} size={0.7} />
 								<span>{getTimeString(postData.updated_at)}</span>
 							</div>
 						)}
 						<div className="flex flex-row items-center space-x-1">
-							<Icon path={mdiTypewriter} size={0.7} className="" />
+							<Icon path={mdiTypewriter} size={0.7} />
 							<span>{postData.words.toLocaleString()} words</span>
 						</div>
 					</div>
