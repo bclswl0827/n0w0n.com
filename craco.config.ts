@@ -71,9 +71,7 @@ const handleBlogPosts = () => {
 				date: postDate
 			});
 
-			if (!statSync(resolve(__dirname, "./public/data")).isDirectory()) {
-				mkdirSync(resolve(__dirname, "./public/data"));
-			}
+			mkdirSync(resolve(__dirname, "./public/data"), { recursive: true });
 			writeFileSync(
 				resolve(__dirname, "./public/data", `${uniqueId}.json`),
 				JSON.stringify({
