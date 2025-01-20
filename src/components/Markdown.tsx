@@ -35,11 +35,14 @@ export const Markdown = ({ className, children }: MarkdownProps) => {
 					</a>
 				),
 				img: ({ node, ...props }) => (
-					<a href={props.src} data-viewer data-caption={props.alt}>
-						<div className="flex flex-col items-center">
-							<img className="rounded-lg" {...props} alt={props.alt} />
-							<span className="-mt-8 text-sm">{props.alt}</span>
-						</div>
+					<a
+						className="flex flex-col items-center"
+						href={props.src}
+						data-viewer
+						data-caption={props.alt}
+					>
+						<img className="rounded-lg shadow-lg" {...props} alt={props.alt} />
+						<span className="-mt-6 text-sm">{props.alt}</span>
 					</a>
 				),
 				pre: ({ node, ...props }) => <pre className="bg-transparent p-2" {...props} />,
