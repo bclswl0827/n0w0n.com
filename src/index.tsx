@@ -12,26 +12,12 @@ import { RouterConfig } from "./config/router";
 const targetNode = document.getElementById("root")!;
 const root = ReactDOM.createRoot(targetNode);
 
-const observer = new MutationObserver((mutationsList, observer) => {
-	for (const mutation of mutationsList) {
-		if (mutation.attributeName === "hidden") {
-			if ((mutation.target as HTMLDivElement).hidden === false) {
-				observer.disconnect();
-				root.render(
-					<ErrorBoundary fallback={<Error />}>
-						<NuqsAdapter>
-							<RouterWrapper
-								mode={RouterConfig.mode}
-								basename={RouterConfig.basename}
-							>
-								<App />
-							</RouterWrapper>
-						</NuqsAdapter>
-					</ErrorBoundary>
-				);
-			}
-		}
-	}
-});
-
-observer.observe(targetNode, { attributes: true });
+root.render(
+	<ErrorBoundary fallback={<Error />}>
+		<NuqsAdapter>
+			<RouterWrapper mode={RouterConfig.mode} basename={RouterConfig.basename}>
+				<App />
+			</RouterWrapper>
+		</NuqsAdapter>
+	</ErrorBoundary>
+);
