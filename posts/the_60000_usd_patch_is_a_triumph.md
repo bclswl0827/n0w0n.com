@@ -20,7 +20,7 @@ Out of curiosity, I requested the schematic of the product and, after some analy
 
 <!--more-->
 
-## A Software-Level Approach to The Issue
+## A Kernel-Level Approach to the Issue
 
 From the above schematic and the [TPT7487 datasheet](http://file.3peakic.com.cn:8080/product/Datasheet_TPT7487-TPT7488.pdf), it became clear that when the CM4_RS485_n_DTR (where n = [1, 2, 3]) pins are low, the transceiver enters receive mode; when they are high, the chip switches to transmit mode.
 
@@ -200,8 +200,8 @@ Cheers!
 Over the next few days, I broke down the task into smaller steps and gradually implemented the required functionality:
 
 1. Set GPIO Mode and Control Pin Levels in the Kernel Module
-2. Hook uart_write in the Kernel Module to Raise GPIO Before Transmission
-3. Wait for uart_write Completion and Lower GPIO After Transmission
+2. Hook `uart_write` in the Kernel Module to Raise GPIO Before Transmission
+3. Wait for `uart_write` Completion and Lower GPIO After Transmission
 
 [Thanks to an article I wrote in 2023 on using mmap for GPIO control](https://n0w0n.com/#/post/allwinner_h3_memory_mapping), I successfully implemented GPIO control in a Raspberry Pi kernel module. The final code is as follows, [I also made it public on my GitHub repository](https://github.com/bclswl0827/r1000v1-rs485-autoflow).
 
