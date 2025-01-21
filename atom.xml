@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>httpsn0w0n.com/</id>
     <title>The [object Object]</title>
-    <updated>2025-01-21T11:13:10.947Z</updated>
+    <updated>2025-01-21T11:17:22.566Z</updated>
     <generator>The [object Object]</generator>
     <author>
         <name>Unknown netizen</name>
@@ -494,7 +494,7 @@ This experience reaffirmed the importance of thinking creatively when addressing
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[MMAP on Allwinner H3 - The faster way to access to GPIO pins]]></title>
+        <title type="html"><![CDATA[MMAP on Allwinner H3 - The Faster Way to Access to GPIO Pins]]></title>
         <id>allwinner_h3_memory_mapping</id>
         <link href="https://n0w0n.com/read/allwinner_h3_memory_mapping.md"/>
         <updated>2023-05-20T05:08:00.000Z</updated>
