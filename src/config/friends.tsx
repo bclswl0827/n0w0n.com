@@ -44,5 +44,10 @@ export const FriendsConfig: IFriendsConfig[] = [
 		name: "Radiofun-Hong's Blog",
 		url: "https://www.rhba7jwe.top",
 		description: `Amateur radio operator (callsign: BA7JWE), enthusiastic about amateur radio, television, flags, animation, and technology.`
+	},
+	{
+		name: "YuzukiTsuru's Space",
+		url: "https://www.gloomyghost.com",
+		description: "Embedded software engineer, also focuses on machine learning and computer vision."
 	}
 ];
