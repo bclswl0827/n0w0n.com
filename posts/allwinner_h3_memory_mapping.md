@@ -1,5 +1,5 @@
 ---
-title: "MMAP on Allwinner H3 - The faster way to access to GPIO pins"
+title: "MMAP on Allwinner H3 - The Faster Way to Access to GPIO Pins"
 date: "2023-05-20 13:08:00 +0800"
 ---
 
