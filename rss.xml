@@ -4,7 +4,7 @@
         <title>The [object Object]</title>
         <link>httpsn0w0n.com/</link>
         <description>undefined</description>
-        <lastBuildDate>Wed, 22 Jan 2025 08:10:01 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 22 Jan 2025 09:00:48 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>The [object Object]</generator>
         <language>en</language>
@@ -17,7 +17,7 @@
         <atom:link href="https://n0w0n.com/rss.xml" rel="self" type="application/rss+xml"/>
         <item>
             <title><![CDATA[The $60,000 Patch: A Newcomer's One-Week Triumph]]></title>
-            <link>https://n0w0n.com/#/post/the_60000_usd_patch_is_a_triumph</link>
+            <link>https://n0w0n.com/post/the_60000_usd_patch_is_a_triumph</link>
             <guid>the_60000_usd_patch_is_a_triumph</guid>
             <pubDate>Tue, 21 Jan 2025 01:31:22 GMT</pubDate>
             <description><![CDATA[<p>In mid-October, after three rounds of assessments and interviews, I finally get a work from a company that specializing in open-source IoT and embedded development.</p>
@@ -456,7 +456,7 @@ module_exit(module_exit_fn);
         </item>
         <item>
             <title><![CDATA[MMAP on Allwinner H3 - The Faster Way to Access to GPIO Pins]]></title>
-            <link>https://n0w0n.com/#/post/allwinner_h3_memory_mapping</link>
+            <link>https://n0w0n.com/post/allwinner_h3_memory_mapping</link>
             <guid>allwinner_h3_memory_mapping</guid>
             <pubDate>Sat, 20 May 2023 05:08:00 GMT</pubDate>
             <description><![CDATA[<p>When it comes to control the GPIO pins on a development board, many of developers have tried to access the GPIO pins from the user space (e.g. The <code>sysfs</code>). But this approach may not perform well because it's not that fast as you may thought - at least it was vividly reflected in one of my recent needs.</p>
