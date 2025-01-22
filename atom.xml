@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>httpsn0w0n.com/</id>
     <title>The [object Object]</title>
-    <updated>2025-01-22T07:48:27.940Z</updated>
+    <updated>2025-01-22T08:10:01.960Z</updated>
     <generator>The [object Object]</generator>
     <author>
         <name>Unknown netizen</name>
@@ -493,17 +493,72 @@ module_exit(module_exit_fn);
 <li>The offset between the CPU base address and the GPIO base address is therefore <code>0x0800</code>.</li>
 </ul>
 <p>on page 318, section 4.22.2, at Port Controller Register, the GPIO register configurations are detailed. After excluding interrupt-related registers, the useful registers for GPIO configuration are as follows:</p>
-<p>| Register | Offset         | Description                                                                                    | Remarks                                                                                                                            |
-| :------- | :------------- | :--------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------- |
-| Pn<em>CFG0  | n*0x24 + 0x00 | GPIO</em>n configuration register 0 for setting up pin mode                                     | First determine the port number (e.g. GPIO<em>A) and pin number (e.g. 6) for which you want to set the GPIO mode.                     |
-| Pn</em>CFG1  | n*0x24 + 0x04 | GPIO<em>n configuration register 1 for setting up pin mode                                     | Then in the P<u>n</u> Configure Register <u>x</u> table following this table in the Datasheet, where n = [0…6] and x = [0…3],  |
-| Pn</em>CFG2  | n*0x24 + 0x08 | GPIO<em>n configuration register 2 for setting up pin mode                                     | find the corresponding "bit" and "value" for the GPIO mode you want to set.                                                        |
-| Pn</em>CFG3  | n*0x24 + 0x0C | GPIO<em>n configuration register 3 for setting up pin mode                                     | (The code n mentioned above also refers to one of the GPIO port numbers A, C, D, E, F, G, L)                                       |
-| Pn</em>DAT   | n*0x24 + 0x10 | GPIO<em>n data register for accessing the state of GPIO pin                                    | In input mode, the corresponding bit indicates the pin status; in output mode, the pin status is the same as the corresponding bit |
-| Pn</em>DRV0  | n*0x24 + 0x14 | GPIO<em>n drive capability register 0, used to configure the output drive capability of GPIO n |                                                                                                                                    |
-| Pn</em>DRV1  | n*0x24 + 0x18 | GPIO<em>n drive capability register 1, used to configure the output drive capability of GPIO n |                                                                                                                                    |
-| Pn</em>PUL0  | n*0x24 + 0x1C | GPIO<em>n Pull-up / Pull-down register 0, used to configure the pull-up / pull-down of GPIO n  |                                                                                                                                    |
-| Pn</em>PUL1  | n*0x24 + 0x20 | GPIO_n Pull-up / Pull-down register 1, used to configure the pull-up / pull-down of GPIO n  |                                                                                                                                    |</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">Register</th>
+<th style="text-align:left;">Offset</th>
+<th style="text-align:left;">Description</th>
+<th style="text-align:left;">Remarks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">Pn_CFG0</td>
+<td style="text-align:left;">n*0x24 + 0x00</td>
+<td style="text-align:left;">GPIO_n configuration register 0 for setting up pin mode</td>
+<td style="text-align:left;">First determine the port number (e.g. GPIO_A) and pin number (e.g. 6) for which you want to set the GPIO mode.</td>
+</tr>
+<tr>
+<td style="text-align:left;">Pn_CFG1</td>
+<td style="text-align:left;">n*0x24 + 0x04</td>
+<td style="text-align:left;">GPIO_n configuration register 1 for setting up pin mode</td>
+<td style="text-align:left;">Then in the P<u>n</u> Configure Register <u>x</u> table following this table in the Datasheet, where n = [0…6] and x = [0…3],</td>
+</tr>
+<tr>
+<td style="text-align:left;">Pn_CFG2</td>
+<td style="text-align:left;">n*0x24 + 0x08</td>
+<td style="text-align:left;">GPIO_n configuration register 2 for setting up pin mode</td>
+<td style="text-align:left;">find the corresponding "bit" and "value" for the GPIO mode you want to set.</td>
+</tr>
+<tr>
+<td style="text-align:left;">Pn_CFG3</td>
+<td style="text-align:left;">n*0x24 + 0x0C</td>
+<td style="text-align:left;">GPIO_n configuration register 3 for setting up pin mode</td>
+<td style="text-align:left;">(The code n mentioned above also refers to one of the GPIO port numbers A, C, D, E, F, G, L)</td>
+</tr>
+<tr>
+<td style="text-align:left;">Pn_DAT</td>
+<td style="text-align:left;">n*0x24 + 0x10</td>
+<td style="text-align:left;">GPIO_n data register for accessing the state of GPIO pin</td>
+<td style="text-align:left;">In input mode, the corresponding bit indicates the pin status; in output mode, the pin status is the same as the corresponding bit</td>
+</tr>
+<tr>
+<td style="text-align:left;">Pn_DRV0</td>
+<td style="text-align:left;">n*0x24 + 0x14</td>
+<td style="text-align:left;">GPIO_n drive capability register 0, used to configure the output drive capability of GPIO n</td>
+<td style="text-align:left;"></td>
+</tr>
+<tr>
+<td style="text-align:left;">Pn_DRV1</td>
+<td style="text-align:left;">n*0x24 + 0x18</td>
+<td style="text-align:left;">GPIO_n drive capability register 1, used to configure the output drive capability of GPIO n</td>
+<td style="text-align:left;"></td>
+</tr>
+<tr>
+<td style="text-align:left;">Pn_PUL0</td>
+<td style="text-align:left;">n*0x24 + 0x1C</td>
+<td style="text-align:left;">GPIO_n Pull-up / Pull-down register 0, used to configure the pull-up / pull-down of GPIO n</td>
+<td style="text-align:left;"></td>
+</tr>
+<tr>
+<td style="text-align:left;">Pn_PUL1</td>
+<td style="text-align:left;">n*0x24 + 0x20</td>
+<td style="text-align:left;">GPIO_n Pull-up / Pull-down register 1, used to configure the pull-up / pull-down of GPIO n</td>
+<td style="text-align:left;"></td>
+</tr>
+</tbody>
+</table>
 <p>Although we know the GPIO register base address is <code>0x01C20800</code>, specific ports like GPIO_A require knowledge of their offset from the GPIO base address.</p>
 <p>From page 319 of the datasheet, section 4.22.2.1 (PA Configure Register 0), we learn: GPIO<em>A registers start at an offset of 0x00 relative to the GPIO base address, the configuration for GPIO</em>A registers ends at <code>0x01C20820</code>, with a total width of 0x20 bytes.</p>
 <p>Given this layout, the following C structure can represent the GPIO register set:</p>
