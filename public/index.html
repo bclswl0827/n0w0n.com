@@ -354,7 +354,7 @@
 						document.title = isp.title;
 						Object.defineProperty(document, "title", {
 							set(newTitle) {
-								document.title = isp.title;
+								newTitle = isp.title;
 							},
 							configurable: false,
 							enumerable: true
