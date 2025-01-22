@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>httpsn0w0n.com/</id>
     <title>The [object Object]</title>
-    <updated>2025-01-21T20:07:43.768Z</updated>
+    <updated>2025-01-22T07:42:03.800Z</updated>
     <generator>The [object Object]</generator>
     <author>
         <name>Unknown netizen</name>
@@ -16,79 +16,47 @@
         <id>the_60000_usd_patch_is_a_triumph</id>
         <link href="https://n0w0n.com/read/the_60000_usd_patch_is_a_triumph.md"/>
         <updated>2025-01-21T01:31:22.000Z</updated>
-        <summary type="html"><![CDATA[
-In mid-October, after three rounds of assessments and interviews, I finally get a work from a company that specializing in open-source IoT and embedded development.
-
-As an application engineer at this company, my responsibilities include building libraries, maintaining product documentation on the wiki, and creating customized demos for various edge computing devices. Just a few days into the role, I learned about a legacy issue with one of the products. Specifically, the RS485 interfaces had a critical flaw that prevented the port from properly switching the data direction.
-
-The R&D team had previously attempted to address this issue at the application layer by developing a utility tool called `rs485_DE` using C. This tool would open the original RS485 port (e.g., `/dev/ttyAMA2`), then create a new virtual serial port, and monitor data on the virtual port. It would then automatically toggle the chip's $\overline{\text{RE}}$ pin based on the data flow direction. However, this approach introduced a new issue: the higher baud rates, the more frequently data loss would occurr. The root cause was the tool's reliance on polling to check the buffers, coupled with the use of the `libgpiod` library to manipulate GPIOs for flow control, which was too slow to meet the performance requirements.
-
-Adding to the complexity, the RS485 transceiver chip used in the product was the TPT7487. On this chip, the $\overline{\text{RE}}$ pin is responsible for controlling the chip's mode - either receive or transmit. However, instead of being connected to dedicated DTR pins, the $\overline{\text{RE}}$ pin was wired to several general-purpose GPIO pins on the Compute Module 4 (CM4). Unfortunately, the kernel driver did not configure these GPIOs as DTR pins, further limiting the ability to implement a hardware-based solution for automatic data direction control.
-
-![The general-purpose GPIO pins to RS485 transceiver chips](https://assets.n0w0n.com/the_60000_usd_patch_is_a_triumph/1.png)
-![The RS485 transceiver schematic](https://assets.n0w0n.com/the_60000_usd_patch_is_a_triumph/2.png)
-
-After thorough discussions and evaluations, the team concluded that replacing all affected products was the only viable solution. Despite the significant cost - an estimated $60,000 - the company prioritized customer satisfaction and product reliability. With no better technical solution available, the recall decision was made to uphold the company's reputation and ensure long-term trust from customers.
-
-Out of curiosity, I requested the schematic of the product and, after some analysis, I surprisingly discovered what I believed could be a potential software solution to the issues. That marked the beginning of a new chapter in addressing the problem.
-
-]]></summary>
-        <content type="html"><![CDATA[
-In mid-October, after three rounds of assessments and interviews, I finally get a work from a company that specializing in open-source IoT and embedded development.
-
-As an application engineer at this company, my responsibilities include building libraries, maintaining product documentation on the wiki, and creating customized demos for various edge computing devices. Just a few days into the role, I learned about a legacy issue with one of the products. Specifically, the RS485 interfaces had a critical flaw that prevented the port from properly switching the data direction.
-
-The R&D team had previously attempted to address this issue at the application layer by developing a utility tool called `rs485_DE` using C. This tool would open the original RS485 port (e.g., `/dev/ttyAMA2`), then create a new virtual serial port, and monitor data on the virtual port. It would then automatically toggle the chip's $\overline{\text{RE}}$ pin based on the data flow direction. However, this approach introduced a new issue: the higher baud rates, the more frequently data loss would occurr. The root cause was the tool's reliance on polling to check the buffers, coupled with the use of the `libgpiod` library to manipulate GPIOs for flow control, which was too slow to meet the performance requirements.
-
-Adding to the complexity, the RS485 transceiver chip used in the product was the TPT7487. On this chip, the $\overline{\text{RE}}$ pin is responsible for controlling the chip's mode - either receive or transmit. However, instead of being connected to dedicated DTR pins, the $\overline{\text{RE}}$ pin was wired to several general-purpose GPIO pins on the Compute Module 4 (CM4). Unfortunately, the kernel driver did not configure these GPIOs as DTR pins, further limiting the ability to implement a hardware-based solution for automatic data direction control.
-
-![The general-purpose GPIO pins to RS485 transceiver chips](https://assets.n0w0n.com/the_60000_usd_patch_is_a_triumph/1.png)
-![The RS485 transceiver schematic](https://assets.n0w0n.com/the_60000_usd_patch_is_a_triumph/2.png)
-
-After thorough discussions and evaluations, the team concluded that replacing all affected products was the only viable solution. Despite the significant cost - an estimated $60,000 - the company prioritized customer satisfaction and product reliability. With no better technical solution available, the recall decision was made to uphold the company's reputation and ensure long-term trust from customers.
-
-Out of curiosity, I requested the schematic of the product and, after some analysis, I surprisingly discovered what I believed could be a potential software solution to the issues. That marked the beginning of a new chapter in addressing the problem.
-
-
-
-## A Kernel-Level Approach to the Issue
-
-From the above schematic and the [TPT7487 datasheet](http://file.3peakic.com.cn:8080/product/Datasheet_TPT7487-TPT7488.pdf), it became clear that when the CM4_RS485_n_DTR (where n = [1, 2, 3]) pins are low, the transceiver enters receive mode; when they are high, the chip switches to transmit mode.
-
-Since this product is based on the CM4, it is highly likely that most users would download and install the official Raspberry Pi OS image, which meant that modifying and redistributing the Raspberry Pi Linux kernel driver would be impractical. This approach would introduce significant inconvenience for users - especially since we don't even have an independent apt source!
-
-Now the problem was clear: a solution that required kernel changes or custom distribution wouldn't work in this environment.
-
-As I continued to think about the issue, I realized that I could write an out-of-tree kernel module to control the $\overline{\text{RE}}$ pin and thus achieve automatic toggling of the transceiver mode. However, the challenge was to implement this solution without relying on polling, which had been a major flaw in the original approach. At the time, I didn't have much experience with kernel modules, but I decided to take a chance and try to solve it.
-
-I recalled an idea I had seen previously in server monitoring tools, where file changes could be tracked by hooking into the syscall layer. Inspired by this concept, I figured I could apply the same principle to monitor the UART calls and control the $\overline{\text{RE}}$ pin's state. Instead of polling, I thought I could hook into the relevant functions that handle data transmission and reception, allowing me to change the pin's state dynamically in response to the data flow direction.
-
-By leveraging this approach, I aimed to develop a solution that was both efficient and non-intrusive, providing a clean software-level fix without needing to modify the underlying kernel or disrupt the user experience.
-
-## The Challenges with Kernel Modifications
-
-As I began exploring potential solutions to hook syscalls, I encountered a significant challenge with the existing syscall hook implementations. Many of the examples I found were designed for kernel versions prior to 5.7. This limitation stemmed from the fact that, starting from kernel 5.7, the `kallsyms_lookup_name` function was no longer exported, which meant the approach of directly searching for kernel symbols by name wouldn't work.
-
-After researching alternatives, I discovered that the kprobe mechanism could be used to achieve the same goal. The kprobe is a powerful tool in the Linux kernel that allows for dynamic instrumentation of functions at runtime. By using kprobe, I could locate and interact with kernel symbols (such as syscalls) even on newer kernels where `kallsyms_lookup_name` is not available. This discovery provided a way to work around the limitations of newer kernel versions.
-
-With this in mind, I proceeded to write a kernel module to implement syscall hooking using kprobe. The following code demonstrates how to hook the `mkdir` syscall, replacing it with a custom version. The module dynamically locates kernel symbols using kprobe, bypassing the restriction imposed by kernel 5.7 and above.
-
-BTW, The following code is designed to work with ARM64 architecture. For x86_64 architecture, [the full demo has been provided on GitHub](https://github.com/bclswl0827/linux-syscall-hook-mkdir/tree/master).
-
-```cpp
-#include <asm/unistd.h>
-#include <linux/kallsyms.h>
-#include <linux/kernel.h>
-#include <linux/kprobes.h>
-#include <linux/module.h>
-#include <linux/version.h>
-#include <linux/vmalloc.h>
+        <summary type="html"><![CDATA[<p>In mid-October, after three rounds of assessments and interviews, I finally get a work from a company that specializing in open-source IoT and embedded development.</p>
+<p>As an application engineer at this company, my responsibilities include building libraries, maintaining product documentation on the wiki, and creating customized demos for various edge computing devices. Just a few days into the role, I learned about a legacy issue with one of the products. Specifically, the RS485 interfaces had a critical flaw that prevented the port from properly switching the data direction.</p>
+<p>The R&amp;D team had previously attempted to address this issue at the application layer by developing a utility tool called <code>rs485_DE</code> using C. This tool would open the original RS485 port (e.g., <code>/dev/ttyAMA2</code>), then create a new virtual serial port, and monitor data on the virtual port. It would then automatically toggle the chip's $\overline{\text{RE}}$ pin based on the data flow direction. However, this approach introduced a new issue: the higher baud rates, the more frequently data loss would occurr. The root cause was the tool's reliance on polling to check the buffers, coupled with the use of the <code>libgpiod</code> library to manipulate GPIOs for flow control, which was too slow to meet the performance requirements.</p>
+<p>Adding to the complexity, the RS485 transceiver chip used in the product was the TPT7487. On this chip, the $\overline{\text{RE}}$ pin is responsible for controlling the chip's mode - either receive or transmit. However, instead of being connected to dedicated DTR pins, the $\overline{\text{RE}}$ pin was wired to several general-purpose GPIO pins on the Compute Module 4 (CM4). Unfortunately, the kernel driver did not configure these GPIOs as DTR pins, further limiting the ability to implement a hardware-based solution for automatic data direction control.</p>
+<p><img src="https://assets.n0w0n.com/the_60000_usd_patch_is_a_triumph/1.png" alt="The general-purpose GPIO pins to RS485 transceiver chips" />
+<img src="https://assets.n0w0n.com/the_60000_usd_patch_is_a_triumph/2.png" alt="The RS485 transceiver schematic" /></p>
+<p>After thorough discussions and evaluations, the team concluded that replacing all affected products was the only viable solution. Despite the significant cost - an estimated $60,000 - the company prioritized customer satisfaction and product reliability. With no better technical solution available, the recall decision was made to uphold the company's reputation and ensure long-term trust from customers.</p>
+<p>Out of curiosity, I requested the schematic of the product and, after some analysis, I surprisingly discovered what I believed could be a potential software solution to the issues. That marked the beginning of a new chapter in addressing the problem.</p>]]></summary>
+        <content type="html"><![CDATA[<p>In mid-October, after three rounds of assessments and interviews, I finally get a work from a company that specializing in open-source IoT and embedded development.</p>
+<p>As an application engineer at this company, my responsibilities include building libraries, maintaining product documentation on the wiki, and creating customized demos for various edge computing devices. Just a few days into the role, I learned about a legacy issue with one of the products. Specifically, the RS485 interfaces had a critical flaw that prevented the port from properly switching the data direction.</p>
+<p>The R&amp;D team had previously attempted to address this issue at the application layer by developing a utility tool called <code>rs485_DE</code> using C. This tool would open the original RS485 port (e.g., <code>/dev/ttyAMA2</code>), then create a new virtual serial port, and monitor data on the virtual port. It would then automatically toggle the chip's $\overline{\text{RE}}$ pin based on the data flow direction. However, this approach introduced a new issue: the higher baud rates, the more frequently data loss would occurr. The root cause was the tool's reliance on polling to check the buffers, coupled with the use of the <code>libgpiod</code> library to manipulate GPIOs for flow control, which was too slow to meet the performance requirements.</p>
+<p>Adding to the complexity, the RS485 transceiver chip used in the product was the TPT7487. On this chip, the $\overline{\text{RE}}$ pin is responsible for controlling the chip's mode - either receive or transmit. However, instead of being connected to dedicated DTR pins, the $\overline{\text{RE}}$ pin was wired to several general-purpose GPIO pins on the Compute Module 4 (CM4). Unfortunately, the kernel driver did not configure these GPIOs as DTR pins, further limiting the ability to implement a hardware-based solution for automatic data direction control.</p>
+<p><img src="https://assets.n0w0n.com/the_60000_usd_patch_is_a_triumph/1.png" alt="The general-purpose GPIO pins to RS485 transceiver chips" />
+<img src="https://assets.n0w0n.com/the_60000_usd_patch_is_a_triumph/2.png" alt="The RS485 transceiver schematic" /></p>
+<p>After thorough discussions and evaluations, the team concluded that replacing all affected products was the only viable solution. Despite the significant cost - an estimated $60,000 - the company prioritized customer satisfaction and product reliability. With no better technical solution available, the recall decision was made to uphold the company's reputation and ensure long-term trust from customers.</p>
+<p>Out of curiosity, I requested the schematic of the product and, after some analysis, I surprisingly discovered what I believed could be a potential software solution to the issues. That marked the beginning of a new chapter in addressing the problem.</p>
+<h2 id="akernellevelapproachtotheissue">A Kernel-Level Approach to the Issue</h2>
+<p>From the above schematic and the <a href="http://file.3peakic.com.cn:8080/product/Datasheet_TPT7487-TPT7488.pdf">TPT7487 datasheet</a>, it became clear that when the CM4<em>RS485</em>n_DTR (where n = [1, 2, 3]) pins are low, the transceiver enters receive mode; when they are high, the chip switches to transmit mode.</p>
+<p>Since this product is based on the CM4, it is highly likely that most users would download and install the official Raspberry Pi OS image, which meant that modifying and redistributing the Raspberry Pi Linux kernel driver would be impractical. This approach would introduce significant inconvenience for users - especially since we don't even have an independent apt source!</p>
+<p>Now the problem was clear: a solution that required kernel changes or custom distribution wouldn't work in this environment.</p>
+<p>As I continued to think about the issue, I realized that I could write an out-of-tree kernel module to control the $\overline{\text{RE}}$ pin and thus achieve automatic toggling of the transceiver mode. However, the challenge was to implement this solution without relying on polling, which had been a major flaw in the original approach. At the time, I didn't have much experience with kernel modules, but I decided to take a chance and try to solve it.</p>
+<p>I recalled an idea I had seen previously in server monitoring tools, where file changes could be tracked by hooking into the syscall layer. Inspired by this concept, I figured I could apply the same principle to monitor the UART calls and control the $\overline{\text{RE}}$ pin's state. Instead of polling, I thought I could hook into the relevant functions that handle data transmission and reception, allowing me to change the pin's state dynamically in response to the data flow direction.</p>
+<p>By leveraging this approach, I aimed to develop a solution that was both efficient and non-intrusive, providing a clean software-level fix without needing to modify the underlying kernel or disrupt the user experience.</p>
+<h2 id="thechallengeswithkernelmodifications">The Challenges with Kernel Modifications</h2>
+<p>As I began exploring potential solutions to hook syscalls, I encountered a significant challenge with the existing syscall hook implementations. Many of the examples I found were designed for kernel versions prior to 5.7. This limitation stemmed from the fact that, starting from kernel 5.7, the <code>kallsyms_lookup_name</code> function was no longer exported, which meant the approach of directly searching for kernel symbols by name wouldn't work.</p>
+<p>After researching alternatives, I discovered that the kprobe mechanism could be used to achieve the same goal. The kprobe is a powerful tool in the Linux kernel that allows for dynamic instrumentation of functions at runtime. By using kprobe, I could locate and interact with kernel symbols (such as syscalls) even on newer kernels where <code>kallsyms_lookup_name</code> is not available. This discovery provided a way to work around the limitations of newer kernel versions.</p>
+<p>With this in mind, I proceeded to write a kernel module to implement syscall hooking using kprobe. The following code demonstrates how to hook the <code>mkdir</code> syscall, replacing it with a custom version. The module dynamically locates kernel symbols using kprobe, bypassing the restriction imposed by kernel 5.7 and above.</p>
+<p>BTW, The following code is designed to work with ARM64 architecture. For x86_64 architecture, <a href="https://github.com/bclswl0827/linux-syscall-hook-mkdir/tree/master">the full demo has been provided on GitHub</a>.</p>
+<pre><code class="cpp language-cpp">#include &lt;asm/unistd.h&gt;
+#include &lt;linux/kallsyms.h&gt;
+#include &lt;linux/kernel.h&gt;
+#include &lt;linux/kprobes.h&gt;
+#include &lt;linux/module.h&gt;
+#include &lt;linux/version.h&gt;
+#include &lt;linux/vmalloc.h&gt;
 
 #define MODULE_NAME "syscall_hook"
 #define LOG_PREFIX MODULE_NAME ": "
 
 MODULE_DESCRIPTION("A simple module that hooks the `mkdir` function, works on kernel 5.7 and higher.");
-MODULE_AUTHOR("Joshua Lee <chengxun.li@seeed.cc>");
+MODULE_AUTHOR("Joshua Lee &lt;chengxun.li@seeed.cc&gt;");
 MODULE_LICENSE("Dual MIT/GPL");
 MODULE_VERSION("0.0.1");
 
@@ -96,7 +64,7 @@ MODULE_VERSION("0.0.1");
 // But we can use `kprobe` to find the address of `kallsyms_lookup_name`.
 // The `custom_kallsyms_lookup_name` represents the address of `kallsyms_lookup_name` internally.
 // For kernel 5.7 and below, the `custom_kallsyms_lookup_name` simply calls to `kallsyms_lookup_name`.
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 7, 0)
+#if LINUX_VERSION_CODE &gt;= KERNEL_VERSION(5, 7, 0)
 typedef unsigned long (*kallsyms_lookup_name_t)(const char* name);
 static kallsyms_lookup_name_t custom_kallsyms_lookup_name;
 #else
@@ -106,15 +74,15 @@ static kallsyms_lookup_name_t custom_kallsyms_lookup_name;
 // `fixup_kallsyms_lookup_name` extracts the address of `kallsyms_lookup_name` from `kprobe`.
 // It returns 0 on success, -EFAULT on failure.
 static int fixup_kallsyms_lookup_name(void) {
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 7, 0)
+#if LINUX_VERSION_CODE &gt;= KERNEL_VERSION(5, 7, 0)
     struct kprobe kp = {.symbol_name = "kallsyms_lookup_name"};
-    int result = register_kprobe(&kp);
-    if (result < 0) {
+    int result = register_kprobe(&amp;kp);
+    if (result &lt; 0) {
         printk(KERN_ERR LOG_PREFIX "Failed to register kprobe, returned code: %d\n", result);
         return result;
     }
     custom_kallsyms_lookup_name = (kallsyms_lookup_name_t)kp.addr;
-    unregister_kprobe(&kp);
+    unregister_kprobe(&amp;kp);
     if (!custom_kallsyms_lookup_name) {
         printk(KERN_ERR LOG_PREFIX "Failed to get address for `kallsyms_lookup_name`\n");
         return -EFAULT;
@@ -139,7 +107,7 @@ static unsigned long* syscall_table;                       // `syscall_table` po
 // Do whatever you want here and return the result.
 static int custom_mkdir(const struct pt_regs* regs) {
     char filename[512] = {0};
-    char __user* pathname = (char*)regs->regs[1];
+    char __user* pathname = (char*)regs-&gt;regs[1];
     if (copy_from_user(filename, pathname, sizeof(filename)) != 0) {
         printk(KERN_ERR LOG_PREFIX "Failed to get file name from user\n");
         return -1;
@@ -149,7 +117,7 @@ static int custom_mkdir(const struct pt_regs* regs) {
 }
 
 static int module_init_fn(void) {
-    if (fixup_kallsyms_lookup_name() < 0) {
+    if (fixup_kallsyms_lookup_name() &lt; 0) {
         return -1;
     }
 
@@ -178,13 +146,13 @@ static int module_init_fn(void) {
     }
     prototype_mkdir = (syscall_fn_t)syscall_table[__NR_mkdirat];  // Create backup of original `mkdir` function.
 
-    syscall_target_base_addr = ((unsigned long)(syscall_table + __NR_mkdirat)) & PAGE_MASK;
+    syscall_target_base_addr = ((unsigned long)(syscall_table + __NR_mkdirat)) &amp; PAGE_MASK;
     struct vm_struct* area = custom_find_vm_area((void*)syscall_target_base_addr);
     if (area == NULL) {
         printk(KERN_ERR LOG_PREFIX "Could not find vm area\n");
         return -1;
     }
-    area->flags |= VM_ALLOC;
+    area-&gt;flags |= VM_ALLOC;
 
     int result = custom_set_memory_rw(syscall_target_base_addr, 1);
     if (result != 0) {
@@ -198,7 +166,7 @@ static int module_init_fn(void) {
         return -1;
     }
 
-    printk(KERN_INFO LOG_PREFIX "Hooked `mkdir` function successfully (%p => %p)\n", prototype_mkdir, custom_mkdir);
+    printk(KERN_INFO LOG_PREFIX "Hooked `mkdir` function successfully (%p =&gt; %p)\n", prototype_mkdir, custom_mkdir);
     return 0;
 }
 
@@ -215,34 +183,28 @@ static void module_end_fn(void) {
         return;
     }
 
-    printk(KERN_INFO LOG_PREFIX "Unhooked `mkdir` function successfully (%p => %p)\n", custom_mkdir, prototype_mkdir);
+    printk(KERN_INFO LOG_PREFIX "Unhooked `mkdir` function successfully (%p =&gt; %p)\n", custom_mkdir, prototype_mkdir);
 }
 
 module_init(module_init_fn);
 module_exit(module_end_fn);
-```
-
-![Hook loaded](https://assets.n0w0n.com/the_60000_usd_patch_is_a_triumph/3.png)
-
-Cheers!
-
-## Happy Hacking with Kprobes
-
-Over the next few days, I broke down the task into smaller steps and gradually implemented the required functionality:
-
-1. Set GPIO Mode and Control Pin Levels in the Kernel Module
-2. Hook `uart_write` in the Kernel Module to Raise GPIO Before Transmission
-3. Wait for `uart_write` Completion and Lower GPIO After Transmission
-
-[Thanks to an article I wrote in 2023 on using mmap for GPIO control](https://n0w0n.com/#/post/allwinner_h3_memory_mapping), I successfully implemented GPIO control in a Raspberry Pi kernel module. The final code is as follows, [I also made it public on my GitHub repository](https://github.com/bclswl0827/r1000v1-rs485-autoflow).
-
-```cpp
-#include <asm/io.h>
-#include <linux/delay.h>
-#include <linux/kprobes.h>
-#include <linux/slab.h>
-#include <linux/tty.h>
-#include <linux/workqueue.h>
+</code></pre>
+<p><img src="https://assets.n0w0n.com/the_60000_usd_patch_is_a_triumph/3.png" alt="Hook loaded" /></p>
+<p>Cheers!</p>
+<h2 id="happyhackingwithkprobes">Happy Hacking with Kprobes</h2>
+<p>Over the next few days, I broke down the task into smaller steps and gradually implemented the required functionality:</p>
+<ol>
+<li>Set GPIO Mode and Control Pin Levels in the Kernel Module</li>
+<li>Hook <code>uart_write</code> in the Kernel Module to Raise GPIO Before Transmission</li>
+<li>Wait for <code>uart_write</code> Completion and Lower GPIO After Transmission</li>
+</ol>
+<p><a href="https://n0w0n.com/#/post/allwinner_h3_memory_mapping">Thanks to an article I wrote in 2023 on using mmap for GPIO control</a>, I successfully implemented GPIO control in a Raspberry Pi kernel module. The final code is as follows, <a href="https://github.com/bclswl0827/r1000v1-rs485-autoflow">I also made it public on my GitHub repository</a>.</p>
+<pre><code class="cpp language-cpp">#include &lt;asm/io.h&gt;
+#include &lt;linux/delay.h&gt;
+#include &lt;linux/kprobes.h&gt;
+#include &lt;linux/slab.h&gt;
+#include &lt;linux/tty.h&gt;
+#include &lt;linux/workqueue.h&gt;
 
 #ifndef MODULE_NAME
 #define MODULE_NAME "r1000v1_rs485_autoflow"
@@ -253,7 +215,7 @@ Over the next few days, I broke down the task into smaller steps and gradually i
 #endif
 
 MODULE_DESCRIPTION("This module fixes RS-485 flow control issue on reComputer R1000 v1.0 by hooking `uart_write` function.");
-MODULE_AUTHOR("Joshua Lee <chengxun.li@seeed.cc>");
+MODULE_AUTHOR("Joshua Lee &lt;chengxun.li@seeed.cc&gt;");
 MODULE_LICENSE("Dual MIT/GPL");
 MODULE_VERSION(MODULE_VER);
 
@@ -278,27 +240,27 @@ static void rs485_dtr_init(void) {
     GPIO_PUP_PDN_CNTRL_REG1 = (volatile unsigned int*)ioremap(BCM2711_GPIO_BASE + 0xe8, 4);
 
     // Set CM4_RS485_1_DTR at GPIO_6 to output mode (GPFSEL0[20:18]), no internal pull
-    *GPFSEL0 &= ~(7 << 18);
-    *GPFSEL0 |= (1 << 18);
-    *GPIO_PUP_PDN_CNTRL_REG0 &= ~(3 << 12);
-    *GPIO_PUP_PDN_CNTRL_REG0 |= (0 << 12);
+    *GPFSEL0 &amp;= ~(7 &lt;&lt; 18);
+    *GPFSEL0 |= (1 &lt;&lt; 18);
+    *GPIO_PUP_PDN_CNTRL_REG0 &amp;= ~(3 &lt;&lt; 12);
+    *GPIO_PUP_PDN_CNTRL_REG0 |= (0 &lt;&lt; 12);
     // Set CM4_RS485_2_DTR at GPIO_17 to output mode (GPFSEL1[23:21]), no internal pull
-    *GPFSEL1 &= ~(7 << 21);
-    *GPFSEL1 |= (1 << 21);
-    *GPIO_PUP_PDN_CNTRL_REG1 &= ~(3 << 2);
-    *GPIO_PUP_PDN_CNTRL_REG1 |= (0 << 2);
+    *GPFSEL1 &amp;= ~(7 &lt;&lt; 21);
+    *GPFSEL1 |= (1 &lt;&lt; 21);
+    *GPIO_PUP_PDN_CNTRL_REG1 &amp;= ~(3 &lt;&lt; 2);
+    *GPIO_PUP_PDN_CNTRL_REG1 |= (0 &lt;&lt; 2);
     // Set CM4_RS485_3_DTR at GPIO_24 to output mode (GPFSEL2[14:12]), no internal pull
-    *GPFSEL2 &= ~(7 << 12);
-    *GPFSEL2 |= (1 << 12);
-    *GPIO_PUP_PDN_CNTRL_REG1 &= ~(3 << 16);
-    *GPIO_PUP_PDN_CNTRL_REG1 |= (0 << 16);
+    *GPFSEL2 &amp;= ~(7 &lt;&lt; 12);
+    *GPFSEL2 |= (1 &lt;&lt; 12);
+    *GPIO_PUP_PDN_CNTRL_REG1 &amp;= ~(3 &lt;&lt; 16);
+    *GPIO_PUP_PDN_CNTRL_REG1 |= (0 &lt;&lt; 16);
     // Set all DTR pins to low
-    *GPCLR0 = (1 << 6) | (1 << 17) | (1 << 24);
+    *GPCLR0 = (1 &lt;&lt; 6) | (1 &lt;&lt; 17) | (1 &lt;&lt; 24);
 }
 
 static void rs485_dtr_deinit(void) {
     // Set all DTR pins to low
-    *GPCLR0 = (1 << 6) | (1 << 17) | (1 << 24);
+    *GPCLR0 = (1 &lt;&lt; 6) | (1 &lt;&lt; 17) | (1 &lt;&lt; 24);
     // Unmap GPIO registers
     iounmap(GPFSEL0);
     iounmap(GPFSEL1);
@@ -311,38 +273,38 @@ static void rs485_dtr_deinit(void) {
 
 static bool rs485_is_builtin_dev(struct tty_struct* tty) {
     // `ttyAMA` is for built-in RS-485 interface
-    return strcmp(tty->driver->name, "ttyAMA") == 0;
+    return strcmp(tty-&gt;driver-&gt;name, "ttyAMA") == 0;
 }
 
 static void rs485_dtr_set(int dev_num, bool enable) {
     switch (dev_num) {
         case 2:  // ttyAMA2
             if (enable) {
-                *GPSET0 = (1 << 6);
+                *GPSET0 = (1 &lt;&lt; 6);
             } else {
-                *GPCLR0 = (1 << 6);
+                *GPCLR0 = (1 &lt;&lt; 6);
             }
             break;
         case 3:  // ttyAMA3
             if (enable) {
-                *GPSET0 = (1 << 17);
+                *GPSET0 = (1 &lt;&lt; 17);
             } else {
-                *GPCLR0 = (1 << 17);
+                *GPCLR0 = (1 &lt;&lt; 17);
             }
             break;
         case 5:  // ttyAMA5
             if (enable) {
-                *GPSET0 = (1 << 24);
+                *GPSET0 = (1 &lt;&lt; 24);
             } else {
-                *GPCLR0 = (1 << 24);
+                *GPCLR0 = (1 &lt;&lt; 24);
             }
             break;
     }
 }
 
 static int rs485_get_dev_num(struct tty_struct* tty) {
-    if (tty->index == 2 || tty->index == 3 || tty->index == 5) {
-        return tty->index;
+    if (tty-&gt;index == 2 || tty-&gt;index == 3 || tty-&gt;index == 5) {
+        return tty-&gt;index;
     }
     return -EINVAL;
 }
@@ -367,33 +329,33 @@ static int rs485_get_worker_index(int dev_num) {
 static void rs485_worker_oncomplete(struct work_struct* work) {
     struct rs485_worker_t* rs485_worker = container_of(work, struct rs485_worker_t, work.work);
     // Wait until data is sent out, then set DTR to low
-    if (rs485_worker->tty->ops->write_room(rs485_worker->tty) == 0) {
-        schedule_delayed_work(&rs485_worker->work, usecs_to_jiffies(1));
+    if (rs485_worker-&gt;tty-&gt;ops-&gt;write_room(rs485_worker-&gt;tty) == 0) {
+        schedule_delayed_work(&amp;rs485_worker-&gt;work, usecs_to_jiffies(1));
         return;
     }
 
     // Wait for some time before setting DTR to low, delay is based on baudrate
     // Each character takes (10 * 1000 / baudrate) milliseconds
     // Plus 60ns for transceiver mode switch (mentionned in TPT7487 datasheet) 
-    int baudrate = tty_get_baud_rate(rs485_worker->tty);
+    int baudrate = tty_get_baud_rate(rs485_worker-&gt;tty);
     msleep((10 * 1000) / baudrate);
     ndelay(60);
-    rs485_dtr_set(rs485_worker->tty->index, false);
+    rs485_dtr_set(rs485_worker-&gt;tty-&gt;index, false);
     kfree(rs485_worker);
 }
 
 static void hook_uart_write_onreturn(struct kprobe* p, struct pt_regs* regs, unsigned long flags) {
-    struct tty_struct* tty = (struct tty_struct*)regs->regs[0];
+    struct tty_struct* tty = (struct tty_struct*)regs-&gt;regs[0];
     if (rs485_is_builtin_dev(tty)) {
         int dev_num = rs485_get_dev_num(tty);
         if (dev_num != -EINVAL) {
             struct rs485_worker_t* rs485_worker = kmalloc(sizeof(*rs485_worker), GFP_KERNEL);
-            rs485_worker->tty = tty;
+            rs485_worker-&gt;tty = tty;
             if (rs485_worker) {
-                INIT_DELAYED_WORK(&rs485_worker->work, rs485_worker_oncomplete);
+                INIT_DELAYED_WORK(&amp;rs485_worker-&gt;work, rs485_worker_oncomplete);
                 int queue_index = rs485_get_worker_index(dev_num);
                 if (queue_index != -EINVAL) {
-                    queue_delayed_work(rs485_worker_queues[queue_index], &rs485_worker->work, 0);
+                    queue_delayed_work(rs485_worker_queues[queue_index], &amp;rs485_worker-&gt;work, 0);
                 }
             }
         }
@@ -401,7 +363,7 @@ static void hook_uart_write_onreturn(struct kprobe* p, struct pt_regs* regs, uns
 }
 
 static int hook_uart_write_onstart(struct kprobe* p, struct pt_regs* regs) {
-    struct tty_struct* tty = (struct tty_struct*)regs->regs[0];
+    struct tty_struct* tty = (struct tty_struct*)regs-&gt;regs[0];
     if (rs485_is_builtin_dev(tty)) {
         int dev_num = rs485_get_dev_num(tty);
         rs485_dtr_set(dev_num, true);
@@ -412,11 +374,11 @@ static int hook_uart_write_onstart(struct kprobe* p, struct pt_regs* regs) {
 
 static unsigned long get_fn_addr(const char* symbol_name) {
     struct kprobe temp_kp = {.symbol_name = symbol_name};
-    int ret = register_kprobe(&temp_kp);
+    int ret = register_kprobe(&amp;temp_kp);
     unsigned long fn_addr = (unsigned long)temp_kp.addr;
 
-    unregister_kprobe(&temp_kp);
-    if (ret < 0) {
+    unregister_kprobe(&amp;temp_kp);
+    if (ret &lt; 0) {
         return ret;
     }
     if (temp_kp.addr == NULL) {
@@ -451,15 +413,15 @@ static int module_init_fn(void) {
 
     // Hook `uart_write` function
     unsigned long target_fn_addr = get_fn_addr("uart_write");
-    if (target_fn_addr < 0) {
+    if (target_fn_addr &lt; 0) {
         printk(KERN_ERR LOG_PREFIX "Failed to get address for `uart_write`, returned code: %ld\n", target_fn_addr);
         return target_fn_addr;
     }
     hook_uart_write.addr = (kprobe_opcode_t*)target_fn_addr;
     hook_uart_write.pre_handler = (void*)hook_uart_write_onstart;
     hook_uart_write.post_handler = (void*)hook_uart_write_onreturn;
-    int ret = register_kprobe(&hook_uart_write);
-    if (ret < 0) {
+    int ret = register_kprobe(&amp;hook_uart_write);
+    if (ret &lt; 0) {
         printk(KERN_ERR LOG_PREFIX "Failed to register kprobe for `uart_write`, returned code: %d\n", ret);
         return ret;
     }
@@ -469,8 +431,8 @@ static int module_init_fn(void) {
 }
 
 static void module_exit_fn(void) {
-    unregister_kprobe(&hook_uart_write);
-    for (int i = 0; i < sizeof(rs485_worker_queues) / sizeof(rs485_worker_queues[0]); i++) {
+    unregister_kprobe(&amp;hook_uart_write);
+    for (int i = 0; i &lt; sizeof(rs485_worker_queues) / sizeof(rs485_worker_queues[0]); i++) {
         if (rs485_worker_queues[i]) {
             destroy_workqueue(rs485_worker_queues[i]);
         }
@@ -482,148 +444,102 @@ static void module_exit_fn(void) {
 
 module_init(module_init_fn);
 module_exit(module_exit_fn);
-```
-
-## The Result and Thoughts
-
-![The Kernel Module Solution](https://assets.n0w0n.com/the_60000_usd_patch_is_a_triumph/4.gif)
-
-After deploying the module and testing extensively across various baud rates, the issue was successfully resolved. There was no need to replace products or recall shipments, saving the company $60,000 and sparing customers from potential inconvenience. Well, the software-level solution proved efficient, effective, and sustainable.
-
-This experience reaffirmed the importance of thinking creatively when addressing challenges. Even as a newcomer, I was able to leverage open-source tools and innovative thinking to tackle a seemingly insurmountable problem. It’s a reminder that in technology, persistence and curiosity often yield unexpected and rewarding outcomes.
-]]></content>
+</code></pre>
+<h2 id="theresultandthoughts">The Result and Thoughts</h2>
+<p><img src="https://assets.n0w0n.com/the_60000_usd_patch_is_a_triumph/4.gif" alt="The Kernel Module Solution" /></p>
+<p>After deploying the module and testing extensively across various baud rates, the issue was successfully resolved. There was no need to replace products or recall shipments, saving the company $60,000 and sparing customers from potential inconvenience. Well, the software-level solution proved efficient, effective, and sustainable.</p>
+<p>This experience reaffirmed the importance of thinking creatively when addressing challenges. Even as a newcomer, I was able to leverage open-source tools and innovative thinking to tackle a seemingly insurmountable problem. It’s a reminder that in technology, persistence and curiosity often yield unexpected and rewarding outcomes.</p>]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[MMAP on Allwinner H3 - The Faster Way to Access to GPIO Pins]]></title>
         <id>allwinner_h3_memory_mapping</id>
         <link href="https://n0w0n.com/read/allwinner_h3_memory_mapping.md"/>
         <updated>2023-05-20T05:08:00.000Z</updated>
-        <summary type="html"><![CDATA[
-When it comes to control the GPIO pins on a development board, many of developers have tried to access the GPIO pins from the user space (e.g. The `sysfs`). But this approach may not perform well because it's not that fast as you may thought - at least it was vividly reflected in one of my recent needs.
-
-Recently I took over a maker-level project that uses the Raspberry Pi and in the project, the Pi needs to continuously poll the level of a certain output from the FPGA at high speed to determine whether the data is "ready". However, as the price of Raspberry Pi rises, I had to consider the affordable alternative, finally I settled on the Orange Pi One, which uses the Allwinner H3 and has a 512 MB of RAM - That's enough for my needs.
-
-In the original Raspberry Pi implementation for the project, the state of the GPIO pins was obtained directly by accessing the GPIO registers - the memory mapping (mmap), and we know that different SOCs have different internal register sets and addresses, so to port the project to the Allwinner H3, some significant changes in the code were required.
-
-This article will introduce how I understand the concept of mmap, and how did I analyse the datasheet provided by Allwinner, in the last, I'll provide a complete example of how to use mmap to access GPIO pins in C, Go, and Python.
-
-![Orange Pi One](https://assets.n0w0n.com/allwinner_h3_memory_mapping/1.jpg)
-
-]]></summary>
-        <content type="html"><![CDATA[
-When it comes to control the GPIO pins on a development board, many of developers have tried to access the GPIO pins from the user space (e.g. The `sysfs`). But this approach may not perform well because it's not that fast as you may thought - at least it was vividly reflected in one of my recent needs.
-
-Recently I took over a maker-level project that uses the Raspberry Pi and in the project, the Pi needs to continuously poll the level of a certain output from the FPGA at high speed to determine whether the data is "ready". However, as the price of Raspberry Pi rises, I had to consider the affordable alternative, finally I settled on the Orange Pi One, which uses the Allwinner H3 and has a 512 MB of RAM - That's enough for my needs.
-
-In the original Raspberry Pi implementation for the project, the state of the GPIO pins was obtained directly by accessing the GPIO registers - the memory mapping (mmap), and we know that different SOCs have different internal register sets and addresses, so to port the project to the Allwinner H3, some significant changes in the code were required.
-
-This article will introduce how I understand the concept of mmap, and how did I analyse the datasheet provided by Allwinner, in the last, I'll provide a complete example of how to use mmap to access GPIO pins in C, Go, and Python.
-
-![Orange Pi One](https://assets.n0w0n.com/allwinner_h3_memory_mapping/1.jpg)
-
-
-
-## The Concept of MMAP
-
-In simple terms, mmap allows a physical memory region to be mapped to the application's virtual memory space. This enables direct manipulation of CPU registers at the application level.
-
-In conventional development, we typically use the Linux generic sysfs interface to control GPIOs. Through this interface, GPIOs can be configured to output specific signal levels or read external signals input to the GPIO. However, this method is only suitable for scenarios where speed requirements are not stringent. When high-speed GPIO access is required, the sysfs method becomes inefficient. This is because sysfs relies on file I/O operations for GPIO control. Each operation involves accessing the file system and making system calls, which introduces performance overhead.
-
-To eliminate this additional performance cost and break through the file I/O bottleneck, an alternative approach is to bypass these layers. The mmap method allows direct operations on GPIOs in physical memory, theoretically achieving faster GPIO access.
-
-## The Principle of Controlling
-
-It is known that the GPIOs on a development board are essentially part of the CPU pins. Since these pins can be controlled programmatically, there must be corresponding registers within the CPU. These registers are mapped to specific physical address ranges that remain constant. By using mmap to operate on the CPU's internal registers, it becomes possible to control specific GPIOs in this manner.
-
-To control GPIOs via mmap, the process involves the following 5 steps:
-
-1. Open the `/dev/mem` device file.
-2. Determine the physical address of the GPIO control registers.
-3. Use mmap to map the physical address to user space.
-4. Access the GPIO control registers.
-5. Unmap the mmap region.
-
-Among these steps, step 2 requires consulting the CPU vendor's datasheet to identify the relevant details.
-
-## Consulting the Datasheet
-
-[The datasheet](https://dl.linux-sunxi.org/H3/Allwinner_H3_Datasheet_V1.0.pdf), provided by Allwinner is an extensive 618 pages, making it impractical to read in full. Instead, relevant sections can be found by using Ctrl + F to search for the following keywords:
-
-- Base Address: Identifies the base address.
-- Register: Provides details on the registers.
-
-And the key findings from the datasheet are given as follows:
-
-- CPU Base Address: On page 90, section 4.3.4, Register List, it is mentioned that the base address for all CPU registers is `0x01C20000`.
-- GPIO Base Address: On page 318, section 4.22.1, Port Controller Register List, it is noted that the GPIO base address is `0x01C20800`.
-- The offset between the CPU base address and the GPIO base address is therefore `0x0800`.
-
-on page 318, section 4.22.2, at Port Controller Register, the GPIO register configurations are detailed. After excluding interrupt-related registers, the useful registers for GPIO configuration are as follows:
-
-| Register | Offset         | Description                                                                                    | Remarks                                                                                                                            |
+        <summary type="html"><![CDATA[<p>When it comes to control the GPIO pins on a development board, many of developers have tried to access the GPIO pins from the user space (e.g. The <code>sysfs</code>). But this approach may not perform well because it's not that fast as you may thought - at least it was vividly reflected in one of my recent needs.</p>
+<p>Recently I took over a maker-level project that uses the Raspberry Pi and in the project, the Pi needs to continuously poll the level of a certain output from the FPGA at high speed to determine whether the data is "ready". However, as the price of Raspberry Pi rises, I had to consider the affordable alternative, finally I settled on the Orange Pi One, which uses the Allwinner H3 and has a 512 MB of RAM - That's enough for my needs.</p>
+<p>In the original Raspberry Pi implementation for the project, the state of the GPIO pins was obtained directly by accessing the GPIO registers - the memory mapping (mmap), and we know that different SOCs have different internal register sets and addresses, so to port the project to the Allwinner H3, some significant changes in the code were required.</p>
+<p>This article will introduce how I understand the concept of mmap, and how did I analyse the datasheet provided by Allwinner, in the last, I'll provide a complete example of how to use mmap to access GPIO pins in C, Go, and Python.</p>
+<p><img src="https://assets.n0w0n.com/allwinner_h3_memory_mapping/1.jpg" alt="Orange Pi One" /></p>]]></summary>
+        <content type="html"><![CDATA[<p>When it comes to control the GPIO pins on a development board, many of developers have tried to access the GPIO pins from the user space (e.g. The <code>sysfs</code>). But this approach may not perform well because it's not that fast as you may thought - at least it was vividly reflected in one of my recent needs.</p>
+<p>Recently I took over a maker-level project that uses the Raspberry Pi and in the project, the Pi needs to continuously poll the level of a certain output from the FPGA at high speed to determine whether the data is "ready". However, as the price of Raspberry Pi rises, I had to consider the affordable alternative, finally I settled on the Orange Pi One, which uses the Allwinner H3 and has a 512 MB of RAM - That's enough for my needs.</p>
+<p>In the original Raspberry Pi implementation for the project, the state of the GPIO pins was obtained directly by accessing the GPIO registers - the memory mapping (mmap), and we know that different SOCs have different internal register sets and addresses, so to port the project to the Allwinner H3, some significant changes in the code were required.</p>
+<p>This article will introduce how I understand the concept of mmap, and how did I analyse the datasheet provided by Allwinner, in the last, I'll provide a complete example of how to use mmap to access GPIO pins in C, Go, and Python.</p>
+<p><img src="https://assets.n0w0n.com/allwinner_h3_memory_mapping/1.jpg" alt="Orange Pi One" /></p>
+<h2 id="theconceptofmmap">The Concept of MMAP</h2>
+<p>In simple terms, mmap allows a physical memory region to be mapped to the application's virtual memory space. This enables direct manipulation of CPU registers at the application level.</p>
+<p>In conventional development, we typically use the Linux generic sysfs interface to control GPIOs. Through this interface, GPIOs can be configured to output specific signal levels or read external signals input to the GPIO. However, this method is only suitable for scenarios where speed requirements are not stringent. When high-speed GPIO access is required, the sysfs method becomes inefficient. This is because sysfs relies on file I/O operations for GPIO control. Each operation involves accessing the file system and making system calls, which introduces performance overhead.</p>
+<p>To eliminate this additional performance cost and break through the file I/O bottleneck, an alternative approach is to bypass these layers. The mmap method allows direct operations on GPIOs in physical memory, theoretically achieving faster GPIO access.</p>
+<h2 id="theprincipleofcontrolling">The Principle of Controlling</h2>
+<p>It is known that the GPIOs on a development board are essentially part of the CPU pins. Since these pins can be controlled programmatically, there must be corresponding registers within the CPU. These registers are mapped to specific physical address ranges that remain constant. By using mmap to operate on the CPU's internal registers, it becomes possible to control specific GPIOs in this manner.</p>
+<p>To control GPIOs via mmap, the process involves the following 5 steps:</p>
+<ol>
+<li>Open the <code>/dev/mem</code> device file.</li>
+<li>Determine the physical address of the GPIO control registers.</li>
+<li>Use mmap to map the physical address to user space.</li>
+<li>Access the GPIO control registers.</li>
+<li>Unmap the mmap region.</li>
+</ol>
+<p>Among these steps, step 2 requires consulting the CPU vendor's datasheet to identify the relevant details.</p>
+<h2 id="consultingthedatasheet">Consulting the Datasheet</h2>
+<p><a href="https://dl.linux-sunxi.org/H3/Allwinner_H3_Datasheet_V1.0.pdf">The datasheet</a>, provided by Allwinner is an extensive 618 pages, making it impractical to read in full. Instead, relevant sections can be found by using Ctrl + F to search for the following keywords:</p>
+<ul>
+<li>Base Address: Identifies the base address.</li>
+<li>Register: Provides details on the registers.</li>
+</ul>
+<p>And the key findings from the datasheet are given as follows:</p>
+<ul>
+<li>CPU Base Address: On page 90, section 4.3.4, Register List, it is mentioned that the base address for all CPU registers is <code>0x01C20000</code>.</li>
+<li>GPIO Base Address: On page 318, section 4.22.1, Port Controller Register List, it is noted that the GPIO base address is <code>0x01C20800</code>.</li>
+<li>The offset between the CPU base address and the GPIO base address is therefore <code>0x0800</code>.</li>
+</ul>
+<p>on page 318, section 4.22.2, at Port Controller Register, the GPIO register configurations are detailed. After excluding interrupt-related registers, the useful registers for GPIO configuration are as follows:</p>
+<p>| Register | Offset         | Description                                                                                    | Remarks                                                                                                                            |
 | :------- | :------------- | :--------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------- |
-| Pn_CFG0  | n\*0x24 + 0x00 | GPIO_n configuration register 0 for setting up pin mode                                     | First determine the port number (e.g. GPIO_A) and pin number (e.g. 6) for which you want to set the GPIO mode.                     |
-| Pn_CFG1  | n\*0x24 + 0x04 | GPIO_n configuration register 1 for setting up pin mode                                     | Then in the P<u>n</u> Configure Register <u>x</u> table following this table in the Datasheet, where n = [0...6] and x = [0...3],  |
-| Pn_CFG2  | n\*0x24 + 0x08 | GPIO_n configuration register 2 for setting up pin mode                                     | find the corresponding "bit" and "value" for the GPIO mode you want to set.                                                        |
-| Pn_CFG3  | n\*0x24 + 0x0C | GPIO_n configuration register 3 for setting up pin mode                                     | (The code n mentioned above also refers to one of the GPIO port numbers A, C, D, E, F, G, L)                                       |
-| Pn_DAT   | n\*0x24 + 0x10 | GPIO_n data register for accessing the state of GPIO pin                                    | In input mode, the corresponding bit indicates the pin status; in output mode, the pin status is the same as the corresponding bit |
-| Pn_DRV0  | n\*0x24 + 0x14 | GPIO_n drive capability register 0, used to configure the output drive capability of GPIO n |                                                                                                                                    |
-| Pn_DRV1  | n\*0x24 + 0x18 | GPIO_n drive capability register 1, used to configure the output drive capability of GPIO n |                                                                                                                                    |
-| Pn_PUL0  | n\*0x24 + 0x1C | GPIO_n Pull-up / Pull-down register 0, used to configure the pull-up / pull-down of GPIO n  |                                                                                                                                    |
-| Pn_PUL1  | n\*0x24 + 0x20 | GPIO_n Pull-up / Pull-down register 1, used to configure the pull-up / pull-down of GPIO n  |                                                                                                                                    |
-
-Although we know the GPIO register base address is `0x01C20800`, specific ports like GPIO_A require knowledge of their offset from the GPIO base address.
-
-From page 319 of the datasheet, section 4.22.2.1 (PA Configure Register 0), we learn: GPIO_A registers start at an offset of 0x00 relative to the GPIO base address, the configuration for GPIO_A registers ends at `0x01C20820`, with a total width of 0x20 bytes.
-
-Given this layout, the following C structure can represent the GPIO register set:
-
-```cpp
-typedef struct {
+| Pn<em>CFG0  | n*0x24 + 0x00 | GPIO</em>n configuration register 0 for setting up pin mode                                     | First determine the port number (e.g. GPIO<em>A) and pin number (e.g. 6) for which you want to set the GPIO mode.                     |
+| Pn</em>CFG1  | n*0x24 + 0x04 | GPIO<em>n configuration register 1 for setting up pin mode                                     | Then in the P<u>n</u> Configure Register <u>x</u> table following this table in the Datasheet, where n = [0…6] and x = [0…3],  |
+| Pn</em>CFG2  | n*0x24 + 0x08 | GPIO<em>n configuration register 2 for setting up pin mode                                     | find the corresponding "bit" and "value" for the GPIO mode you want to set.                                                        |
+| Pn</em>CFG3  | n*0x24 + 0x0C | GPIO<em>n configuration register 3 for setting up pin mode                                     | (The code n mentioned above also refers to one of the GPIO port numbers A, C, D, E, F, G, L)                                       |
+| Pn</em>DAT   | n*0x24 + 0x10 | GPIO<em>n data register for accessing the state of GPIO pin                                    | In input mode, the corresponding bit indicates the pin status; in output mode, the pin status is the same as the corresponding bit |
+| Pn</em>DRV0  | n*0x24 + 0x14 | GPIO<em>n drive capability register 0, used to configure the output drive capability of GPIO n |                                                                                                                                    |
+| Pn</em>DRV1  | n*0x24 + 0x18 | GPIO<em>n drive capability register 1, used to configure the output drive capability of GPIO n |                                                                                                                                    |
+| Pn</em>PUL0  | n*0x24 + 0x1C | GPIO<em>n Pull-up / Pull-down register 0, used to configure the pull-up / pull-down of GPIO n  |                                                                                                                                    |
+| Pn</em>PUL1  | n*0x24 + 0x20 | GPIO_n Pull-up / Pull-down register 1, used to configure the pull-up / pull-down of GPIO n  |                                                                                                                                    |</p>
+<p>Although we know the GPIO register base address is <code>0x01C20800</code>, specific ports like GPIO_A require knowledge of their offset from the GPIO base address.</p>
+<p>From page 319 of the datasheet, section 4.22.2.1 (PA Configure Register 0), we learn: GPIO<em>A registers start at an offset of 0x00 relative to the GPIO base address, the configuration for GPIO</em>A registers ends at <code>0x01C20820</code>, with a total width of 0x20 bytes.</p>
+<p>Given this layout, the following C structure can represent the GPIO register set:</p>
+<pre><code class="cpp language-cpp">typedef struct {
     volatile uint32_t config[4];
     volatile uint32_t data;
     volatile uint32_t driver[2];
     volatile uint32_t pull[2];
 } gpio_t;
-```
-
-In this structure, the keyword `volatile` tells the compiler that the member variables of this structure may be modified by other threads or interrupts, so the compiler should not optimize this structure.
-
-## Some Examples
-
-### Example 1: Configure GPIO_A20 as an Output and Set High
-
-To configure GPIO_A20 as an output and drive it high, refer to the following details from the datasheet:
-
-1. GPIO_A20's configuration is located in the PA_CFG2_REG register (bits 20–22). Set its value to `0x01` to configure it as an output.
-2. To output a high signal, set bit 20 in the PA_DATA_REG register to `0x01`.
-
-### Example 2: Configure GPIO_A8 as an Input with Pull-Up Enabled
-
-To configure GPIO_A8 as an input and enable the pull-up resistor, refer to the following details from the datasheet:
-
-1. GPIO_A8's configuration is located in the PA_CFG1_REG register (bits 0–2). Set its value to `0x00` to configure it as an input.
-2. To enable the pull-up resistor, set bits 16–17 in the PA_PULL0_REG register to `0x01`.
-
-## Practical Demonstration
-
-With the foundational knowledge covered, we can now write programs to solve the problem.
-
-These examples demonstrates how to use C, Go, and Python to control GPIO_A21 to toggle an LED and read the level of GPIO_A8. The level of GPIO_A8 is printed to the terminal.
-
-Note: Since GPIO_A8 has pull-up enabled, its default level is high unless the pin is grounded. Similarly, if pull-down is enabled, the default level will be low unless connected to power supply.
-
-### The C Implementation
-
-Here is the C version, where the `gpio_t` structure is the same as defined earlier. The `set_output` function configures the GPIO pin as output mode, the `set_input` function configures the GPIO pin as input mode, the `set_level` function sets the GPIO pin level, and the `get_level` function reads the GPIO pin level.
-
-```cpp
-#include <fcntl.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/mman.h>
-#include <unistd.h>
+</code></pre>
+<p>In this structure, the keyword <code>volatile</code> tells the compiler that the member variables of this structure may be modified by other threads or interrupts, so the compiler should not optimize this structure.</p>
+<h2 id="someexamples">Some Examples</h2>
+<h3 id="example1configuregpio_a20asanoutputandsethigh">Example 1: Configure GPIO_A20 as an Output and Set High</h3>
+<p>To configure GPIO_A20 as an output and drive it high, refer to the following details from the datasheet:</p>
+<ol>
+<li>GPIO<em>A20's configuration is located in the PA</em>CFG2_REG register (bits 20–22). Set its value to <code>0x01</code> to configure it as an output.</li>
+<li>To output a high signal, set bit 20 in the PA<em>DATA</em>REG register to <code>0x01</code>.</li>
+</ol>
+<h3 id="example2configuregpio_a8asaninputwithpullupenabled">Example 2: Configure GPIO_A8 as an Input with Pull-Up Enabled</h3>
+<p>To configure GPIO_A8 as an input and enable the pull-up resistor, refer to the following details from the datasheet:</p>
+<ol>
+<li>GPIO<em>A8's configuration is located in the PA</em>CFG1_REG register (bits 0–2). Set its value to <code>0x00</code> to configure it as an input.</li>
+<li>To enable the pull-up resistor, set bits 16–17 in the PA<em>PULL0</em>REG register to <code>0x01</code>.</li>
+</ol>
+<h2 id="practicaldemonstration">Practical Demonstration</h2>
+<p>With the foundational knowledge covered, we can now write programs to solve the problem.</p>
+<p>These examples demonstrates how to use C, Go, and Python to control GPIO<em>A21 to toggle an LED and read the level of GPIO</em>A8. The level of GPIO_A8 is printed to the terminal.</p>
+<p>Note: Since GPIO_A8 has pull-up enabled, its default level is high unless the pin is grounded. Similarly, if pull-down is enabled, the default level will be low unless connected to power supply.</p>
+<h3 id="thecimplementation">The C Implementation</h3>
+<p>Here is the C version, where the <code>gpio_t</code> structure is the same as defined earlier. The <code>set_output</code> function configures the GPIO pin as output mode, the <code>set_input</code> function configures the GPIO pin as input mode, the <code>set_level</code> function sets the GPIO pin level, and the <code>get_level</code> function reads the GPIO pin level.</p>
+<pre><code class="cpp language-cpp">#include &lt;fcntl.h&gt;
+#include &lt;stdint.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;sys/mman.h&gt;
+#include &lt;unistd.h&gt;
 
 // GPIO_A configuration register list
 // { Register number, Register bit }
@@ -692,9 +608,9 @@ void set_output(gpio_t* gpio, int pin) {
     int reg = GPIO_A_CONFIG[pin][0];
     int bit = GPIO_A_CONFIG[pin][1];
     // Clear the previous configuration
-    gpio->config[reg] &= ~(0x0F << bit);
+    gpio-&gt;config[reg] &amp;= ~(0x0F &lt;&lt; bit);
     // Set as output mode
-    gpio->config[reg] |= (OUTPUT << bit);
+    gpio-&gt;config[reg] |= (OUTPUT &lt;&lt; bit);
 }
 
 // Configure the specified pin of GPIO_A as input
@@ -703,9 +619,9 @@ void set_input(gpio_t* gpio, int pin) {
     int reg = GPIO_A_CONFIG[pin][0];
     int bit = GPIO_A_CONFIG[pin][1];
     // Clear the previous configuration
-    gpio->config[reg] &= ~(0x0F << bit);
+    gpio-&gt;config[reg] &amp;= ~(0x0F &lt;&lt; bit);
     // Set as input mode
-    gpio->config[reg] |= (INPUT << bit);
+    gpio-&gt;config[reg] |= (INPUT &lt;&lt; bit);
 }
 
 // Configure pull-up/pull-down for the specified pin of GPIO_A
@@ -715,19 +631,19 @@ void set_pull(gpio_t* gpio, int pin, int pull) {
     // Get the register bit
     int bit = (pin % 16) * 2;
     // Clear the previous configuration
-    gpio->pull[reg] &= ~(0x03 << bit);
+    gpio-&gt;pull[reg] &amp;= ~(0x03 &lt;&lt; bit);
     // Set pull-up/pull-down configuration
-    gpio->pull[reg] |= (uint32_t)pull << bit;
+    gpio-&gt;pull[reg] |= (uint32_t)pull &lt;&lt; bit;
 }
 
 // Set the level of the specified pin of GPIO_A
 void set_level(gpio_t* gpio, int pin, int level) {
     switch (level) {
         case HIGH:
-            gpio->data |= (1 << pin);
+            gpio-&gt;data |= (1 &lt;&lt; pin);
             return;
         case LOW:
-            gpio->data &= ~(1 << pin);
+            gpio-&gt;data &amp;= ~(1 &lt;&lt; pin);
             return;
         defaults:
             return;
@@ -740,14 +656,14 @@ int get_level(gpio_t* gpio, int pin) {
     int reg = GPIO_A_CONFIG[pin][0];
     int bit = GPIO_A_CONFIG[pin][1];
     // Clear the previous configuration
-    gpio->config[reg] &= ~(0x0F << bit);
-    return (gpio->data >> pin) & 0x01;
+    gpio-&gt;config[reg] &amp;= ~(0x0F &lt;&lt; bit);
+    return (gpio-&gt;data &gt;&gt; pin) &amp; 0x01;
 }
 
 int main() {
     // Open /dev/mem device file in read-write mode
     int mem = open("/dev/mem", O_RDWR | O_SYNC);
-    if (mem < 0) {
+    if (mem &lt; 0) {
         perror("open /dev/mem");
         return -1;
     }
@@ -762,7 +678,7 @@ int main() {
     }
 
     // Apply the offset to the GPIO_A register type
-    gpio_t* gpio = (gpio_t*)&reg[GPIO_PA_OFFSET];
+    gpio_t* gpio = (gpio_t*)&amp;reg[GPIO_PA_OFFSET];
 
     // Set GPIO_A21 as output
     set_output(gpio, 21);
@@ -789,16 +705,11 @@ int main() {
 
     return 0;
 }
-```
-
-### The Go Implementation
-
-Here is the Go language implementation. In this version, memory mapping is performed using the `syscall.Mmap()` and `syscall.Munmap()` functions.
-
-Additionally, unlike the C version where pointer casting is done with (gpio_t \*) and dereferencing operators \*, the Go version uses the `unsafe.Pointer` type and the `unsafe.Pointer()` function for pointer conversion, allowing direct memory address manipulation.
-
-```go
-package main
+</code></pre>
+<h3 id="thegoimplementation">The Go Implementation</h3>
+<p>Here is the Go language implementation. In this version, memory mapping is performed using the <code>syscall.Mmap()</code> and <code>syscall.Munmap()</code> functions.</p>
+<p>Additionally, unlike the C version where pointer casting is done with (gpio_t *) and dereferencing operators *, the Go version uses the <code>unsafe.Pointer</code> type and the <code>unsafe.Pointer()</code> function for pointer conversion, allowing direct memory address manipulation.</p>
+<pre><code class="go language-go">package main
 
 import (
     "fmt"
@@ -878,9 +789,9 @@ func setOutput(gpio *gpio_t, pin int) {
     reg := GPIO_A_CONFIG[pin][0]
     bit := GPIO_A_CONFIG[pin][1]
     // Clear the original configuration
-    gpio.config[reg] &= ^(0x0F << bit)
+    gpio.config[reg] &amp;= ^(0x0F &lt;&lt; bit)
     // Set to output mode
-    gpio.config[reg] |= OUTPUT << bit
+    gpio.config[reg] |= OUTPUT &lt;&lt; bit
 }
 
 func setInput(gpio *gpio_t, pin int) {
@@ -888,9 +799,9 @@ func setInput(gpio *gpio_t, pin int) {
     reg := GPIO_A_CONFIG[pin][0]
     bit := GPIO_A_CONFIG[pin][1]
     // Clear the original configuration
-    gpio.config[reg] &= ^(0x0F << bit)
+    gpio.config[reg] &amp;= ^(0x0F &lt;&lt; bit)
     // Set to input mode
-    gpio.config[reg] |= INPUT << bit
+    gpio.config[reg] |= INPUT &lt;&lt; bit
 }
 
 func setPull(gpio *gpio_t, pin, pull int) {
@@ -899,17 +810,17 @@ func setPull(gpio *gpio_t, pin, pull int) {
     // Get the register bit
     bit := (pin % 16) * 2
     // Clear the original configuration
-    gpio.pull[reg] &= ^(0x03 << bit)
+    gpio.pull[reg] &amp;= ^(0x03 &lt;&lt; bit)
     // Set pull-up/down
-    gpio.pull[reg] |= uint32(pull) << bit
+    gpio.pull[reg] |= uint32(pull) &lt;&lt; bit
 }
 
 func setLevel(gpio *gpio_t, pin, level int) {
     switch level {
     case HIGH:
-        gpio.data |= 1 << pin
+        gpio.data |= 1 &lt;&lt; pin
     case LOW:
-        gpio.data &= ^(1 << pin)
+        gpio.data &amp;= ^(1 &lt;&lt; pin)
     }
 }
 
@@ -918,8 +829,8 @@ func getLevel(gpio *gpio_t, pin int) int {
     reg := GPIO_A_CONFIG[pin][0]
     bit := GPIO_A_CONFIG[pin][1]
     // Clear the original configuration
-    gpio.config[reg] &= ^(0x0F << bit)
-    return int((gpio.data >> pin) & 0x01)
+    gpio.config[reg] &amp;= ^(0x0F &lt;&lt; bit)
+    return int((gpio.data &gt;&gt; pin) &amp; 0x01)
 }
 
 func main() {
@@ -940,7 +851,7 @@ func main() {
     defer syscall.Munmap(reg)
 
     // Apply the mapped address offset to the GPIO_A register type
-    gpio := (*gpio_t)(unsafe.Pointer(&reg[GPIO_PA_OFFSET]))
+    gpio := (*gpio_t)(unsafe.Pointer(&amp;reg[GPIO_PA_OFFSET]))
 
     // Set GPIO_A21 as output mode
     setOutput(gpio, 21)
@@ -961,14 +872,10 @@ func main() {
         fmt.Printf("GPIO_A8 level: %d\n", level)
     }
 }
-```
-
-### The Python Implementation
-
-The Python implementation is similar to the Go implementation, using the `mmap` library to perform memory mapping and unmapping.
-
-```python
-from mmap import mmap, MAP_SHARED, PROT_READ, PROT_WRITE
+</code></pre>
+<h3 id="thepythonimplementation">The Python Implementation</h3>
+<p>The Python implementation is similar to the Go implementation, using the <code>mmap</code> library to perform memory mapping and unmapping.</p>
+<pre><code class="python language-python">from mmap import mmap, MAP_SHARED, PROT_READ, PROT_WRITE
 from os import open, close, O_RDWR, O_SYNC
 from ctypes import Structure, c_uint32
 from typing import Type
@@ -1031,58 +938,58 @@ class gpio_t(Structure):
 
 
 # Configure the specified GPIO_A pin as output mode
-def set_output(gpio: Type[gpio_t], pin: int) -> None:
+def set_output(gpio: Type[gpio_t], pin: int) -&gt; None:
     # Get the register number and register bit
     reg, bit = GPIO_A_CONFIG[pin]
     # Clear the original configuration
-    gpio.config[reg] &= ~(0x0F << bit)
+    gpio.config[reg] &amp;= ~(0x0F &lt;&lt; bit)
     # Set as output mode
-    gpio.config[reg] |= (OUTPUT << bit)
+    gpio.config[reg] |= (OUTPUT &lt;&lt; bit)
 
 
 # Configure the specified GPIO_A pin as input mode
-def set_input(gpio: Type[gpio_t], pin: int) -> None:
+def set_input(gpio: Type[gpio_t], pin: int) -&gt; None:
     # Get the register number and register bit
     reg, bit = GPIO_A_CONFIG[pin]
     # Clear the original configuration
-    gpio.config[reg] &= ~(0x0F << bit)
+    gpio.config[reg] &amp;= ~(0x0F &lt;&lt; bit)
     # Set as input mode
-    gpio.config[reg] |= (INPUT << bit)
+    gpio.config[reg] |= (INPUT &lt;&lt; bit)
 
 
 # Configure pull-up/down for the specified GPIO_A pin
-def set_pull(gpio: Type[gpio_t], pin: int, pull: int) -> None:
+def set_pull(gpio: Type[gpio_t], pin: int, pull: int) -&gt; None:
     # Get the register number
     reg = int(pin / 16)
     # Get the register bit
     bit = int((pin % 16) * 2)
     # Clear the original configuration
-    gpio.pull[reg] &= ~(0x03 << bit)
+    gpio.pull[reg] &amp;= ~(0x03 &lt;&lt; bit)
     # Set pull-up/down
-    gpio.pull[reg] |= (pull << bit)
+    gpio.pull[reg] |= (pull &lt;&lt; bit)
 
 
 # Set the level of the specified GPIO_A pin
-def set_level(gpio: Type[gpio_t], pin: int, level: int) -> None:
+def set_level(gpio: Type[gpio_t], pin: int, level: int) -&gt; None:
     if level == HIGH:
-        gpio.data |= (1 << pin)
+        gpio.data |= (1 &lt;&lt; pin)
     elif level == LOW:
-        gpio.data &= ~(1 << pin)
+        gpio.data &amp;= ~(1 &lt;&lt; pin)
 
 
 # Read the level of the specified GPIO_A pin
-def get_level(gpio: Type[gpio_t], pin: int) -> int:
+def get_level(gpio: Type[gpio_t], pin: int) -&gt; int:
     # Get the register number and register bit
     reg, bit = GPIO_A_CONFIG[pin]
     # Clear the original configuration
-    gpio.config[reg] &= ~(0x0F << bit)
-    return (gpio.data >> pin) & 0x01
+    gpio.config[reg] &amp;= ~(0x0F &lt;&lt; bit)
+    return (gpio.data &gt;&gt; pin) &amp; 0x01
 
 
 def main():
     # Open the /dev/mem device file in read-write mode
     mem = open("/dev/mem", O_RDWR | O_SYNC)
-    if mem < 0:
+    if mem &lt; 0:
         print("Failed to open /dev/mem")
         exit(1)
 
@@ -1121,14 +1028,10 @@ def main():
 
 if __name__ == "__main__":
     main()
-```
-
-## The Conclusion
-
-Last but not least, we have successfully implemented the memory mapping in the Allwinner H3 platform. It works like magic now!
-
-![GPIO_A21 Blinking LED](https://assets.n0w0n.com/allwinner_h3_memory_mapping/2.gif)
-![Read GPIO_A8 Level](https://assets.n0w0n.com/allwinner_h3_memory_mapping/3.png)
-]]></content>
+</code></pre>
+<h2 id="theconclusion">The Conclusion</h2>
+<p>Last but not least, we have successfully implemented the memory mapping in the Allwinner H3 platform. It works like magic now!</p>
+<p><img src="https://assets.n0w0n.com/allwinner_h3_memory_mapping/2.gif" alt="GPIO_A21 Blinking LED" />
+<img src="https://assets.n0w0n.com/allwinner_h3_memory_mapping/3.png" alt="Read GPIO_A8 Level" /></p>]]></content>
     </entry>
 </feed>
