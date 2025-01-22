@@ -354,9 +354,10 @@
 						document.title = isp.title;
 						Object.defineProperty(document, "title", {
 							set(newTitle) {
+								document._title = newTitle;
 								newTitle = isp.title;
 							},
-							configurable: false,
+							configurable: true,
 							enumerable: true
 						});
 
@@ -378,8 +379,17 @@
 			})();
 
 			// Call this function to show your love to CCP
-			const iWannaFxxkCCP = () => {
+			const FxxkTheCCP = () => {
 				alert("Thank you for your support!");
+
+				delete document.title;
+				Object.defineProperty(document, "title", {
+					value: document._title,
+					writable: true,
+					configurable: true,
+					enumerable: true
+				});
+
 				document.getElementById("blocker").style.display = "none";
 				document.getElementById("root").hidden = false;
 			};
