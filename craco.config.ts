@@ -68,7 +68,7 @@ const handleBlogPosts = () => {
 				id: uniqueId,
 				link: `${getProtocolPrefix(GlobalConfig.site_settings.https)}://${
 					GlobalConfig.site_settings.domain
-				}${GlobalConfig.site_settings.base}read/${file}`,
+				}${GlobalConfig.site_settings.base}#/post/${uniqueId}`,
 				description: htmlRender.makeHtml(summary),
 				content: htmlRender.makeHtml(postContent),
 				date: postDate
