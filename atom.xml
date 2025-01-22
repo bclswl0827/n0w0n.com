@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>httpsn0w0n.com/</id>
     <title>The [object Object]</title>
-    <updated>2025-01-22T07:42:03.800Z</updated>
+    <updated>2025-01-22T07:48:27.940Z</updated>
     <generator>The [object Object]</generator>
     <author>
         <name>Unknown netizen</name>
@@ -14,7 +14,7 @@
     <entry>
         <title type="html"><![CDATA[The $60,000 Patch: A Newcomer's One-Week Triumph]]></title>
         <id>the_60000_usd_patch_is_a_triumph</id>
-        <link href="https://n0w0n.com/read/the_60000_usd_patch_is_a_triumph.md"/>
+        <link href="https://n0w0n.com/#/post/the_60000_usd_patch_is_a_triumph"/>
         <updated>2025-01-21T01:31:22.000Z</updated>
         <summary type="html"><![CDATA[<p>In mid-October, after three rounds of assessments and interviews, I finally get a work from a company that specializing in open-source IoT and embedded development.</p>
 <p>As an application engineer at this company, my responsibilities include building libraries, maintaining product documentation on the wiki, and creating customized demos for various edge computing devices. Just a few days into the role, I learned about a legacy issue with one of the products. Specifically, the RS485 interfaces had a critical flaw that prevented the port from properly switching the data direction.</p>
@@ -453,7 +453,7 @@ module_exit(module_exit_fn);
     <entry>
         <title type="html"><![CDATA[MMAP on Allwinner H3 - The Faster Way to Access to GPIO Pins]]></title>
         <id>allwinner_h3_memory_mapping</id>
-        <link href="https://n0w0n.com/read/allwinner_h3_memory_mapping.md"/>
+        <link href="https://n0w0n.com/#/post/allwinner_h3_memory_mapping"/>
         <updated>2023-05-20T05:08:00.000Z</updated>
         <summary type="html"><![CDATA[<p>When it comes to control the GPIO pins on a development board, many of developers have tried to access the GPIO pins from the user space (e.g. The <code>sysfs</code>). But this approach may not perform well because it's not that fast as you may thought - at least it was vividly reflected in one of my recent needs.</p>
 <p>Recently I took over a maker-level project that uses the Raspberry Pi and in the project, the Pi needs to continuously poll the level of a certain output from the FPGA at high speed to determine whether the data is "ready". However, as the price of Raspberry Pi rises, I had to consider the affordable alternative, finally I settled on the Orange Pi One, which uses the Allwinner H3 and has a 512 MB of RAM - That's enough for my needs.</p>
