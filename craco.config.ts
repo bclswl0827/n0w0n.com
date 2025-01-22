@@ -11,6 +11,7 @@ const getProtocolPrefix = (https: boolean) => (https ? "https" : "http");
 
 const handleBlogPosts = () => {
 	const htmlRender = new showdown.Converter();
+	htmlRender.setOption("tables", true);
 
 	const rssFeed = new Feed({
 		updated: new Date(),
