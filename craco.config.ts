@@ -9,6 +9,41 @@ import { GlobalConfig } from "./src/config/global";
 
 const getProtocolPrefix = (https: boolean) => (https ? "https" : "http");
 
+const generatePlainHtml = (
+	baseUrl: string,
+	siteTitle: string,
+	postTitle: string,
+	postHtml: string
+) =>
+	`<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>${postTitle} - ${siteTitle}</title>
+    </head>
+    <body>
+        <noscript>
+            <h1>${postTitle}</h1>
+            <article>${postHtml}</article>
+        </noscript>
+        <script>
+            (() => {
+                const main = () => {
+                    document.title = "Redirecting... - ${siteTitle}";
+                    document.body.innerText = "Redirecting...";
+                    const url = new URL(window.location.href);
+                    url.hash = url.pathname.replace("index.html", "");
+                    url.pathname = "${baseUrl}";
+                    window.location.href = url.href;
+                };
+
+                main();
+            })();
+        </script>
+    </body>
+</html>`;
+
 const handleBlogPosts = () => {
 	const htmlRender = new showdown.Converter();
 	htmlRender.setOption("tables", true);
@@ -63,17 +98,29 @@ const handleBlogPosts = () => {
 			const postContent = rawText
 				.slice(metadata[0].length)
 				.replace(/<!--(.?)+more(.?)+-->/, "");
+			const postContentHtml = htmlRender.makeHtml(postContent);
 
 			rssFeed.addItem({
 				title: metedataObj.title,
 				id: uniqueId,
 				link: `${getProtocolPrefix(GlobalConfig.site_settings.https)}://${
 					GlobalConfig.site_settings.domain
-				}${GlobalConfig.site_settings.base}#/post/${uniqueId}`,
+				}${GlobalConfig.site_settings.base}post/${uniqueId}`,
 				description: htmlRender.makeHtml(summary),
-				content: htmlRender.makeHtml(postContent),
+				content: postContentHtml,
 				date: postDate
 			});
+
+			mkdirSync(resolve(__dirname, `./public/post/${uniqueId}`), { recursive: true });
+			writeFileSync(
+				resolve(__dirname, `./public/post/${uniqueId}`, `index.html`),
+				generatePlainHtml(
+					GlobalConfig.site_settings.base,
+					GlobalConfig.site_settings.title,
+					metedataObj.title,
+					postContentHtml
+				)
+			);
 
 			mkdirSync(resolve(__dirname, "./public/data"), { recursive: true });
 			writeFileSync(

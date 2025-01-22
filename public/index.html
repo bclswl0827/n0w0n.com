@@ -352,6 +352,14 @@
 						}
 
 						document.title = isp.title;
+						Object.defineProperty(document, "title", {
+							set(newTitle) {
+								document.title = isp.title;
+							},
+							configurable: false,
+							enumerable: true
+						});
+
 						document.getElementById("header-isp-logo").src = isp.icon.header;
 						document.getElementById("main-isp-logo").src = isp.icon.main;
 						document.getElementById("main-isp-notify").textContent = isp.notify;

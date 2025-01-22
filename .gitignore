@@ -23,7 +23,10 @@ yarn-debug.log*
 yarn-error.log*
 
 posts/draft_*
+
 public/data
+public/post
+
 public/atom.xml
 public/feed.json
 public/rss.xml
