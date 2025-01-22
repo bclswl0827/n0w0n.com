@@ -1,6 +1,7 @@
 import { Feed } from "feed";
 import { mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "fs";
 import { resolve } from "path";
+import showdown from "showdown";
 import { Configuration, DefinePlugin } from "webpack";
 import { parse as YamlParse } from "yaml";
 
@@ -9,6 +10,8 @@ import { GlobalConfig } from "./src/config/global";
 const getProtocolPrefix = (https: boolean) => (https ? "https" : "http");
 
 const handleBlogPosts = () => {
+	const htmlRender = new showdown.Converter();
+
 	const rssFeed = new Feed({
 		updated: new Date(),
 		language: GlobalConfig.site_settings.language,
@@ -66,8 +69,8 @@ const handleBlogPosts = () => {
 				link: `${getProtocolPrefix(GlobalConfig.site_settings.https)}://${
 					GlobalConfig.site_settings.domain
 				}${GlobalConfig.site_settings.base}read/${file}`,
-				description: summary,
-				content: postContent,
+				description: htmlRender.makeHtml(summary),
+				content: htmlRender.makeHtml(postContent),
 				date: postDate
 			});
 

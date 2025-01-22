@@ -46,7 +46,7 @@ export const Markdown = ({ className, children }: MarkdownProps) => {
 					</a>
 				),
 				pre: ({ node, ...props }) => <pre className="bg-transparent p-2" {...props} />,
-				code: ({ className, children, node }) => {
+				code: ({ className, children }) => {
 					const match = /language-(\w+)/.exec(className ?? "");
 					const lang = match !== null ? match[1] : "";
 					const code = String(children);
