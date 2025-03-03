@@ -1,7 +1,7 @@
 import { mdiClockCheck, mdiClockEdit, mdiTypewriter } from "@mdi/js";
 import Icon from "@mdi/react";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useMatch, useNavigate, useNavigation, useParams } from "react-router-dom";
 
 import { Error } from "../../components/Error";
 import { Markdown } from "../../components/Markdown";
@@ -42,6 +42,18 @@ const Post = () => {
 			document.title = `Error occurred while loading post - ${siteTitle}`;
 		}
 	}, [error, siteTitle]);
+
+	// Setup canonical link
+	const { pathname } = useLocation();
+	useEffect(() => {
+		const url = new URL(window.location.href);
+		url.pathname = pathname.replace(/\/+$/, "");
+		url.hash = "";
+		const link = document.createElement("link");
+		link.href = url.toString();
+		link.rel = "canonical";
+		document.head.appendChild(link);
+	}, []);
 
 	// Setup comment system
 	useEffect(() => {
