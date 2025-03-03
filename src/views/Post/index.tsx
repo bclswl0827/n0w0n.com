@@ -1,7 +1,7 @@
 import { mdiClockCheck, mdiClockEdit, mdiTypewriter } from "@mdi/js";
 import Icon from "@mdi/react";
 import { useEffect, useState } from "react";
-import { useLocation, useMatch, useNavigate, useNavigation, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 import { Error } from "../../components/Error";
 import { Markdown } from "../../components/Markdown";
