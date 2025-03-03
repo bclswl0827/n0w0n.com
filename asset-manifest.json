@@ -1,12 +1,12 @@
 {
   "files": {
     "main.css": "./static/css/main.b84d8cfc.css",
-    "main.js": "./static/js/main.f282075e.js",
-    "static/js/693.2af81f3c.chunk.js": "./static/js/693.2af81f3c.chunk.js",
-    "static/js/957.51b99bfe.chunk.js": "./static/js/957.51b99bfe.chunk.js",
+    "main.js": "./static/js/main.f8541bb1.js",
+    "static/js/693.c7760fd2.chunk.js": "./static/js/693.c7760fd2.chunk.js",
+    "static/js/957.3a651e32.chunk.js": "./static/js/957.3a651e32.chunk.js",
     "static/js/577.3dee07ac.chunk.js": "./static/js/577.3dee07ac.chunk.js",
     "static/js/68.db68973d.chunk.js": "./static/js/68.db68973d.chunk.js",
-    "static/js/603.dcd56b4b.chunk.js": "./static/js/603.dcd56b4b.chunk.js",
+    "static/js/603.7ecffcf4.chunk.js": "./static/js/603.7ecffcf4.chunk.js",
     "static/js/828.af176bb2.chunk.js": "./static/js/828.af176bb2.chunk.js",
     "static/css/486.d62eb8a6.chunk.css": "./static/css/486.d62eb8a6.chunk.css",
     "static/js/486.423b878d.chunk.js": "./static/js/486.423b878d.chunk.js",
@@ -75,6 +75,6 @@
   },
   "entrypoints": [
     "static/css/main.b84d8cfc.css",
-    "static/js/main.f282075e.js"
+    "static/js/main.f8541bb1.js"
   ]
 }
