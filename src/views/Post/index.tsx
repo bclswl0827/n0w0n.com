@@ -75,7 +75,9 @@ const Post = () => {
 
 	return !error.length ? (
 		<div className="animate-fade flex flex-col items-center space-y-4 mx-12 lg:mx-0">
-			<h1 className="text-2xl font-extrabold text-gray-800">{postData.title}</h1>
+			<h1 className="max-w-[calc(95%)] md:max-w-[calc(80%)] lg:max-w-[calc(50%)] text-2xl text-center font-extrabold text-gray-800">
+				{postData.title}
+			</h1>
 
 			{postData.content && (
 				<>
