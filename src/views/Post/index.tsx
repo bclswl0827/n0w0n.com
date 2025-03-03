@@ -46,14 +46,16 @@ const Post = () => {
 	// Setup canonical link
 	const { pathname } = useLocation();
 	useEffect(() => {
-		const url = new URL(window.location.href);
-		url.pathname = pathname.replace(/\/+$/, "");
-		url.hash = "";
-		const link = document.createElement("link");
-		link.href = url.toString();
-		link.rel = "canonical";
-		document.head.appendChild(link);
-	}, [pathname]);
+		if (postData.content) {
+			const url = new URL(window.location.href);
+			url.pathname = pathname.replace(/\/+$/, "");
+			url.hash = "";
+			const link = document.createElement("link");
+			link.href = url.toString();
+			link.rel = "canonical";
+			document.head.appendChild(link);
+		}
+	}, [pathname, postData.content]);
 
 	// Setup comment system
 	useEffect(() => {
@@ -68,7 +70,7 @@ const Post = () => {
 			script.setAttribute("async", "true");
 			commentContainer?.appendChild(script);
 		}
-	}, [postData]);
+	}, [postData.content]);
 
 	return !error.length ? (
 		<div className="animate-fade flex flex-col items-center space-y-4 mx-12 lg:mx-0">
