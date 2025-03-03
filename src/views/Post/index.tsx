@@ -49,6 +49,7 @@ const Post = () => {
 		if (postData.content) {
 			const url = new URL(window.location.href);
 			url.pathname = pathname.replace(/\/+$/, "");
+			url.search = "";
 			url.hash = "";
 			const link = document.createElement("link");
 			link.href = url.toString();
