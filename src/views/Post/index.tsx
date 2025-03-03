@@ -53,7 +53,7 @@ const Post = () => {
 		link.href = url.toString();
 		link.rel = "canonical";
 		document.head.appendChild(link);
-	}, []);
+	}, [pathname]);
 
 	// Setup comment system
 	useEffect(() => {
