@@ -64,7 +64,7 @@ const Post = () => {
 			const script = document.createElement("script");
 			script.src = "https://utteranc.es/client.js";
 			script.setAttribute("repo", "bclswl0827/n0w0n.com");
-			script.setAttribute("issue-term", "pathname");
+			script.setAttribute("issue-term", "url");
 			script.setAttribute("theme", "github-light");
 			script.setAttribute("crossorigin", "anonymous");
 			script.setAttribute("async", "true");
