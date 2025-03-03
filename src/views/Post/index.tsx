@@ -51,10 +51,16 @@ const Post = () => {
 			url.pathname = pathname.replace(/\/+$/, "");
 			url.search = "";
 			url.hash = "";
-			const link = document.createElement("link");
-			link.href = url.toString();
-			link.rel = "canonical";
-			document.head.appendChild(link);
+
+			let link = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
+			if (link) {
+				link.href = url.toString();
+			} else {
+				link = document.createElement("link");
+				link.href = url.toString();
+				link.rel = "canonical";
+				document.head.appendChild(link);
+			}
 		}
 	}, [pathname, postData.content]);
 
