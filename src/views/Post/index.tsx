@@ -43,6 +43,21 @@ const Post = () => {
 		}
 	}, [error, siteTitle]);
 
+	// Setup comment system
+	useEffect(() => {
+		const commentContainer = document.getElementById("utterances-container");
+		if (postData.content && commentContainer) {
+			const script = document.createElement("script");
+			script.src = "https://utteranc.es/client.js";
+			script.setAttribute("repo", "bclswl0827/n0w0n.com");
+			script.setAttribute("issue-term", "pathname");
+			script.setAttribute("theme", "github-light");
+			script.setAttribute("crossorigin", "anonymous");
+			script.setAttribute("async", "true");
+			commentContainer?.appendChild(script);
+		}
+	}, [postData]);
+
 	return !error.length ? (
 		<div className="animate-fade flex flex-col items-center space-y-4 mx-12 lg:mx-0">
 			<h1 className="text-2xl font-extrabold text-gray-800">{postData.title}</h1>
@@ -66,9 +81,11 @@ const Post = () => {
 						</div>
 					</div>
 
-					<div className="pt-6 max-w-[calc(95%)] md:max-w-[calc(80%)] lg:max-w-[calc(50%)]">
+					<div className="py-6 max-w-[calc(95%)] md:max-w-[calc(80%)] lg:max-w-[calc(50%)]">
 						<Markdown>{postData.content}</Markdown>
 					</div>
+
+					<div id="utterances-container" className="w-full" />
 				</>
 			)}
 		</div>
