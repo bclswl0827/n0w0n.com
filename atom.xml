@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>httpsn0w0n.com/</id>
     <title>The [object Object]</title>
-    <updated>2025-03-03T09:30:06.974Z</updated>
+    <updated>2025-09-24T16:23:22.829Z</updated>
     <generator>The [object Object]</generator>
     <author>
         <name>Unknown netizen</name>
@@ -11,6 +11,370 @@
     <link rel="self" href="https://n0w0n.com/atom.xml"/>
     <logo>/avatar.jpg</logo>
     <rights>Posts are available under the Creative Commons Attribution-ShareAlike License 4.0, additional terms may apply.</rights>
+    <entry>
+        <title type="html"><![CDATA[No C, No Python, No Problem: Writing a SeisComP Plugin in Pure Go]]></title>
+        <id>seiscomp_plugin_impl_in_go</id>
+        <link href="https://n0w0n.com/post/seiscomp_plugin_impl_in_go"/>
+        <updated>2025-09-24T05:08:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>It has been a few months since I left Seeed Studio and started working on my own business, <a href="https://anyshake.org">AnyShake Project</a>, a open-source project targeted at Raspberry Shake and other similar products.</p>
+<p>As part of building a complete seismograph solution — both hardware and software — I knew from the beginning that integration with SeisComP was a must. It's one of the most widely used tools in professional seismology for real-time monitoring, data acquisition, and event detection. However, most SeisComP plugins are traditionally written in either C++ or Python. And to be honest, after years of juggling build systems, header hell, and Python dependency management, I decided: not this time.</p>
+<h2 id="thechallenge">The Challenge</h2>
+<p>SeisComP's plugin system is designed with C, C++, and Python in mind. There's no official plugin SDK for Go — actually, no SDKs at all — and the documentation is painfully sparse when it comes to writing custom data sources.</p>
+<p>To be honest, after getting used to modern developer tools and documentation with quick starts, examples, and real-world use cases, reading the SeisComP docs felt like stepping back in time. Instead of showing you how to get something working quickly, it starts with every possible concept, explained in abstract detail. I get that it's thorough, but when all I wanted was "how do I feed my waveform into the system?"—it was a slog.</p>
+<p>I don’t need a philosophical discussion on the nature of a stream; I need a working data pipeline.</p>
+<p>So I decided to do it the hard way: dive into the source code, trace how existing modules talk to each other, and build my own minimal setup from scratch.</p>
+<h2 id="whygo">Why Go?</h2>
+<p>Go (or Golang) has become my go-to language for building everything from firmware tools to backend services. It compiles to a single binary, it's cross-platform friendly, and concurrency is baked into the language. Most importantly, it allows me to move fast without sacrificing stability or maintainability. So the question became: can I write a fully functional SeisComP plugin in pure Go—no C bindings, no Python wrappers?</p>
+<blockquote>
+  <p>Spoiler alert: yes, I can.</p>
+</blockquote>]]></summary>
+        <content type="html"><![CDATA[<p>It has been a few months since I left Seeed Studio and started working on my own business, <a href="https://anyshake.org">AnyShake Project</a>, a open-source project targeted at Raspberry Shake and other similar products.</p>
+<p>As part of building a complete seismograph solution — both hardware and software — I knew from the beginning that integration with SeisComP was a must. It's one of the most widely used tools in professional seismology for real-time monitoring, data acquisition, and event detection. However, most SeisComP plugins are traditionally written in either C++ or Python. And to be honest, after years of juggling build systems, header hell, and Python dependency management, I decided: not this time.</p>
+<h2 id="thechallenge">The Challenge</h2>
+<p>SeisComP's plugin system is designed with C, C++, and Python in mind. There's no official plugin SDK for Go — actually, no SDKs at all — and the documentation is painfully sparse when it comes to writing custom data sources.</p>
+<p>To be honest, after getting used to modern developer tools and documentation with quick starts, examples, and real-world use cases, reading the SeisComP docs felt like stepping back in time. Instead of showing you how to get something working quickly, it starts with every possible concept, explained in abstract detail. I get that it's thorough, but when all I wanted was "how do I feed my waveform into the system?"—it was a slog.</p>
+<p>I don’t need a philosophical discussion on the nature of a stream; I need a working data pipeline.</p>
+<p>So I decided to do it the hard way: dive into the source code, trace how existing modules talk to each other, and build my own minimal setup from scratch.</p>
+<h2 id="whygo">Why Go?</h2>
+<p>Go (or Golang) has become my go-to language for building everything from firmware tools to backend services. It compiles to a single binary, it's cross-platform friendly, and concurrency is baked into the language. Most importantly, it allows me to move fast without sacrificing stability or maintainability. So the question became: can I write a fully functional SeisComP plugin in pure Go—no C bindings, no Python wrappers?</p>
+<blockquote>
+  <p>Spoiler alert: yes, I can.</p>
+</blockquote>
+<h2 id="analysisanddesign">Analysis and Design</h2>
+<p>Seismograph manufacturers are scattered across the globe, and most of them use their own proprietary protocols. To accommodate this diversity, SeisComP adopts an interface-oriented design pattern: it provides two files, <a href="https://github.com/SeisComP/seedlink/blob/master/libs/plugin/plugin.c"><code>plugin.c</code></a> and <a href="https://github.com/SeisComP/seedlink/blob/master/libs/plugin/plugin.h"><code>plugin.h</code></a>, allowing users to implement specific function signatures (such as <code>send_raw3</code>) themselves. Once implemented, users can register their plugin within SeisComP, enabling dynamic loading of data sources without modifying the SeisComP core.</p>
+<p>This is a particularly clever approach because it elegantly decouples third-party data ingestion from the core system. By examining the source code of <code>plugin.c</code>, we can see that the final call chain is as follows:</p>
+<pre><code>send_raw3
+  ↓
+  ├─ Prepare and populate header fields (station, channel, time, correction...)
+  ↓
+  ├─ If no data is available:
+  │     ├─ Send a time packet (PluginRawDataTimePacket)
+  │     └─ Or send a GAP packet (PluginRawDataGapPacket)
+  ↓
+  ├─ Loop and send data in fragments:
+  │     ├─ head.packtype = TimePacket (first packet) / DataPacket (subsequent packets)
+  │     ├─ head.data_size = sample_count
+  │     └─ Call send_packet()
+  │           ↓
+  │           ├─ writen(PLUGIN_FD, head)
+  │           └─ writen(PLUGIN_FD, dataptr)
+  ↓
+  └─ Return the total number of bytes sent
+</code></pre>
+<p>Here, <code>PLUGIN_FD</code> is defined as <code>63</code> — a predefined constant in SeisComP’s SeedLink plugin system. It represents a special file descriptor used as an IPC "pipe" for communication between the plugin and SeisComP.</p>
+<p>This insight reveals an important fact: if we can replicate this process, we can implement a fully functional SeisComP plugin in Go.</p>
+<p>In the case of AnyShake Observer, the software already provides a TCP-based data forwarder. This means that all I need to do is connect to the server, receive and parse the incoming data, and then format and send it according to SeisComP’s expected protocol.</p>
+<h2 id="implementation">Implementation</h2>
+<p>Initially, I considered calling the C functions directly via cgo, but ultimately, due to cross-compilation concerns, I decided to translate the prototypes into pure Go code—after all, they aren’t particularly complex. I created a struct that encapsulates the file descriptor and exposed the following methods:</p>
+<ul>
+<li>SendRaw3</li>
+<li>SendFlush3</li>
+<li>SendMSeed</li>
+<li>SendMSeed2</li>
+<li>SendLog3</li>
+<li>SendRawDepoch</li>
+</ul>
+<p>They maintain the same function signatures as in C, but are implemented entirely in pure Go, requiring no cgo support and thus can be called directly from Go. The final code is as follows:</p>
+<pre><code class="go language-go">import (
+    "encoding/binary"
+    "os"
+    "time"
+)
+
+const (
+    PLUGIN_FD             = 63
+    PLUGIN_MSEED_SIZE     = 512
+    PLUGIN_MAX_MSG_SIZE   = 448
+    PLUGIN_MAX_DATA_BYTES = 4000
+)
+
+const (
+    PLUGIN_RAW_TIME_PACKET  = 8
+    PLUGIN_RAW_PACKET       = 9
+    PLUGIN_RAW_GAP_PACKET   = 10
+    PLUGIN_RAW_FLUSH_PACKET = 11
+    PLUGIN_LOG_PACKET       = 12
+    PLUGIN_MSEED_PACKET     = 13
+)
+
+type PluginPacketHeader struct {
+    PackType       uint32
+    Station        [10]byte
+    Channel        [10]byte
+    Year           uint32
+    Yday           uint32
+    Hour           uint32
+    Minute         uint32
+    Second         uint32
+    Usec           uint32
+    UsecCorrection int32
+    TimingQuality  int32
+    DataSize       int32
+}
+
+type SeedLinkPluginIPC struct {
+    fd *os.File
+}
+
+func NewSeedlinkPluginIPC() SeedLinkPluginIPC {
+    return SeedLinkPluginIPC{
+        fd: os.NewFile(PLUGIN_FD, "seedlink"),
+    }
+}
+
+func (s *SeedLinkPluginIPC) sendPacket(head *PluginPacketHeader, data []byte) error {
+    headerBuf := make([]byte, 60)
+
+    binary.LittleEndian.PutUint32(headerBuf[0:4], head.PackType)
+    copy(headerBuf[4:14], head.Station[:])
+    copy(headerBuf[14:24], head.Channel[:])
+    binary.LittleEndian.PutUint32(headerBuf[24:28], head.Year)
+    binary.LittleEndian.PutUint32(headerBuf[28:32], head.Yday)
+    binary.LittleEndian.PutUint32(headerBuf[32:36], head.Hour)
+    binary.LittleEndian.PutUint32(headerBuf[36:40], head.Minute)
+    binary.LittleEndian.PutUint32(headerBuf[40:44], head.Second)
+    binary.LittleEndian.PutUint32(headerBuf[44:48], head.Usec)
+    binary.LittleEndian.PutUint32(headerBuf[48:52], uint32(head.UsecCorrection))
+    binary.LittleEndian.PutUint32(headerBuf[52:56], uint32(head.TimingQuality))
+    binary.LittleEndian.PutUint32(headerBuf[56:60], uint32(head.DataSize))
+
+    if _, err := s.fd.Write(headerBuf); err != nil {
+        return err
+    }
+    if data != nil {
+        if _, err := s.fd.Write(data); err != nil {
+            return err
+        }
+    }
+
+    return nil
+}
+
+func (s *SeedLinkPluginIPC) isLeap(y int) bool {
+    return (y%400 == 0) || (y%4 == 0 &amp;&amp; y%100 != 0)
+}
+
+func (s *SeedLinkPluginIPC) ldoy(y, m int) int {
+    doy := [...]int{0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365}
+    if s.isLeap(y) &amp;&amp; m &gt;= 3 {
+        return doy[m-1] + 1
+    }
+    return doy[m-1]
+}
+
+func (s *SeedLinkPluginIPC) mdy2dy(month, day, year int) int {
+    return s.ldoy(year, month) + day - 1
+}
+
+func (s *SeedLinkPluginIPC) Close() {
+    _ = s.fd.Close()
+}
+
+func (s *SeedLinkPluginIPC) SendRaw3(station, channel string, t time.Time, usecCorr, timingQuality int, data []int32) error {
+    const maxSamplesPerPacket = PLUGIN_MAX_DATA_BYTES / 4 // 4000 / 4 = 1000
+
+    sent := 0
+    total := len(data)
+    first := true
+
+    for sent &lt; total {
+        end := sent + maxSamplesPerPacket
+        if end &gt; total {
+            end = total
+        }
+        chunk := data[sent:end]
+
+        var head PluginPacketHeader
+        copy(head.Station[:], station)
+        copy(head.Channel[:], channel)
+
+        if first {
+            head.PackType = PLUGIN_RAW_TIME_PACKET
+            head.Year = uint32(t.Year())
+            head.Yday = uint32(s.mdy2dy(int(t.Month()), t.Day(), t.Year()))
+            head.Hour = uint32(t.Hour())
+            head.Minute = uint32(t.Minute())
+            head.Second = uint32(t.Second())
+            head.Usec = uint32(t.Nanosecond() / 1000)
+            head.UsecCorrection = int32(usecCorr)
+            head.TimingQuality = int32(timingQuality)
+            first = false
+        } else {
+            head.PackType = PLUGIN_RAW_PACKET
+        }
+
+        head.DataSize = int32(len(chunk))
+
+        dataBytes := make([]byte, len(chunk)*4)
+        for i, v := range chunk {
+            binary.LittleEndian.PutUint32(dataBytes[i*4:(i+1)*4], uint32(v))
+        }
+
+        if err := s.sendPacket(&amp;head, dataBytes); err != nil {
+            return err
+        }
+
+        sent = end
+    }
+
+    return nil
+}
+
+func (s *SeedLinkPluginIPC) SendFlush3(station, channel string) error {
+    var head PluginPacketHeader
+    copy(head.Station[:], station)
+    copy(head.Channel[:], channel)
+    head.PackType = PLUGIN_RAW_FLUSH_PACKET
+    head.DataSize = 0
+
+    return s.sendPacket(&amp;head, nil)
+}
+
+func (s *SeedLinkPluginIPC) SendMSeed(station string, data []byte) error {
+    if len(data) != PLUGIN_MSEED_SIZE {
+        return nil
+    }
+
+    var head PluginPacketHeader
+    copy(head.Station[:], station)
+    head.PackType = PLUGIN_MSEED_PACKET
+    head.DataSize = int32(len(data))
+
+    return s.sendPacket(&amp;head, data)
+}
+
+func (s *SeedLinkPluginIPC) SendMSeed2(station, channel string, seq int, data []byte) error {
+    if len(data) != PLUGIN_MSEED_SIZE {
+        return nil
+    }
+
+    var head PluginPacketHeader
+    copy(head.Station[:], station)
+    copy(head.Channel[:], channel)
+    head.PackType = PLUGIN_MSEED_PACKET
+    head.TimingQuality = int32(seq)
+    head.DataSize = int32(len(data))
+
+    return s.sendPacket(&amp;head, data)
+}
+
+func (s *SeedLinkPluginIPC) SendLog3(station string, t time.Time, msg string) error {
+    var head PluginPacketHeader
+    copy(head.Station[:], station)
+    head.PackType = PLUGIN_LOG_PACKET
+
+    head.Year = uint32(t.Year())
+    head.Yday = uint32(s.mdy2dy(int(t.Month()), t.Day(), t.Year()))
+    head.Hour = uint32(t.Hour())
+    head.Minute = uint32(t.Minute())
+    head.Second = uint32(t.Second())
+    head.Usec = uint32(t.Nanosecond() / 1000)
+
+    data := []byte(msg)
+    head.DataSize = int32(len(data))
+
+    return s.sendPacket(&amp;head, data)
+}
+
+func (s *SeedLinkPluginIPC) SendRawDepoch(station, channel string, depoch float64, usecCorr, timingQuality int, data []int32) error {
+    sec := int64(depoch)
+    usec := int((depoch - float64(sec)) * 1e6)
+    t := time.Unix(sec, int64(usec)*1000).UTC()
+    return s.SendRaw3(station, channel, t, usecCorr, timingQuality, data)
+}
+</code></pre>
+<p>In the AnyShake Project, the AnyShake Explorer — used as a data acquisition device—can experience gradual clock drift due to tiny deviations in its crystal oscillator. To address this, I chose to use <code>SendMSeed</code> to provide the data, ensuring that each data packet carries a fully controllable timestamp.</p>
+<p>The function <code>SendMSeed</code> only accepts pre-encoded MiniSEED packets, so I leveraged a pure Go MiniSEED encoding library I previously developed for the AnyShake Project, <a href="https://github.com/bclswl0827/mseedio">mseedio</a>, to handle this task.</p>
+<p>It’s important to note that, according to the implementation in <code>plugin.c</code>, each MiniSEED packet written to <code>SendMSeed</code> must have a length equal to <code>PLUGIN_MSEED_SIZE</code>, i.e., 512 bytes. Through extensive testing, I found that MiniSEED packets containing 100 samples are safe. Therefore, I set 100 samples as the upper limit for a single MiniSEED data block. Before encoding, I check the data length and slice it appropriately. I also encapsulated the MiniSEED encoding logic to make it easier to use.</p>
+<pre><code class="go language-go">import (
+    "fmt"
+    "time"
+
+    "github.com/bclswl0827/mseedio"
+)
+
+const MINISEED_CHUNK_SAMPLES = 100
+
+type MiniSeedData struct {
+    Station    string
+    Network    string
+    Location   string
+    Channel    string
+    Timestamp  int64
+    SampleRate int
+    Data       []int32
+}
+
+func NewMiniSeedData(timestamp time.Time, station, network, location, channel string, sampleRate int, data []int32) MiniSeedData {
+    return MiniSeedData{
+        Timestamp:  timestamp.UnixMilli(),
+        Station:    station,
+        Network:    network,
+        Location:   location,
+        Channel:    channel,
+        SampleRate: sampleRate,
+        Data:       data,
+    }
+}
+
+func (m *MiniSeedData) chunkInt32Slice(data []int32, chunkSamples int) [][]int32 {
+    var chunks [][]int32
+
+    for i := 0; i &lt; len(data); i += chunkSamples {
+        end := min(i+chunkSamples, len(data))
+        chunks = append(chunks, data[i:end])
+    }
+
+    return chunks
+}
+
+func (m *MiniSeedData) EncodeChunk(sequenceNumber int) ([][]byte, error) {
+    dataSpanMs := 1000 / m.SampleRate
+    var buf [][]byte
+
+    for i, c := range m.chunkInt32Slice(m.Data, MINISEED_CHUNK_SAMPLES) {
+        var miniseed mseedio.MiniSeedData
+        if err := miniseed.Init(mseedio.STEIM2, mseedio.MSBFIRST); err != nil {
+            return nil, err
+        }
+
+        startTime := time.UnixMilli(m.Timestamp + int64(i*MINISEED_CHUNK_SAMPLES*dataSpanMs)).UTC()
+        if err := miniseed.Append(c, &amp;mseedio.AppendOptions{
+            ChannelCode:    m.Channel,
+            StationCode:    m.Station,
+            LocationCode:   m.Location,
+            NetworkCode:    m.Network,
+            SampleRate:     float64(m.SampleRate),
+            SequenceNumber: fmt.Sprintf("%06d", sequenceNumber),
+            StartTime:      startTime,
+        }); err != nil {
+            return nil, err
+        }
+
+        for i := 0; i &lt; len(miniseed.Series); i++ {
+            miniseed.Series[i].BlocketteSection.RecordLength = 9
+        }
+
+        msData, err := miniseed.Encode(mseedio.OVERWRITE, mseedio.MSBFIRST)
+        if err != nil {
+            return nil, err
+        }
+
+        buf = append(buf, msData)
+    }
+
+    return buf, nil
+}
+</code></pre>
+<p>The above covers the core code analysis. For establishing the TCP connection, the main program, and some necessary template files, I have open-sourced everything in the <a href="https://github.com/anyshake/nexus">AnyShake Nexus</a> repository. The code is simple and easy to read, so I won’t go into further detail here.</p>
+<h2 id="testresult">Test Result</h2>
+<p>I configured the AnyShake Nexus plugin as a data source in SeisComP.</p>
+<p><img src="https://assets.n0w0n.com/seiscomp_plugin_impl_in_go/1.png" alt="SeisComP Configuration" /></p>
+<p>After starting the SeedLink module and checking the logs, it is clear that the system correctly recognizes the data stream coming from the plugin.</p>
+<p><img src="https://assets.n0w0n.com/seiscomp_plugin_impl_in_go/2.png" alt="SeedLink Module" /></p>
+<p>Opening a terminal and running <code>scrttv</code> shows the real-time waveform from the plugin—mission accomplished.</p>
+<p><img src="https://assets.n0w0n.com/seiscomp_plugin_impl_in_go/3.png" alt="Realtime Waveform" /></p>]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[The $60,000 Patch: A Newcomer's One-Week Triumph]]></title>
         <id>the_60000_usd_patch_is_a_triumph</id>
